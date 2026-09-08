@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# LaTeX build artifacts
+paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Heavy / generated data (regenerable) — keep the small curated set explicitly
+*_sim_df
+*_store.pkl
+runs_*/
+notebook_cache/
+
+# Model checkpoints are large: track only via Git LFS (see checkpoints/README.md)
+checkpoints/*.pt
+
+# OS cruft
+.DS_Store

@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite the paper below."
+title: "Deep Learning of Robust Market Making under Regime-Switching Order Flow"
+type: software
+authors:
+  - family-names: "Moret"
+    given-names: "Felipe"
+    affiliation: "Scuola Normale Superiore, Pisa"
+  - family-names: "Lillo"
+    given-names: "Fabrizio"
+    affiliation: "Scuola Normale Superiore, Pisa"
+abstract: >-
+  A Rainbow-style distributional DQN (C51) market maker, calibrated and tested
+  in a zero-intelligence limit order book, that outperforms the
+  Guéant-Lehalle-Fernandez-Tapia benchmark across the risk-return frontier and,
+  via a Bayesian change-point flow filter, a quote-exposure imbalance signal and
+  a scenario-bandit step, stays profitable under regime-switching order flow.
+keywords:
+  - market making
+  - reinforcement learning
+  - limit order book
+  - regime switching
+  - distributional DQN
+license: MIT
