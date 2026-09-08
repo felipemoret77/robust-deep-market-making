@@ -40,6 +40,14 @@
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\dd}{\,\mathrm{d}}
 
+% unmarked footnote (no superscript) for the first-page code-availability note
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
 \title{Deep Learning of Robust Market Making \\ under Regime-Switching Order Flow}
 \author{%
   Felipe Moret \quad Fabrizio Lillo \\[2pt]
@@ -53,6 +61,8 @@
 
 \begin{document}
 \maketitle
+\blfootnote{Code, trained models, and paper source are available at
+\url{https://github.com/felipemoret77/robust-deep-market-making}.}
 
 \begin{abstract}
 Classical market-making strategies based on stochastic control, such as
