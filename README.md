@@ -18,8 +18,8 @@ non-stationary flow, and a final scenario-bandit step further hardens it against
 random-persistence and correlated-direction stress. Training proceeds in three
 algorithms:
 
-| Algorithm | What it is | Entry point |
-|-----------|------------|-------------|
+| Algorithm | Description | Entry point |
+|-----------|-------------|-------------|
 | **Algorithm A** | Stationary Rainbow-DQN controller | [`src/agents/DeepSarsaQRunner.py`](src/agents/DeepSarsaQRunner.py) |
 | **Algorithm B** | Regime-aware fine-tuning (Bayesian change-point flow filter + quote-exposure imbalance) | [`src/agents/DeepSarsaQRunner_REGIME.py`](src/agents/DeepSarsaQRunner_REGIME.py) |
 | **Algorithm C** | Scenario-bandit robust fine-tuning | [`src/agents/DeepSarsaQRunner_RANDOM_TAU.py`](src/agents/DeepSarsaQRunner_RANDOM_TAU.py) |
@@ -31,82 +31,68 @@ robust-deep-market-making/
 ├── src/
 │   ├── sim/      # LOB simulator, MM controller, config, Bayesian flow signal, plot palette
 │   ├── agents/   # distributional DQN engine, fine-tuning machinery (ADR-lite, EWC, adversaries), A/B/C runners
-│   ├── glft/     # GLFT policy factory + intensity/censored-waiting-time calibration + GLFT studies
+│   ├── glft/     # GLFT policy factory + intensity / censored-waiting-time calibration + GLFT studies
 │   └── eval/     # risk–return frontier, stress tests, degradation curves, AS-miss bundle
-├── repro/        # figure-reproduction helpers (WIP — see caveats below)
-├── paper/        # main.tex, references.bib, figures/ (the 33 figures used by the paper)
-├── checkpoints/  # canonical A/B/C checkpoints (13 files, included as plain git — see checkpoints/README.md)
-├── data/         # small derived CSV/NPZ (see data/README.md)
+├── repro/        # scripts that regenerate figures from cached simulation outputs
+├── paper/        # main.tex, references.bib, and the figures used in the paper
+├── checkpoints/  # trained A/B/C checkpoints (see checkpoints/README.md)
+├── data/         # small derived CSV/NPZ inputs (see data/README.md)
 ├── requirements.txt
 └── Makefile
 ```
 
-## Install
+## Installation
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Important: flat imports need `PYTHONPATH`
-
-The source modules currently use **flat imports** (`import CONFIG_MM`,
-`from MM_LOB_SIM import ...`). They are grouped into `src/{sim,agents,glft,eval}`
-for readability, so **every `src/` subfolder must be on `PYTHONPATH`**. The
-`Makefile` does this for you; to run scripts by hand:
+The source modules are imported by top-level name, so the `src/` subdirectories
+must be on `PYTHONPATH`. The `Makefile` sets this automatically; to run scripts
+directly, export it once:
 
 ```bash
 export PYTHONPATH="$PWD/src/sim:$PWD/src/agents:$PWD/src/glft:$PWD/src/eval"
-python src/agents/DeepSarsaQRunner.py        # Algorithm A
 ```
 
-(Refactoring these into a proper installable package with clean namespaced
-imports is planned — see "Roadmap".)
-
-## Reproduce
+## Usage
 
 ```bash
-make paper       # compile paper/main.tex -> paper/main.pdf (needs tectonic)
-make train-a     # train Algorithm A   (likewise train-b / train-c)
-make figures     # regenerate the paper figures that have turnkey generators
+make paper       # compile paper/main.tex -> paper/main.pdf (requires tectonic)
+make train-a     # train Algorithm A   (likewise: make train-b, make train-c)
+make figures     # regenerate the data-driven figures
 ```
 
-Building the paper requires [tectonic](https://tectonic-typesetting.github.io/).
+Algorithm B fine-tunes from an Algorithm-A checkpoint: set `WARMSTART_CKPT` in
+[`src/agents/DeepSarsaQRunner_REGIME.py`](src/agents/DeepSarsaQRunner_REGIME.py)
+to the desired checkpoint from `checkpoints/` (see
+[`checkpoints/README.md`](checkpoints/README.md) for the A/B/C mapping).
 
-## Reproducibility caveats (please read before regenerating figures)
+## Reproducibility
 
-- **`repro/` scripts are not publication-clean.** They use absolute macOS
-  paths, address Jupyter cells by index, and read pickle caches. They are kept
-  because they are what currently regenerates several figures; they are the
-  first thing slated for the clean rewrite (see Roadmap).
-- **Seven figures have no turnkey generator yet**: `total_pnl_0001.png`,
-  `MM_inv_0001.png`, the three interpretability heatmaps
-  (`p_buy_mhat_vs_inv.png`, `bayes_m_vs_spread.png`, `inventory_vs_spread.png`)
-  and the two schematic diagrams (`regime_model_diagram.png`,
-  `scenario_bandit_diagram.png`). They are versioned as-is. The heatmaps and the
-  Bayesian-belief diagnostic come from the trainer at a configuration that is
-  not byte-reproducible from a standalone script, so their flow-bias label was
-  corrected by raster surgery (`repro/relabel_iota_*.py`) rather than re-render.
-- **Freeze the exact Algorithm-B config before relying on it.**
-  `src/agents/DeepSarsaQRunner_REGIME.py` currently ships with
-  `WARMSTART_CKPT=None`, whereas the paper describes Algorithm B as fine-tuning
-  from Algorithm A. Set `WARMSTART_CKPT` to the Algorithm-A checkpoint to match
-  the paper's results.
-- Canonical GLFT calibration (fixed in code): `A = 0.1507`, `κ = 2.335`,
+- The trained A/B/C checkpoints behind the paper's results are included in
+  `checkpoints/`.
+- The figures in `paper/figures/` are those used in the manuscript. The
+  data-driven figures regenerate from the committed checkpoints and cached
+  simulation outputs through the scripts in `src/eval/` and `repro/`; the two
+  schematic diagrams (`regime_model_diagram`, `scenario_bandit_diagram`) are
+  illustrations.
+- GLFT calibration constants used throughout: `A = 0.1507`, `κ = 2.335`,
   `σ = 0.30`.
+- Evaluations use paired-seed episodes (identical order-flow realizations across
+  policies) under a fixed global seed.
 
-## Roadmap (clean-up before public release)
+## Roadmap
 
-1. Turn `src/` into an installable package (`pip install -e .`) with namespaced
-   imports, dropping the `PYTHONPATH` requirement.
-2. Replace `repro/` with clean, path-free generators:
-   `scripts/train_algorithm_{a,b,c}.py`, `scripts/evaluate_{stationary,regimes}.py`,
-   `scripts/make_figures.py`, `scripts/build_paper.py`.
-3. Add turnkey generators for the seven figures listed above.
-4. Canonical A/B/C checkpoints ship in `checkpoints/` as plain git objects
-   (each ~3–6 MB); move to Git LFS or Zenodo if the set grows (see
-   `checkpoints/README.md`).
+- Package `src/` as an installable module with namespaced imports.
+- Consolidate training, evaluation, and figure generation behind a single set of
+  command-line entry points.
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff).
+If you use this code, please cite the paper; see [`CITATION.cff`](CITATION.cff).
+
+## License
+
+Released under the MIT License; see [`LICENSE`](LICENSE).

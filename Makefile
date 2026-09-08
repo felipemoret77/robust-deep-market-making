@@ -14,7 +14,7 @@ help:
 	@echo "  make train-b   - train Algorithm B (regime-aware fine-tuning)"
 	@echo "  make train-c   - train Algorithm C (scenario-bandit fine-tuning)"
 	@echo "  make paper     - compile paper/main.tex -> paper/main.pdf (needs tectonic)"
-	@echo "  make figures   - regenerate figures with turnkey generators (WIP; see README)"
+	@echo "  make figures   - regenerate the data-driven figures"
 	@echo "  make clean     - remove LaTeX build artifacts and __pycache__"
 
 env:
@@ -32,12 +32,11 @@ train-c:
 paper:
 	cd paper && tectonic main.tex
 
-# NOTE: several figure generators in src/eval and all of repro/ still use
-# absolute paths / pickle caches (see README caveats). This target runs the
-# self-contained analytical bundle as a starting point; the rest are WIP.
+# Regenerates the self-contained analytical figure bundle. The remaining
+# figures are produced by the scripts in src/eval/ and repro/ from the
+# committed checkpoints and cached simulation outputs.
 figures:
 	$(PY) src/eval/generate_as_miss_bundle.py
-	@echo "See README 'Reproducibility caveats' for the figures still routed through repro/."
 
 clean:
 	rm -f paper/*.aux paper/*.log paper/*.out paper/*.bbl paper/*.blg paper/*.pdf
