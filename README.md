@@ -35,7 +35,7 @@ robust-deep-market-making/
 │   └── eval/     # risk–return frontier, stress tests, degradation curves, AS-miss bundle
 ├── repro/        # figure-reproduction helpers (WIP — see caveats below)
 ├── paper/        # main.tex, references.bib, figures/ (the 33 figures used by the paper)
-├── checkpoints/  # canonical A/B/C checkpoints (see checkpoints/README.md — add via Git LFS/Zenodo)
+├── checkpoints/  # canonical A/B/C checkpoints (13 files, included as plain git — see checkpoints/README.md)
 ├── data/         # small derived CSV/NPZ (see data/README.md)
 ├── requirements.txt
 └── Makefile
@@ -103,7 +103,9 @@ Building the paper requires [tectonic](https://tectonic-typesetting.github.io/).
    `scripts/train_algorithm_{a,b,c}.py`, `scripts/evaluate_{stationary,regimes}.py`,
    `scripts/make_figures.py`, `scripts/build_paper.py`.
 3. Add turnkey generators for the seven figures listed above.
-4. Publish canonical checkpoints via Git LFS or Zenodo (see `checkpoints/README.md`).
+4. Canonical A/B/C checkpoints ship in `checkpoints/` as plain git objects
+   (each ~3–6 MB); move to Git LFS or Zenodo if the set grows (see
+   `checkpoints/README.md`).
 
 ## Citation
 
