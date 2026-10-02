@@ -1,0 +1,60 @@
+{
+  "notebook_sha256": "9eaa8eed68cb17cf34c7ebe3d5afcfeec10627cdafd2d9c6461cf17c8eec59e0",
+  "functions": [
+    {
+      "cell": 4,
+      "function": "meta_bool",
+      "ast_sha256": "34df8e117f41878e57be908c4f3f7df873ff2052b855b6099c44613b524323ae"
+    },
+    {
+      "cell": 4,
+      "function": "meta_float",
+      "ast_sha256": "5c35c3b3bfaec7c4db2121ec72b87070cc9d4b8cdfdcee1dd2fc456e5a407d7b"
+    },
+    {
+      "cell": 4,
+      "function": "checkpoint_signal_config",
+      "ast_sha256": "4e69fed49624a7d05fbcf5600d705556061859c54434f6298ca804a53911e423"
+    },
+    {
+      "cell": 4,
+      "function": "estimate_expected_mo_events",
+      "ast_sha256": "13f7be31dbe42abe6dc61f2a14b85000000176222937f136085e2e675e858613"
+    },
+    {
+      "cell": 4,
+      "function": "build_regime_schedule",
+      "ast_sha256": "42eb8e1640bdd1f481d0c0afb87f014b1634a34f1766713d0412c8ffe0c4bf40"
+    },
+    {
+      "cell": 4,
+      "function": "build_sim_kwargs",
+      "ast_sha256": "54916593f849f28f9139edcb0bc3b45c866321cce33b48fd2e8a0ee802e54930"
+    },
+    {
+      "cell": 10,
+      "function": "set_seeds",
+      "ast_sha256": "363b16beaa42358e67fd8e3eac5897a5dda10cbfb96da010e95e4316378f6283"
+    },
+    {
+      "cell": 10,
+      "function": "reset_eval_controller",
+      "ast_sha256": "739ead118f5606c8e8e5c14ba06428b9a33f84665ea7ac0ac7434f462a545c0e"
+    },
+    {
+      "cell": 10,
+      "function": "run_one_sim",
+      "ast_sha256": "8ddb391482bcca246e3e1474fe18af331a0b5f48f288d081431de68015d60d4a"
+    },
+    {
+      "cell": 25,
+      "function": "make_random_tau_regime_schedule",
+      "ast_sha256": "94d0abe5d337996eb6805a7362ba3daa373884306bd794a4d7a7d81535b833eb"
+    },
+    {
+      "cell": 29,
+      "function": "make_clustered_intensity_regime_schedule",
+      "ast_sha256": "dc3b4618d01e1af91d098a8c5850afa67e0cf711ef20f70086bef169a3798b29"
+    }
+  ]
+}

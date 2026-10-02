@@ -1,0 +1,194 @@
+[
+  {
+    "path": "paper/figures/censored_waiting_different_throttles.png",
+    "sha256": "f9bb8f755c9ba470e818d88bb92d2fce61c5e484610a153d4f9da9cd25a73f99",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/pnl_cumulated_pnl_glft_vs_naive.png",
+    "sha256": "1569f185c91f2b05237089fe16e27ded73a3dcdc9623a6baefc76f2515790035",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/glft_naive_pnl_lifetime_hist.png",
+    "sha256": "75cd798a6444916ed976df3e7628448a6157bb2db5b515632bbe2772d33ee1cd",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/dqn_vs_as_vs_glft.png",
+    "sha256": "332b1e0c9f7e41b60a80eac5aa833e624f2cfc3c75c105a55e485f1298df5901",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/glft_degradation_vs_tau_regime.png",
+    "sha256": "79b36201e9ce98830859518871cff3266e9e8bb5458106aeae2d21e27e671654",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/total_pnl_0001.png",
+    "sha256": "eef1f39ffc68f1fd52bc55ccb751ab9f111f6f7509609996430b3ef3b49a78b1",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/MM_inv_0001.png",
+    "sha256": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/glft_frontier_complete.png",
+    "sha256": "3c12a4b094f3a561562b1de35a3a5ebdbfc2bb5240d5c307e5b3afea5e3b0306",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/regime_model_diagram.png",
+    "sha256": "d2ff8c0081e967e4255d0994af8735eba085bf9e057834f84936bf1d36983250",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/regime_switching_one_episode_example.png",
+    "sha256": "ab15bd9fa21856a9da773620bafa9c5ea624a82ec004039cec8fa4d23989e9e7",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/degradation_vs_tau_regime.png",
+    "sha256": "bd02f1a22809f4f05cb9b7473a03de76b1bcfe4b7803ae6ab6fd0817e0ca1a93",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/regime_trained_final_phase_b.png",
+    "sha256": "97128025fec66a313ff358294e68719a79bb9f9c32f95e7de929ead8b1e84536",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/regime_trained_pnl_mean_across_time.png",
+    "sha256": "7892b7e76253363c25b8eb56bbb6c318c92ec06f9c7a4273dad2fbd1bdee34d5",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/inventory_distribution_phaseA_phaseB.png",
+    "sha256": "f67c1d9364f39f88acfaeb7a793deb1741920113f0631bf5d564db8d6f63f179",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/pnl_distribution_phaseA_phaseB.png",
+    "sha256": "7b28c217ceaeea5558f028e398f6097cc42dffe95287f09bada1a7cc9f73696e",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/p_buy_mhat_vs_inv.png",
+    "sha256": "edba9d72c167475cfb61c063fcfb618fdc721dc78ca03097775a5811fa3cf3fd",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/inventory_vs_spread.png",
+    "sha256": "3ca8289cc5ca846a4c3676a57b3cdd483ac98d1214b2780f6a2ccb73d95ac045",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/bayes_m_vs_spread.png",
+    "sha256": "5f063690bdfc493c5a97e656bec28d3640b3c49877e55c82cf2394b426ee9ddf",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/bayes_single_estimation_example.png",
+    "sha256": "95c1c76352bc3ecacd7ca5f2e9a712f6908158361bae947f3aa7ee168f83bfa0",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/quote_exposure_single_estimation_example.png",
+    "sha256": "6b2d1dca3233cad8ce3850ff63ab20cae3bfd197894a93e580b93332408abe88",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/regime_tau_sweep_decay_phasea_vs_phaseb.png",
+    "sha256": "6abf0f7f318185ad82bf661f3c740976f79b182a3b73066631270a7c7c670ed6",
+    "portable_replot": "repro/plot_paper_sweep.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/random_tau_stress.png",
+    "sha256": "5bb15e96644d63de64f8544212c56b14d0f46c9c708a5bf48eaa17494ab3ca62",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/correlated_regime_stress.png",
+    "sha256": "8d9783baf029434e685d7994efd317b4326105cdda12a8d127d8832ffda336df",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/scenario_bandit_diagram.png",
+    "sha256": "2317d5d03a3c01a0b115743b2e18fa3fdfeac4ebcc56fc34194a68f628bf18a1",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/scenario_bandit_random_tau.png",
+    "sha256": "a11dab1772c64b783e3587966c65f6ad381bb6dc4f9f32633d9172a2d071e03e",
+    "portable_replot": "repro/regen_scenario_bandit_shaded.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/scenario_bandit_correlated_regime_stress.png",
+    "sha256": "fccd302d956fc5ce895561d3f5f5084325b98a114bc62d8abb886cc4beb3295a",
+    "portable_replot": "repro/regen_scenario_bandit_shaded.py",
+    "status": "portable archived-data replot"
+  },
+  {
+    "path": "paper/figures/as_miss_pi_q_lines.png",
+    "sha256": "49ad1395d1977087cdb2c05c20d7a4054711c982f5237159d8e7dccddaf0d391",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/as_miss_pi_heatmap.png",
+    "sha256": "d01163b811ae8544e9c163e97b65e196d64602de838943fa963ddc3f47d1ed91",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/as_miss_qbar_vs_p.png",
+    "sha256": "97b18535b868362e2a25568733308bc04597687694c5eca6f7e50c1e9d1c3039",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/as_miss_boundary_mass_vs_p.png",
+    "sha256": "757e5c489c8761a6c173bec59096d13b78e8acfb18e12f5a2075dcc00688e395",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/as_miss_expected_pnl_curves.png",
+    "sha256": "0b5bb360c5aea5008a08b96d63e48d3fc3b2fe78618de1317e07b5b3824a0967",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  },
+  {
+    "path": "paper/figures/as_miss_pnl_decomposition.png",
+    "sha256": "b5bf0aab572d21e524e3882cc6e9e56fe9ed985950e3abd8c04fb5cf679a015c",
+    "portable_replot": null,
+    "status": "preserved paper asset; separate provenance/reproduction check needed"
+  }
+]

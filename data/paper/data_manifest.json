@@ -1,0 +1,26 @@
+{
+  "regime_mc.npz": {
+    "source": "CELL_15_mc_quick_a452fae9.pkl",
+    "source_sha256": "7667ff89e17857cd69526dde6c8ab1b31e5bdd99613f8e109cb604362258d8dc",
+    "sha256": "22f49e37233b13760dedc9484be70f9009f55eab8dc4c37dd199aaec6858ccfe",
+    "episodes": 100,
+    "events": 100000,
+    "kind": "archived evaluation arrays; no new simulation"
+  },
+  "bandit_random.npz": {
+    "source": "CELL_29_mc_dro_vs_phaseb_random_tau_cb9e32cb.pkl",
+    "source_sha256": "287cb15c43607b8fee5fc7795a8d81f7e293389c8d2fb6cfd1b60f9bd132bbe6",
+    "sha256": "4c59107757eef9f13592f02029f8723f9cbe2a25493e963fcc0a752c9db4f019",
+    "episodes": 50,
+    "events": 500000,
+    "kind": "archived paired terminal outcomes; no new simulation"
+  },
+  "bandit_correlated.npz": {
+    "source": "CELL_30_mc_dro_vs_phaseb_clustered_3dbeaec0.pkl",
+    "source_sha256": "bb2dfac4f7946253a7e18405b34d6f50ba2de72a7859b2d7333d29657c82f8af",
+    "sha256": "0f2481fb1092b179a4df0b1104d76af8dba35db01e048a228e9ea89b50aa12e5",
+    "episodes": 50,
+    "events": 500000,
+    "kind": "archived paired terminal outcomes; no new simulation"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "neutral_clean": {
+    "spread": 1.0,
+    "inventory": 0.0,
+    "pure_mm_bid_sizes": [
+      4.0,
+      4.0
+    ],
+    "pure_mm_ask_sizes": [
+      4.0,
+      4.0
+    ],
+    "bayes_m_hat": 0.0,
+    "bayes_expected_run_length": 0.7,
+    "fill_imbalance_ewma": 0.0
+  },
+  "heatmaps": {
+    "p_buy_mhat_vs_inv.png": "p_buy_mhat_vs_inv.png",
+    "inventory_vs_spread.png": "inventory_vs_spread.png",
+    "bayes_m_vs_spread.png": "bayes_m_vs_spread.png",
+    "heatmap_regime_value_inventory_x_bayes_m_hat.png": "heatmap_regime_value_inventory_x_bayes_m_hat.png",
+    "heatmap_mm_value_inventory_x_spread.png": "heatmap_mm_value_inventory_x_spread.png",
+    "heatmap_regime_spread_value_bayes_m_hat_x_spread.png": "heatmap_regime_spread_value_bayes_m_hat_x_spread.png"
+  },
+  "stats": {
+    "p_buy_mhat_vs_inv.png": {
+      "min": -2.9885029792785645,
+      "max": 1.8545567989349365,
+      "mean": -0.28453755378723145
+    },
+    "inventory_vs_spread.png": {
+      "min": -2.952779531478882,
+      "max": 2.3102660179138184,
+      "mean": -0.2719149589538574
+    },
+    "bayes_m_vs_spread.png": {
+      "min": 1.6157777309417725,
+      "max": 2.3131837844848633,
+      "mean": 1.9667848348617554
+    }
+  },
+  "comparison": "neutral_clean_heatmaps_comparison.png",
+  "provenance_status": "Original generation directory was viz_geometry_search_mix_on_final_neutral_clean; exact checkpoint mapping remains unverified."
+}

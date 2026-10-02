@@ -22,8 +22,19 @@ paper/*.synctex.gz
 runs_*/
 notebook_cache/
 
-# Model checkpoints are large: track only via Git LFS (see checkpoints/README.md)
+# Keep training outputs out of Git; curated paper checkpoints are plain Git files.
 checkpoints/*.pt
 
 # OS cruft
 .DS_Store
+
+# Canonical B recovered for the paper (see manifest for SHA-256).
+!checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt
+
+# Generated evaluations and local diagnostic traces
+outputs/
+repro/**/episodes/
+repro/**/traces/
+repro/**/tensorboard*/
+repro/**/worker_*.log
+repro/**/*resources.txt

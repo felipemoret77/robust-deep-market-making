@@ -112,18 +112,14 @@ USE_MDP_GLFT = True
 # ── DQN checkpoints ────────────────────────────────────────────────────────
 # Map: display label → checkpoint path.
 # Add entries as you train DQN agents with different inv_penalty_coeff values.
+# Canonical frontier model identities are recorded alongside A/B/C.
+from pathlib import Path as _ManifestPath
+import json as _manifest_json
+_manifest_root = _ManifestPath(__file__).resolve().parents[2]
+_manifest = _manifest_json.loads((_manifest_root / "config/paper_experiments.json").read_text())
 DQN_CHECKPOINTS: Dict[str, str] = {
-    # New reward (dampened pnl):
-    "DQN  (φ=0.000)": "checkpoints/deep_mm_mtm_pure_invp0.0000_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    "DQN  (φ=0.001)": "checkpoints/deep_mm_mtm_pure_invp0.0010_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    "DQN  (φ=0.002)": "checkpoints/deep_mm_mtm_pure_invp0.0020_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    #"DQN  (φ=0.003)": "checkpoints/deep_mm_mtm_pure_invp0.0030_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    #"DQN  (φ=0.004)": "checkpoints/deep_mm_mtm_pure_invp0.0040_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    "DQN  (φ=0.005)": "checkpoints/deep_mm_mtm_pure_invp0.0050_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    #"DQN  (φ=0.006)": "checkpoints/deep_mm_mtm_pure_invp0.0060_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    "DQN  (φ=0.008)": "checkpoints/deep_mm_mtm_pure_invp0.0080_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    #"DQN  (φ=0.010)": "checkpoints/deep_mm_mtm_pure_invp0.0100_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
-    #"DQN  (φ=0.100)": "checkpoints/deep_mm_mtm_pure_invp0.1000_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+    label: str(_manifest_root / item["checkpoint"])
+    for label, item in _manifest["frontier_checkpoints"].items()
 }
 
 

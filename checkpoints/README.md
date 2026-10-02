@@ -1,45 +1,50 @@
-# Canonical checkpoints
+# Paper checkpoint identities
 
-The trained checkpoints used to produce the paper's results, kept **flat** (with
-their original filenames) so the hard-coded `checkpoints/<name>.pt` paths in the
-eval scripts resolve when run from the repo root. Each file is small (~3–6 MB),
-so they are committed as plain Git objects — **no Git LFS required**. Use LFS
-(or Zenodo) only if you later add many more or larger checkpoints.
+`config/paper_experiments.json` records exact filenames, SHA-256 hashes, saved
+metadata and parentage. Run `make verify-paper` before an evaluation.
 
-## Algorithm A — stationary DQN (risk–return frontier φ-sweep)
+## Algorithm A
 
-Loaded by [`src/eval/risk_return_frontier.py`](../src/eval/risk_return_frontier.py),
-one per inventory-penalty φ (= `invp`):
+The `deep_mm_mtm_pure_invp*_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt`
+files cover the stationary inventory-penalty sweep. The `invp0.0010` checkpoint
+is the A reference in the regime experiments. It is not a warm-start for B.
 
-```
-deep_mm_mtm_pure_invp{0.0000,0.0010,0.0020,0.0030,0.0040,
-                       0.0050,0.0060,0.0080,0.0100,0.1000}_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt
-```
+## Algorithm B
 
-The **canonical single Algorithm-A** controller (stress tests, and the
-warm-start source for Algorithm B) is **`invp0.0010`**.
-
-## Algorithm B — regime-aware fine-tuning
+The canonical file is:
 
 ```
-deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_final.pt
-...bayes_on2_mix_off_best_ma100.pt
+deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt
 ```
 
-Loaded by `viz_checkpoint_mix_off.py` and the regime diagnostics.
+SHA-256: `3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200`.
 
-## Algorithm C — scenario-bandit robust fine-tuning
+This is a byte-preserving copy of the recovered 2026-05-27 checkpoint used for
+the individual recovery results and the corrected persistence sweep. It is
+restored under the original filename recorded in C's warm-start metadata.
+B was trained from scratch. Its filter uses `USE_MIXTURE=False`,
+`USE_TRUNCATED_BETA=False`, `BAYES_FLOW_PRIOR_MODE="beta"`, and an assumed
+mean duration of 60 MOs.
+
+The two files ending in `bayes_on2_mix_off_best_ma100.pt` and
+`bayes_on2_mix_off_final.pt` are historical snapshots from a different run.
+Their truncated Beta prior and their weights differ. They are preserved for
+traceability and are not fallback choices for a paper evaluation.
+
+## Algorithm C
+
+The canonical file is:
 
 ```
 deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_random_tau_curriculum_dro_tau_p256_b0p5_eps0p5_cap0p05_ramp0p5_pmix0p5__c_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_final_hfb729bdc32.pt
 ```
 
-(`dro_tau` is the in-code name of the scenario-bandit step; `p256 b0.5 eps0.5
-cap0.05` are the bandit pool size / temperature / mixing / weight-cap.) Loaded by
-the scenario-bandit stress figures.
+C starts from the canonical B filename above and retains the same single-filter
+configuration. Its metadata record the scenario pool, sampling schedule,
+coefficient `ANCHOR_LAMBDA=0.001`, and other saved training settings.
 
-## Not included
+## Storage
 
-`risk_return_frontier.py` also references PPO/SAC baselines
-(`ppo_mm_pure_final.pt`, `sac_mm_pure_ep0350.pt`); these are **not** part of the
-paper's frontier figure and are not shipped here.
+These small curated checkpoints are ordinary Git files, not Git LFS pointers.
+New training outputs belong in `outputs/training/`. Do not overwrite a canonical
+checkpoint to publish a later run under an old filename.

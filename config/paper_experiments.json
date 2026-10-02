@@ -1,0 +1,984 @@
+{
+  "schema_version": 1,
+  "models": {
+    "A": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "6f16ba7be66a2a10c1ddd7fa56613aa7b920659a77e60603cd7cf1d366e5446c",
+      "parent": null,
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.001,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 1965,
+        "best_ma_window": 50,
+        "best_ma_value": 0.3495000000000001,
+        "best_ma_episode": 1965,
+        "USE_REGIME_SWITCH": false,
+        "REGIME_DISTRIBUTION": "exponential",
+        "REGIME_ALPHA": 1.5,
+        "REGIME_L_MIN": 10,
+        "REGIME_EXP_TAU": 20,
+        "REGIME_P_LO": 0.2,
+        "REGIME_P_HI": 0.8,
+        "EWMA_ALPHA": 0.1,
+        "FAST_FLOW_EWMA_ALPHA": null,
+        "USE_ADVERSARIAL": false,
+        "USE_FLOW_EWMA": false,
+        "USE_FAST_FLOW_EWMA": false,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true,
+        "USE_FILL_IMBALANCE": false,
+        "USE_ADV_TAU": false,
+        "ADV_TAU_MODE": "alpha_recalc",
+        "ADV_TAU_OBJECTIVE": "final_pnl",
+        "ADV_FREEZE_MM": 100,
+        "ADV_FREEZE_ADV": 15,
+        "ADV_WARMUP_EPISODES": 200
+      }
+    },
+    "B": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+      "sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+      "parent": null,
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.999,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 64,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "dropout_level": 0.0,
+          "replay_capacity": 100000,
+          "n_steps": 3,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -3.0,
+          "dist_v_max": 3.0,
+          "dist_atoms": 101,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.001,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 4000,
+        "episode": 3885,
+        "best_ma_window": 100,
+        "best_ma_value": 0.14395000000000002,
+        "best_ma_episode": 3885,
+        "USE_REGIME_SWITCH": true,
+        "REGIME_DISTRIBUTION": "exponential",
+        "REGIME_ALPHA": 1.5,
+        "REGIME_L_MIN": 10,
+        "REGIME_EXP_TAU": 60,
+        "REGIME_P_LO": 0.2,
+        "REGIME_P_HI": 0.8,
+        "EWMA_ALPHA": 0.01652854617838251,
+        "FAST_FLOW_EWMA_ALPHA": 0.06449301496838222,
+        "FILL_IMBALANCE_ALPHA": 0.0005811643918498532,
+        "MO_EVENT_FRACTION": 0.03488,
+        "MO_EVENT_FRACTION_ANALYTIC": 0.038461538461538464,
+        "MO_EVENT_FRACTION_SOURCE": "empirical",
+        "N_MO_FRAC_CALIB_EPISODES": 5,
+        "USE_ADVERSARIAL": false,
+        "USE_FLOW_EWMA": false,
+        "USE_FAST_FLOW_EWMA": false,
+        "USE_BAYES_FLOW_SIGNAL": true,
+        "USE_MIXTURE": false,
+        "BAYES_MIXTURE_TAUS": [
+          15.0,
+          30.0,
+          60.0,
+          120.0,
+          240.0
+        ],
+        "BAYES_FLOW_TAU_R": 60.0,
+        "USE_TRUNCATED_BETA": false,
+        "BAYES_FLOW_PRIOR_MODE": "beta",
+        "BAYES_FLOW_CP_WINDOW": 5,
+        "BAYES_FLOW_FEATURE_KEYS": [
+          "bayes_m_hat",
+          "bayes_expected_run_length"
+        ],
+        "PLOT_FILL_IMBALANCE": true,
+        "PLOT_FILL_IMBALANCE_INTERVAL": 500,
+        "PLOT_BAYES_METRICS": true,
+        "PLOT_BAYES_METRICS_INTERVAL": 500,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true,
+        "USE_FILL_IMBALANCE": true,
+        "USE_QUOTE_EXPOSURE_IMBALANCE": true,
+        "ACTIVE_FILL_IMBALANCE_FEATURE": "quote_exposure",
+        "CHECKPOINT_FEATURE_TAG": "fill_quote_exposure_bayes_on2_mix_off_truncated_off",
+        "USE_G_CLIP": true,
+        "USE_PER_PRIORITY_CLIP": true,
+        "WARMSTART_CKPT": null,
+        "USE_FINE_TUNING_TECHNIQUES": true,
+        "ANCHOR_LAMBDA": 0.001,
+        "LR_FEATURE_FACTOR": 0.5,
+        "REPLAY_RESTORE_FRACTION": 0.0,
+        "USE_ANCHOR_DECAY": false,
+        "USE_CURRICULUM_TIED_ANCHOR": false,
+        "TIED_ANCHOR_BASE": 0.001,
+        "TIED_ANCHOR_SLOPE": 0.004,
+        "TIED_ANCHOR_GATE": 0.08,
+        "USE_CYCLICAL_LR": true,
+        "USE_ADV_TAU": false,
+        "ADV_TAU_MODE": "alpha_recalc",
+        "ADV_TAU_OBJECTIVE": "final_pnl",
+        "ADV_FREEZE_MM": 100,
+        "ADV_FREEZE_ADV": 15,
+        "ADV_WARMUP_EPISODES": 200
+      }
+    },
+    "C": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_random_tau_curriculum_dro_tau_p256_b0p5_eps0p5_cap0p05_ramp0p5_pmix0p5__c_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_final_hfb729bdc32.pt",
+      "sha256": "bc87d3f3f9f23c20f8fc602aa21218ca16a901e76d727fec6569ef83c0226b65",
+      "parent": "B",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0003,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.999,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 64,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "dropout_level": 0.0,
+          "replay_capacity": 100000,
+          "n_steps": 3,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -3.0,
+          "dist_v_max": 3.0,
+          "dist_atoms": 101,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.001,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episodes_completed": 2000,
+        "early_stopped": false,
+        "per_alpha_last_episode": 2000,
+        "per_beta_last_episode": 2000,
+        "USE_REGIME_SWITCH": true,
+        "REGIME_DISTRIBUTION": "exponential",
+        "REGIME_ALPHA": 1.5,
+        "REGIME_L_MIN": 10,
+        "REGIME_EXP_TAU": 60,
+        "USE_RANDOM_TAU_REGIME": true,
+        "RANDOM_TAU_GRID": [
+          15.0,
+          30.0,
+          60.0,
+          120.0,
+          240.0
+        ],
+        "RANDOM_TAU_PROBS_START": [
+          0.05,
+          0.15,
+          0.6,
+          0.15,
+          0.05
+        ],
+        "RANDOM_TAU_PROBS_END": [
+          0.15,
+          0.2,
+          0.3,
+          0.2,
+          0.15
+        ],
+        "RANDOM_TAU_RAMP_FRAC": 1.0,
+        "USE_DRO_TAU": true,
+        "DRO_TAU_MIX_PROB": 1.0,
+        "DRO_POOL_SIZE": 256,
+        "DRO_BETA": 0.0,
+        "DRO_BETA_START": 0.0,
+        "DRO_BETA_END": 0.5,
+        "DRO_ETA": 0.05,
+        "DRO_EPS_UNIFORM": 1.0,
+        "DRO_EPS_UNIFORM_START": 1.0,
+        "DRO_EPS_UNIFORM_END": 0.5,
+        "DRO_RAMP_FRAC": 0.5,
+        "DRO_MAX_PROB": 0.05,
+        "DRO_REFRESH_EVERY": 500,
+        "DRO_REFRESH_FRAC": 0.1,
+        "DRO_BUFFER_MO_EVENTS": 1000,
+        "DRO_PERSISTENT_MIX_PROB": 0.5,
+        "DRO_PERSISTENT_RHO": 0.85,
+        "REGIME_P_LO": 0.2,
+        "REGIME_P_HI": 0.8,
+        "EWMA_ALPHA": 0.01652854617838251,
+        "FAST_FLOW_EWMA_ALPHA": 0.06449301496838222,
+        "FILL_IMBALANCE_ALPHA": 0.0005811643918498532,
+        "MO_EVENT_FRACTION": 0.03488,
+        "MO_EVENT_FRACTION_ANALYTIC": 0.038461538461538464,
+        "MO_EVENT_FRACTION_SOURCE": "empirical",
+        "N_MO_FRAC_CALIB_EPISODES": 5,
+        "USE_ADVERSARIAL": false,
+        "USE_FLOW_EWMA": false,
+        "USE_FAST_FLOW_EWMA": false,
+        "USE_BAYES_FLOW_SIGNAL": true,
+        "USE_MIXTURE": false,
+        "BAYES_MIXTURE_TAUS": [
+          15.0,
+          30.0,
+          60.0,
+          120.0,
+          240.0
+        ],
+        "BAYES_FLOW_TAU_R": 60.0,
+        "FORCE_BAYES_TAU_R_FIXED": true,
+        "USE_TRUNCATED_BETA": false,
+        "BAYES_FLOW_PRIOR_MODE": "beta",
+        "BAYES_FLOW_CP_WINDOW": 5,
+        "BAYES_FLOW_FEATURE_KEYS": [
+          "bayes_m_hat",
+          "bayes_expected_run_length"
+        ],
+        "PLOT_FILL_IMBALANCE": false,
+        "PLOT_FILL_IMBALANCE_INTERVAL": 500,
+        "PLOT_BAYES_METRICS": false,
+        "PLOT_BAYES_METRICS_INTERVAL": 500,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true,
+        "USE_FILL_IMBALANCE": true,
+        "USE_QUOTE_EXPOSURE_IMBALANCE": true,
+        "ACTIVE_FILL_IMBALANCE_FEATURE": "quote_exposure",
+        "CHECKPOINT_FEATURE_TAG": "fill_quote_exposure_bayes_on2_mix_off_truncated_off",
+        "USE_G_CLIP": true,
+        "USE_PER_PRIORITY_CLIP": true,
+        "WARMSTART_CKPT": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+        "USE_FINE_TUNING_TECHNIQUES": true,
+        "ANCHOR_LAMBDA": 0.001,
+        "LR_FEATURE_FACTOR": 0.5,
+        "REPLAY_RESTORE_FRACTION": 0.0,
+        "USE_ANCHOR_DECAY": false,
+        "USE_CURRICULUM_TIED_ANCHOR": false,
+        "TIED_ANCHOR_BASE": 0.001,
+        "TIED_ANCHOR_SLOPE": 0.004,
+        "TIED_ANCHOR_GATE": 0.08,
+        "USE_CYCLICAL_LR": true,
+        "USE_ADV_TAU": false,
+        "ADV_TAU_MODE": "alpha_recalc",
+        "ADV_TAU_OBJECTIVE": "final_pnl",
+        "ADV_FREEZE_MM": 100,
+        "ADV_FREEZE_ADV": 15,
+        "ADV_WARMUP_EPISODES": 200
+      }
+    }
+  },
+  "evaluation": {
+    "device": "cpu",
+    "learning": false,
+    "epsilon": 0.0,
+    "throttle_seconds": 1.0,
+    "inventory_limit": 8,
+    "filter": {
+      "tau_r": 60,
+      "prior": "beta",
+      "mixture": false,
+      "history_limit": 300,
+      "age_normalization_reference": 300
+    },
+    "sweep": {
+      "taus": [
+        0,
+        15,
+        30,
+        60,
+        120,
+        240
+      ],
+      "seed_start": 20123,
+      "seeds": 100,
+      "steps": 100000,
+      "warmup": 10000
+    },
+    "recovery": {
+      "tau": 60,
+      "seed_start": 123,
+      "seeds": 100,
+      "steps": 100000,
+      "warmup": 10000
+    },
+    "random": {
+      "seed_start": 500123,
+      "seeds": 50,
+      "steps": 500000,
+      "warmup": 10000
+    },
+    "correlated": {
+      "seed_start": 700123,
+      "seeds": 50,
+      "steps": 500000,
+      "warmup": 10000
+    }
+  },
+  "historical_B_checkpoints": [
+    {
+      "path": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_best_ma100.pt",
+      "sha256": "3ee52967e1fc376c1946e64e77a23ea9d58a3f8e050637de3f7bc5a33a747cff",
+      "reason": "Different training run; truncated Beta prior. Not the canonical B for the corrected sweep."
+    },
+    {
+      "path": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_final.pt",
+      "sha256": "81054933f1d2284eeaf43a95dc670e47bf1c821f88adc9c05cdcbd35141ce7f4",
+      "reason": "Different training run; truncated Beta prior. Not the canonical B for the corrected sweep."
+    }
+  ],
+  "limitations": [
+    "A sweep values are archived aggregates, not newly rerun A trajectories.",
+    "Heatmap provenance records a mix_on_final variant; its exact checkpoint mapping is not yet verified. Do not relabel it as the canonical B.",
+    "Frozen-policy reproduction does not demonstrate bitwise reproduction of training."
+  ],
+  "frontier_checkpoints": {
+    "DQN  (\u03c6=0.000)": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0000_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "676d74b4039af9f33e485453b736309c8556461ed48060206db4d2ff9b991751",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.0,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 977,
+        "best_ma_window": 50,
+        "best_ma_value": 0.4595000000000002,
+        "best_ma_episode": 977,
+        "BUY_MO_PROB": 0.5,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true
+      }
+    },
+    "DQN  (\u03c6=0.001)": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "6f16ba7be66a2a10c1ddd7fa56613aa7b920659a77e60603cd7cf1d366e5446c",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.001,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 1965,
+        "best_ma_window": 50,
+        "best_ma_value": 0.3495000000000001,
+        "best_ma_episode": 1965,
+        "USE_REGIME_SWITCH": false,
+        "REGIME_DISTRIBUTION": "exponential",
+        "REGIME_ALPHA": 1.5,
+        "REGIME_L_MIN": 10,
+        "REGIME_EXP_TAU": 20,
+        "REGIME_P_LO": 0.2,
+        "REGIME_P_HI": 0.8,
+        "EWMA_ALPHA": 0.1,
+        "FAST_FLOW_EWMA_ALPHA": null,
+        "USE_ADVERSARIAL": false,
+        "USE_FLOW_EWMA": false,
+        "USE_FAST_FLOW_EWMA": false,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true,
+        "USE_FILL_IMBALANCE": false,
+        "USE_ADV_TAU": false,
+        "ADV_TAU_MODE": "alpha_recalc",
+        "ADV_TAU_OBJECTIVE": "final_pnl",
+        "ADV_FREEZE_MM": 100,
+        "ADV_FREEZE_ADV": 15,
+        "ADV_WARMUP_EPISODES": 200
+      }
+    },
+    "DQN  (\u03c6=0.002)": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0020_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "24020f12b1f13b9135c3396e73c553da6ffa5d486c3ca692b459a0cb11d6854b",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.002,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 514,
+        "best_ma_window": 50,
+        "best_ma_value": 0.3171000000000001,
+        "best_ma_episode": 514,
+        "BUY_MO_PROB": 0.5,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true
+      }
+    },
+    "DQN  (\u03c6=0.005)": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0050_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "acf928e6b29e48d22230b046eb893fa726039e6571ece44a3bceb044b759fcb0",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.005,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 1420,
+        "best_ma_window": 50,
+        "best_ma_value": 0.26760000000000006,
+        "best_ma_episode": 1420,
+        "BUY_MO_PROB": 0.5,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true
+      }
+    },
+    "DQN  (\u03c6=0.008)": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0080_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "42c56fd15537beb6b0cd22c339537dfc1ef324115e9b7fea366231a42e099eea",
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.008,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 436,
+        "best_ma_window": 50,
+        "best_ma_value": 0.24040000000000009,
+        "best_ma_episode": 436,
+        "BUY_MO_PROB": 0.5,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true
+      }
+    }
+  },
+  "other_A_checkpoints": [
+    "checkpoints/deep_mm_mtm_pure_invp0.0040_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+    "checkpoints/deep_mm_mtm_pure_invp0.0030_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+    "checkpoints/deep_mm_mtm_pure_invp0.0100_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+    "checkpoints/deep_mm_mtm_pure_invp0.0060_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+    "checkpoints/deep_mm_mtm_pure_invp0.1000_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt"
+  ]
+}

@@ -335,14 +335,14 @@ if __name__ == "__main__":
   #WARMSTART_CKPT = "checkpoints/deep_mm_mtm_pure_invp0.0010_regime_switch_with_ewma_final.pt"
   
   
-  # -- Fase B: Regime switching (warmstart from Fase A checkpoint) --------------------------------------------------------------
-  WARMSTART_CKPT = (
-      "checkpoints/"
-      "deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_"
-      "regime_exponential_factored_noise_fully_noisy_inv_wall_"
-      "dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_"
-      "truncated_off_best_ma100.pt"
-  )
+  # -- Algorithm C: scenario-bandit fine-tuning from the paper Algorithm B checkpoint --------------------------------------------------------------
+  # Resolve the canonical B from the manifest, independent of the launch directory.
+  from pathlib import Path as _PaperPath
+  import json as _paper_json
+  _paper_root = _PaperPath(__file__).resolve().parents[2]
+  _paper_spec = _paper_json.loads((_paper_root / "config/paper_experiments.json").read_text())
+  WARMSTART_CKPT = str(_paper_root / _paper_spec["models"]["B"]["checkpoint"])
+
   FORCE_NOISY_NET = True         # checkpoint has NoisyNet -- keep sigmas from checkpoint
   RESET_SIGMAS = False           # fine-tuning: preserve checkpoint sigmas
   USE_FACTORED_NOISE = True       # factored NoisyNet noise (winner in noisy-mode ablation)
