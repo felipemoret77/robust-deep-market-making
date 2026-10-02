@@ -7,3 +7,4 @@ matplotlib>=3.7
 torch>=2.0
 tqdm>=4.65
 Pillow>=10.0
+tensorboard>=2.12

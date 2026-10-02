@@ -10,8 +10,6 @@ filled bars matching the style we fixed for cells 27/29 earlier
 
 from __future__ import annotations
 
-import pickle
-import shutil
 from pathlib import Path
 
 import matplotlib as mpl
@@ -27,25 +25,7 @@ mpl.rcParams.update({
     "legend.title_fontsize": 12,
 })
 
-REPO_DIR = Path("/Users/felipemoret/Desktop/MM_LOB_SIM")
-CACHE_DIR = REPO_DIR / "notebook_cache"
-
-CACHE_RANDOM_TAU = CACHE_DIR / "CELL_29_mc_dro_vs_phaseb_random_tau_cb9e32cb.pkl"
-CACHE_CLUSTERED = CACHE_DIR / "CELL_30_mc_dro_vs_phaseb_clustered_3dbeaec0.pkl"
-
-OUT_RANDOM_TAU = REPO_DIR / "scenario_bandit_random_tau.png"
-OUT_CLUSTERED = REPO_DIR / "scenario_bandit_correlated_regime_stress.png"
-
-COPY_TARGET_DIRS = [
-    Path("/Users/felipemoret/Desktop/extended_first_abstract_RLMM"),
-    Path("/Users/felipemoret/Desktop/market_making_with_alpha_signals"),
-]
-
-
-def _load(cache_path: Path):
-    with cache_path.open("rb") as fh:
-        return pickle.load(fh)
-
+ROOT = Path(__file__).resolve().parents[1]
 
 def _plot_pair(phaseb_pnls: np.ndarray, dro_pnls: np.ndarray, *,
                phaseb_label_stem: str, out_path: Path) -> None:
@@ -89,53 +69,18 @@ def _plot_pair(phaseb_pnls: np.ndarray, dro_pnls: np.ndarray, *,
     print(f"  wrote {out_path}")
 
 
-def _copy_to_targets(src: Path) -> None:
-    for target_dir in COPY_TARGET_DIRS:
-        if not target_dir.exists():
-            print(f"  skip {target_dir} (does not exist)")
-            continue
-        dst = target_dir / src.name
-        shutil.copy2(src, dst)
-        print(f"  copied -> {dst}")
-
-
 def main() -> None:
-    print(f"[CELL_29] loading {CACHE_RANDOM_TAU.name}")
-    (dro_random_tau_pnls,
-     _dro_random_tau_absinv,
-     _dro_random_tau_limit_frac,
-     phaseb_cmp_pnls,
-     _phaseb_cmp_absinv,
-     _phaseb_cmp_limit_frac,
-     _paired_diff_dro,
-     _std_ratio) = _load(CACHE_RANDOM_TAU)
-
-    _plot_pair(
-        phaseb_cmp_pnls,
-        dro_random_tau_pnls,
-        phaseb_label_stem="Algorithm B",
-        out_path=OUT_RANDOM_TAU,
-    )
-    _copy_to_targets(OUT_RANDOM_TAU)
-
-    print(f"[CELL_30] loading {CACHE_CLUSTERED.name}")
-    (dro_clustered_pnls,
-     _dro_clustered_absinv,
-     _dro_clustered_limit_frac,
-     phaseb_cmp_clustered_pnls,
-     _phaseb_cmp_clustered_absinv,
-     _phaseb_cmp_clustered_limit_frac,
-     _paired_diff_dro_clustered,
-     _std_ratio_clustered) = _load(CACHE_CLUSTERED)
-
-    _plot_pair(
-        phaseb_cmp_clustered_pnls,
-        dro_clustered_pnls,
-        phaseb_label_stem="Algorithm B",
-        out_path=OUT_CLUSTERED,
-    )
-    _copy_to_targets(OUT_CLUSTERED)
+    import argparse
+    parser = argparse.ArgumentParser(description='Replot archived B/C stress-test outcomes.')
+    parser.add_argument('--output', type=Path, default=ROOT / 'outputs/paper_figures')
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=True)
+    for family, name in [('random', 'scenario_bandit_random_tau.png'),
+                         ('correlated', 'scenario_bandit_correlated_regime_stress.png')]:
+        with np.load(ROOT / f'data/paper/bandit_{family}.npz', allow_pickle=False) as data:
+            _plot_pair(data['B_pnl'], data['C_pnl'], phaseb_label_stem='Algorithm B',
+                       out_path=args.output / name)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

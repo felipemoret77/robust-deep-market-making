@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """
 Regenerate the three Monte-Carlo regime figures from the notebook cache
-(CELL_15_mc_quick), faithfully reproducing the notebook plotting cells
+(CELL_15_mc_quick), reproducing the notebook plotting cells
 17/20/21 but with the legend term "Phase" -> "Algorithm".
 
-Data-only replot: loads the cached MC arrays, no simulation.
+Data-only replot: loads data/paper/regime_mc.npz; no simulation.
 """
 from pathlib import Path
-import glob
-import pickle
 
 import matplotlib
 matplotlib.use("Agg")
@@ -21,17 +19,19 @@ mpl_style = {
 }
 plt.rcParams.update(mpl_style)
 
-REPO = Path("/Users/felipemoret/Desktop/MM_LOB_SIM")
-PAPER = Path("/Users/felipemoret/Desktop/extended_first_abstract_RLMM")
+import argparse
+ROOT = Path(__file__).resolve().parents[1]
+parser = argparse.ArgumentParser(description='Replot the archived regime Monte Carlo arrays.')
+parser.add_argument('--output', type=Path, default=ROOT / 'outputs/paper_figures')
+args = parser.parse_args()
+args.output.mkdir(parents=True, exist_ok=True)
+REPO = PAPER = args.output
 N_STEPS = 100_000
 INV_LIMIT = 8
 HAS_PHASEB = True
-
-cache_file = glob.glob(str(REPO / "notebook_cache/CELL_15_mc_quick*.pkl"))[0]
-(pnls_base_all, pnls_regime_all, pnls_phaseb_all,
- pnl_traj_base, pnl_traj_regime, pnl_traj_phaseb,
- inv_traj_base, inv_traj_regime, inv_traj_phaseb,
- _delta, _impr, _gap) = pickle.load(open(cache_file, "rb"))
+with np.load(ROOT / 'data/paper/regime_mc.npz', allow_pickle=False) as data:
+    for key in data.files:
+        globals()[key] = data[key]
 
 
 def stack_traces(traces):
@@ -51,8 +51,7 @@ t = np.linspace(0, N_STEPS - 1, T)
 
 def _save(fig, name):
     fig.savefig(REPO / name, dpi=200, bbox_inches="tight")
-    fig.savefig(PAPER / name, dpi=200, bbox_inches="tight")
-    print(f"  saved {name} -> repo + paper")
+    print(f"  saved {name} -> output")
 
 
 # ── Figure 1: mean cumulative PnL (cell 20) ────────────────────────────────
@@ -110,5 +109,5 @@ ax.legend(fontsize=14); ax.grid(True, alpha=0.3)
 plt.tight_layout()
 fig.savefig(REPO / "pnl_distribution_phaseA_phaseB.png", dpi=150, bbox_inches="tight")
 fig.savefig(PAPER / "pnl_distribution_phaseA_phaseB.png", dpi=150, bbox_inches="tight")
-print("  saved pnl_distribution_phaseA_phaseB.png -> repo + paper"); plt.close(fig)
+print("  saved pnl_distribution_phaseA_phaseB.png -> output"); plt.close(fig)
 print("done")

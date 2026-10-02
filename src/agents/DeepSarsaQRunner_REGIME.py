@@ -342,10 +342,10 @@ if __name__ == "__main__":
   #WARMSTART_CKPT = "checkpoints/deep_mm_mtm_pure_invp0.0010_regime_switch_with_ewma_final.pt"
   
   
-  # -- Fase B: Regime switching (warmstart from Fase A checkpoint) --------------------------------------------------------------
+  # -- Algorithm B: regime-switching training from scratch --------------------------------------------------------------
   WARMSTART_CKPT = None
   FORCE_NOISY_NET = True         # checkpoint has NoisyNet -- keep sigmas from checkpoint
-  RESET_SIGMAS = True            # preserve pre-calibrated sigmas from Fase A
+  RESET_SIGMAS = True            # reset noise scales if a warm-start is explicitly enabled
   USE_FACTORED_NOISE = True       # factored NoisyNet noise (winner in noisy-mode ablation)
   USE_FULLY_NOISY    = True       # True = NoisyLinear on ALL layers (paper), False = heads only
   NOISY_WEIGHT_DECAY = 0.0        # match checkpoint (weight_decay=0.0)
@@ -1531,9 +1531,9 @@ if __name__ == "__main__":
   PLOT_EWMA          = True       # flow-EWMA diagnostic plots
   PLOT_EWMA_INTERVAL = 100        # episodes between EWMA plots
   PLOT_FILL_IMBALANCE = True        # plot fill imbalance diagnostics
-  PLOT_FILL_IMBALANCE_INTERVAL = 100
+  PLOT_FILL_IMBALANCE_INTERVAL = 500
   PLOT_BAYES_METRICS = True        # Bayesian flow diagnostic plots
-  PLOT_BAYES_METRICS_INTERVAL = 100 # episodes between Bayesian diagnostic plots
+  PLOT_BAYES_METRICS_INTERVAL = 500 # episodes between Bayesian diagnostic plots
 
   # --------------------------------------------------------------
   # Adversarial Tau Bandit (regime duration adversary)

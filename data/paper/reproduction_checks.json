@@ -1,0 +1,80 @@
+{
+  "scope": "Checkpoint and configuration alignment; frozen-policy reproduction, not retraining.",
+  "canonical_B_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+  "original_comparison": {
+    "A": {
+      "events": 3000,
+      "warmup": 500,
+      "seed": 123,
+      "decisions_compared": 428,
+      "states_signals_actions_and_terminal_results": "identical"
+    },
+    "B": {
+      "events": 3000,
+      "warmup": 500,
+      "seed": 123,
+      "decisions_compared": 425,
+      "states_signals_actions_and_terminal_results": "identical"
+    },
+    "C": {
+      "events": 3000,
+      "warmup": 500,
+      "seed": 123,
+      "decisions_compared": 435,
+      "states_signals_actions_and_terminal_results": "identical"
+    }
+  },
+  "archived_outcomes": {
+    "B_sweep": {
+      "seed": 20123,
+      "pnl": 0.8800000000000014,
+      "matches_archived": true,
+      "events": 100000
+    },
+    "B_recovery": {
+      "seed": 123,
+      "pnl": 3.0499999999999976,
+      "matches_archived": true,
+      "events": 100000
+    },
+    "C_random": {
+      "seed": 500123,
+      "pnl": 11.299999999999915,
+      "matches_archived": true,
+      "events": 500000
+    }
+  },
+  "figure_replots": {
+    "scenario_bandit_random_tau.png": {
+      "pixel_identical": false,
+      "same_archived_numeric_inputs": true
+    },
+    "pnl_distribution_phaseA_phaseB.png": {
+      "pixel_identical": true,
+      "same_archived_numeric_inputs": true
+    },
+    "scenario_bandit_correlated_regime_stress.png": {
+      "pixel_identical": false,
+      "same_archived_numeric_inputs": true
+    },
+    "inventory_distribution_phaseA_phaseB.png": {
+      "pixel_identical": true,
+      "same_archived_numeric_inputs": true
+    },
+    "regime_tau_sweep_decay_phasea_vs_phaseb.png": {
+      "pixel_identical": true,
+      "same_archived_numeric_inputs": true
+    },
+    "regime_trained_pnl_mean_across_time.png": {
+      "pixel_identical": true,
+      "same_archived_numeric_inputs": true
+    }
+  },
+  "remaining": [
+    "Exact checkpoint provenance for the heatmaps remains to be verified.",
+    "The generic historical research scripts retain external path/cache assumptions; the documented paper commands are portable.",
+    "No entire training run was repeated.",
+    "No full 600-run sweep was repeated in this repository-organization task."
+  ],
+  "original_simulator_learning_engine_and_existing_checkpoints_unchanged": true
+}
