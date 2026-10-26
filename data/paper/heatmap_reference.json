@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "algorithm": "B",
+  "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+  "checkpoint_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+  "USE_MIXTURE": false,
+  "neutral_clean": {
+    "spread": 1.0,
+    "inventory": 0.0,
+    "pure_mm_bid_sizes": [
+      4.0,
+      4.0
+    ],
+    "pure_mm_ask_sizes": [
+      4.0,
+      4.0
+    ],
+    "bayes_m_hat": 0.0,
+    "bayes_expected_run_length": 0.7,
+    "fill_imbalance_ewma": 0.0
+  },
+  "reference_state_path": "data/paper/heatmaps/reference_state.json",
+  "numeric_data": "data/paper/heatmaps/heatmap_data.npz",
+  "numeric_data_sha256": "c8671930b437d066bb70730dc70f47260b5b02df6e5ae39e851cdede4b7f99b6",
+  "provenance": "data/paper/heatmaps/provenance.json",
+  "generator": "repro/plot_paper_heatmaps.py",
+  "heatmaps": {
+    "p_buy_mhat_vs_inv.png": "paper/figures/p_buy_mhat_vs_inv.png",
+    "inventory_vs_spread.png": "paper/figures/inventory_vs_spread.png",
+    "bayes_m_vs_spread.png": "paper/figures/bayes_m_vs_spread.png"
+  },
+  "stats": {
+    "p_buy_mhat_vs_inv.png": {
+      "min": -2.988581657409668,
+      "max": 1.9856274127960205,
+      "mean": -0.5385682582855225
+    },
+    "inventory_vs_spread.png": {
+      "min": -2.992166757583618,
+      "max": 2.331122398376465,
+      "mean": -0.44262459874153137
+    },
+    "bayes_m_vs_spread.png": {
+      "min": 1.7069811820983887,
+      "max": 2.331223726272583,
+      "mean": 2.043320894241333
+    }
+  },
+  "evaluation": "Frozen weights, eval mode; V(s)=max Q(s,a) over the actions retained by the controller action mask.",
+  "mask_method": "_get_valid_action_mask",
+  "mask_semantics": "Canonical representatives of recovery-side offsets at inventory limits; all six actions elsewhere.",
+  "retained_indices_at_long_cap": [
+    0,
+    1,
+    4
+  ],
+  "retained_indices_at_short_cap": [
+    0,
+    2,
+    5
+  ],
+  "age_coordinate": "0.7 is the already normalized network feature, not 0.7 MO events.",
+  "provenance_status": "Verified final masked value slices of frozen canonical B (USE_MIXTURE=false). Archived on 2026-10-03; repository paper PNGs match the final generation hashes."
+}

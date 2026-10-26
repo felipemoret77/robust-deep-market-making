@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "tolerance": 1e-09,
+  "checked_runs": 11,
+  "all_exactly_equal": true,
+  "checks": [
+    {
+      "policy": "rlmm_phi_0.000",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "rlmm_phi_0.001",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "rlmm_phi_0.002",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "rlmm_phi_0.005",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "rlmm_phi_0.008",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "glft_gamma_0.01",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "glft_gamma_0.001",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "glft_gamma_0.0001",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "glft_gamma_1e-05",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "glft_gamma_1e-06",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    },
+    {
+      "policy": "at_best",
+      "seed": 9000000,
+      "errors": {
+        "terminal_pnl": 0.0,
+        "terminal_inventory": 0.0,
+        "mean_abs_inventory": 0.0
+      },
+      "exactly_equal": true
+    }
+  ]
+}

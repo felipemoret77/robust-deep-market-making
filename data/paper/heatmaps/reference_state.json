@@ -1,0 +1,15 @@
+{
+  "spread": 1.0,
+  "inventory": 0.0,
+  "pure_mm_bid_sizes": [
+    4.0,
+    4.0
+  ],
+  "pure_mm_ask_sizes": [
+    4.0,
+    4.0
+  ],
+  "bayes_m_hat": 0.0,
+  "bayes_expected_run_length": 0.7,
+  "fill_imbalance_ewma": 0.0
+}

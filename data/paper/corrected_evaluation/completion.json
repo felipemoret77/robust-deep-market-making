@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-09T09:36:23.689909+02:00",
+  "episodes": 4405,
+  "events": 526310000,
+  "protocol_sha256": "c3ae8dfe63a0f39cd5fde40d962e47c052d27123978f9d6f0daf400b7bf8fc2b",
+  "weights_unchanged": true,
+  "paper_and_slides_unchanged": true,
+  "protected_files_changed": [],
+  "per_episode_sha256": "bf804d3eb6efa5a7e683a1cda39f96a723a8cb30a7a6c86298367a273fad5642"
+}

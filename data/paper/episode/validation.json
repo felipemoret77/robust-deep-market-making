@@ -1,0 +1,217 @@
+{
+  "checked_on": "2026-10-04",
+  "commands": [
+    "python repro/plot_paper_episode.py --output outputs/episode_candidates --verify-rerun",
+    "python repro/plot_paper_episode.py --output outputs/episode_candidates"
+  ],
+  "verification_order": "The first command regenerated the signal rollout and compared every archived array exactly. The second command only rerendered approved axis-label clarifications; numeric archives were unchanged.",
+  "numeric_archives": {
+    "single_episode.npz": {
+      "sha256": "82fe2c42e635474c18c01f59e7b1457da5777e1e556e851fbfe123eaaf740a12",
+      "arrays": {
+        "A_regime_MM_TotalPnL": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "3748a0744b25f684fad2bc9296f0066a4b7a84ccf8040f768c6185fea09d023d"
+        },
+        "A_regime_MM_Inventory": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "106c4c38eee26edfa6ebda4ea8479e4d1ae6ff734bf1d18a4b440b3c5fb389dd"
+        },
+        "A_baseline_MM_TotalPnL": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "5712788381cf06dfd49091ff7f9cfb7df7092b0f95bba451f5957822c21e390f"
+        },
+        "A_baseline_MM_Inventory": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "29087a6154765f19464566054dbdc8013a37358aef3b7907b33e0663ab15f9cb"
+        },
+        "B_regime_MM_Inventory": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "0cc19df6774b161228c55e984806de36291435a24a91d8e01db8139f9c40060a"
+        },
+        "B_regime_MM_TotalPnL": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "6d4c3031af4a3782827334cc9f58fc5b2e8a379fe2938c0c2cf664db887ee5d7"
+        },
+        "A_regime_message_type": {
+          "shape": [
+            100000
+          ],
+          "dtype": "int64",
+          "raw_array_sha256": "05a2c10e8be8e1cf495e124853b5b0d355e2b98e9a2aa6a3c55e3f13bb5be0c3"
+        },
+        "p_buy": {
+          "shape": [
+            100000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "620c2080652bed9c05282210b1131c42b501525a76b66a304e0e81625aec14f4"
+        },
+        "regime_boundaries": {
+          "shape": [
+            74
+          ],
+          "dtype": "int64",
+          "raw_array_sha256": "df1d4c88c42436fdb25d914e6ad93204efb6f6f17590e224ae701483f85cb5ba"
+        },
+        "regime_probabilities": {
+          "shape": [
+            73
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "cb81dfd1a0d82828dfa183d5e6671a9fe9445b89b0df124b56d17990777bc12e"
+        }
+      }
+    },
+    "signal_example.npz": {
+      "sha256": "aa9c94497791fa2764ea1a3792fa80bdfc9276fb79a38ce284ebf1c63f711b26",
+      "arrays": {
+        "step": {
+          "shape": [
+            5000
+          ],
+          "dtype": "int64",
+          "raw_array_sha256": "a3d44437f284b46e5d827df6101e63efe16f752040ad67db809c061bc367bde5"
+        },
+        "message_type": {
+          "shape": [
+            5000
+          ],
+          "dtype": "int64",
+          "raw_array_sha256": "a7217981cdbf0a8d19607f547be5a251dcdca616685752a9fbfd1a21befd4572"
+        },
+        "regime_boundaries": {
+          "shape": [
+            25
+          ],
+          "dtype": "int64",
+          "raw_array_sha256": "76c0657cf8cc1660f41d0d0db9fdef26b0e1af2ce5ced4ab5e19c522e491790f"
+        },
+        "regime_probabilities": {
+          "shape": [
+            24
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "5257d8a48d900e3b7f069922622870ed41bcda861c5e7b37b6ab5407cba8f9e4"
+        },
+        "latent_bias": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "22a8ed41f30f5cc759c2280eda7fa6d7e29e7fb8ba32bd356b7e961d669f32c3"
+        },
+        "true_age_mo": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "fe28df3ba4bcc50741bdc5be52b3d7f6e27d0e80a90e6b17cb9e159db469dc43"
+        },
+        "posterior_bias": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "460bd5bf440cac3a96205a2b74b9d17822ab63b9003cfb980c241ca574db77f2"
+        },
+        "expected_age_mo": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "17e9aa7555e626da78041e29bc25feb88b8f5cbf63e00aadd88fc1c0d61ba2d9"
+        },
+        "quote_exposure": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "bc80ba2de4f8e8f3c2029e46dd23ea9cde908006bf4ea414bbd5d65e956284c2"
+        },
+        "inventory": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "b7e2abff7cd561baa53c30de73f3d82d71334333266a1cb79a4f089295ea42ea"
+        },
+        "pnl": {
+          "shape": [
+            5000
+          ],
+          "dtype": "float64",
+          "raw_array_sha256": "17dc46f2f7f335c080883b7b424baab2a9f8fee5577e46753671df5ace3de358"
+        }
+      }
+    }
+  },
+  "signal_rerun": {
+    "passed": true,
+    "all_arrays_exact": true,
+    "checked_arrays": 11,
+    "maximum_absolute_difference": 0.0,
+    "unchanged_q_net": true,
+    "unchanged_target_net": true,
+    "unchanged_checkpoint": true
+  },
+  "figures": {
+    "regime_switching_one_episode_example.png": {
+      "generated_sha256": "ab15bd9fa21856a9da773620bafa9c5ea624a82ec004039cec8fa4d23989e9e7",
+      "dimensions": [
+        2089,
+        1335
+      ],
+      "kind": "historical archived episode",
+      "historical_png_byte_identical": true
+    },
+    "regime_trained_final_phase_b.png": {
+      "generated_sha256": "97128025fec66a313ff358294e68719a79bb9f9c32f95e7de929ead8b1e84536",
+      "dimensions": [
+        2089,
+        1335
+      ],
+      "kind": "historical archived episode",
+      "historical_png_byte_identical": true
+    },
+    "bayes_single_estimation_example.png": {
+      "generated_sha256": "6e718b08f13919451de9f07fc7316797632247539e99a24df9a26a1cb1a9b10e",
+      "dimensions": [
+        989,
+        489
+      ],
+      "kind": "new frozen canonical-B signal illustration",
+      "historical_png_byte_identical": false
+    },
+    "quote_exposure_single_estimation_example.png": {
+      "generated_sha256": "a24ac1b594a854a28c88b3ea97446f0273c9eeb65b2efd4237e975f32570a867",
+      "dimensions": [
+        989,
+        290
+      ],
+      "kind": "new frozen canonical-B signal illustration",
+      "historical_png_byte_identical": false
+    }
+  },
+  "paper_assets_written_by_generator": false,
+  "matplotlib": "3.10.8",
+  "numpy": "2.4.2"
+}

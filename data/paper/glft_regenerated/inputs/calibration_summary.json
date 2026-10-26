@@ -1,0 +1,166 @@
+{
+  "fit_05a5": {
+    "A_fit": 0.11985784533125485,
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3,
+    "x": 0.11294121069889276,
+    "finite_window_factor": 1.0586579669604224,
+    "included_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "zero_fill_distances": [],
+    "full_range_all_positive": true,
+    "regression": "unweighted OLS in log rate"
+  },
+  "fit_05a25_reference": {
+    "A_fit": 0.15993073565533122,
+    "A": 0.14962177118086215,
+    "kappa": 2.420402128107447,
+    "sigma": 0.3,
+    "x": 0.13181279538930882,
+    "finite_window_factor": 1.068900163345932,
+    "included_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5
+    ],
+    "zero_fill_distances": [],
+    "full_range_all_positive": true,
+    "regression": "unweighted OLS in log rate"
+  },
+  "differences_vs_short_range": {
+    "A": {
+      "absolute": -0.03640499194536832,
+      "percent": -24.3313467405503
+    },
+    "kappa": {
+      "absolute": -0.17995365416406406,
+      "percent": -7.4348659701754976
+    }
+  },
+  "protocol": {
+    "seeds": 20,
+    "events_per_seed_distance": 1000000,
+    "warmup": 1000,
+    "requested_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "effective_fit_range": [
+      0.5,
+      5.0
+    ],
+    "mean_buy_MO_probability": 0.5,
+    "regimes": false,
+    "observation_window": 0.5,
+    "posting_interval": 0.5,
+    "source": "100 archived corrected runs + 100 newly simulated corrected runs"
+  },
+  "empirical_rows": [
+    {
+      "distance": 0.5,
+      "n_fills": 58564,
+      "exposure": 1539550.9983465099,
+      "n_probes": 3108467,
+      "intensity": 0.03803966225405862
+    },
+    {
+      "distance": 1.0,
+      "n_fills": 36357,
+      "exposure": 1903506.7225386326,
+      "n_probes": 3825156,
+      "intensity": 0.01910001134722135
+    },
+    {
+      "distance": 1.5,
+      "n_fills": 11927,
+      "exposure": 3182284.813023479,
+      "n_probes": 6370276,
+      "intensity": 0.003747936058767849
+    },
+    {
+      "distance": 2.0,
+      "n_fills": 3047,
+      "exposure": 1852924.9026146978,
+      "n_probes": 3707267,
+      "intensity": 0.0016444271409490584
+    },
+    {
+      "distance": 2.5,
+      "n_fills": 983,
+      "exposure": 3219034.2056031926,
+      "n_probes": 6438480,
+      "intensity": 0.00030537109493553906
+    },
+    {
+      "distance": 3.0,
+      "n_fills": 249,
+      "exposure": 1847361.965998286,
+      "n_probes": 3694824,
+      "intensity": 0.00013478679575685876
+    },
+    {
+      "distance": 3.5,
+      "n_fills": 114,
+      "exposure": 3223263.2981336336,
+      "n_probes": 6446579,
+      "intensity": 3.5367883246152874e-05
+    },
+    {
+      "distance": 4.0,
+      "n_fills": 24,
+      "exposure": 1847701.026153403,
+      "n_probes": 3695418,
+      "intensity": 1.298911439691295e-05
+    },
+    {
+      "distance": 4.5,
+      "n_fills": 15,
+      "exposure": 3225048.561839279,
+      "n_probes": 6450108,
+      "intensity": 4.651092754846874e-06
+    },
+    {
+      "distance": 5.0,
+      "n_fills": 5,
+      "exposure": 1842882.1722760675,
+      "n_probes": 3685771,
+      "intensity": 2.713141445079317e-06
+    },
+    {
+      "distance": 5.5,
+      "n_fills": 1,
+      "exposure": 1612126.692044955,
+      "n_probes": 3224260,
+      "intensity": 6.202986433600434e-07
+    }
+  ],
+  "extra_effective_bins_excluded_by_prespecified_fit_range": [
+    5.5
+  ],
+  "figure_semantics": "Points are measured pooled fills/exposure; dashed curve A_fit exp(-kappa delta); no smoothing; full-range OLS uses positive intensities only if zero rates occur.",
+  "output_sha256": {
+    "novo_fit_exponencial_05a5.png": "e7b93b81fe075642e6933be95e26a4c0755c1568026486a6c8366cadb4886b3f",
+    "novo_fit_exponencial_05a5.pdf": "bd73afd9ac9ffae09ac96ce3070a1bf17dc6b8d37015a0ccd568593e632a6af8"
+  }
+}

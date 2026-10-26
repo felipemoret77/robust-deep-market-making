@@ -1,3 +1,8 @@
+"""Historical calibration implementation.
+
+The paper uses the corrected order-lifecycle estimator in repro/glft_calibration.py.
+See repro/README.md; reconstructed windows here are not the current protocol.
+"""
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

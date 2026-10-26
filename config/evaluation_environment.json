@@ -1,0 +1,19 @@
+{
+  "description": "Reference for stable frozen C51 evaluation, validated on 2026-10-08. Not a record of historical training.",
+  "python": "3.13.12",
+  "system": "Darwin",
+  "machine": "arm64",
+  "device": "cpu",
+  "torch_threads": 1,
+  "torch_interop_threads": 1,
+  "packages": {
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "pandas": "3.0.0",
+    "matplotlib": "3.10.8",
+    "torch": "2.10.0",
+    "tqdm": "4.67.3",
+    "Pillow": "12.1.1",
+    "tensorboard": "2.20.0"
+  }
+}

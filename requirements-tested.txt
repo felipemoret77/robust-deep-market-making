@@ -1,0 +1,10 @@
+# Pinned CPU reference: Python 3.13.12, macOS arm64.
+# Reproduction checks 2026-10-02/03; stable C51 regression checks 2026-10-08.
+numpy==2.4.2
+scipy==1.17.0
+pandas==3.0.0
+matplotlib==3.10.8
+torch==2.10.0
+tqdm==4.67.3
+Pillow==12.1.1
+tensorboard==2.20.0

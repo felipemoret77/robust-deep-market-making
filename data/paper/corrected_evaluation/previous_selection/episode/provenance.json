@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "archives": {
+    "single_episode.npz": {
+      "sha256": "82fe2c42e635474c18c01f59e7b1457da5777e1e556e851fbfe123eaaf740a12",
+      "bytes": 94697
+    },
+    "signal_example.npz": {
+      "sha256": "aa9c94497791fa2764ea1a3792fa80bdfc9276fb79a38ce284ebf1c63f711b26",
+      "bytes": 17554
+    }
+  },
+  "historical_episode": {
+    "kind": "lossless recovery of six original 100000-event numeric traces; deterministic schedule reconstruction",
+    "events": 100000,
+    "warmup": 10000,
+    "seed": 42,
+    "schedule_seed": 1000042,
+    "tau_mo": 60,
+    "probability_bounds": [
+      0.2,
+      0.8
+    ],
+    "algorithm_A_checkpoint_sha256": "6f16ba7be66a2a10c1ddd7fa56613aa7b920659a77e60603cd7cf1d366e5446c",
+    "algorithm_B_checkpoint_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+    "original_algorithm_B_checkpoint_name": "RECOVERED_git_2026-05-27__h1x256_regime_bayes_mix_off_truncated_off_best_ma100.pt",
+    "terminal_pnl": {
+      "A_stationary": 6.4400000000000155,
+      "A_regime": -2.0899999999999976,
+      "B_regime": 2.1500000000000026
+    },
+    "cache_recovery": {
+      "source": "MM_LOB_SIM/notebook_cache/CELL_10_paired_single_episodes_049109fc.pkl",
+      "source_sha256": "9b7ae28d4eb1d37956283569bc5f1afa7a9f2a1d508f0d825355925c2f9279d7",
+      "source_bytes": 183239341,
+      "condition": "pickle ends without STOP; wrapper for the sixth DataFrame and schedule was not completed",
+      "method": "Python pickle._Unpickler read existing bytes until EOFError. Completed DataFrames recovered from memo 217 (A regime) and 514901 (A stationary); Type column from memo 3. B numeric blocks recovered from final metastack before the unfinished final block.",
+      "B_required_block": "complete float64 array at memo 1029620, shape (40,100000), with serialized BlockPlacement assigning row 1 to column 6 (MM_Inventory) and row 4 to column 9 (MM_TotalPnL). Column positions agree with completed A frames and simulator row construction.",
+      "no_values_invented": true,
+      "no_cache_bytes_modified": true,
+      "schedule": "Original make_regime_schedule(seed=1000042,n_mo_events=3488,distribution=exponential,exp_rate=1/60). Notebook reconstruct_p_buy_trace assigns schedule values at the 3351 archived Type==1 events and forward-fills other steps; initial value 0.5.",
+      "plot_validation": "Both reconstructed episode PNGs are byte-for-byte identical to selected paper assets."
+    },
+    "plot_function_ast_sha256": "7ab71b22b37cd5092e60f05dc21b77d96e4dfe81296f94d9ff9681d618559eab",
+    "plot_adjustments": "Original harness replaced Phase with Algorithm in legend strings. All curves, colors, sizes and plotting settings retained."
+  },
+  "historical_episode_figures": {
+    "regime_switching_one_episode_example.png": {
+      "sha256": "ab15bd9fa21856a9da773620bafa9c5ea624a82ec004039cec8fa4d23989e9e7",
+      "pixel_match_expected": true
+    },
+    "regime_trained_final_phase_b.png": {
+      "sha256": "97128025fec66a313ff358294e68719a79bb9f9c32f95e7de929ead8b1e84536",
+      "pixel_match_expected": true
+    }
+  },
+  "signal_example": {
+    "kind": "new illustrative frozen-policy rollout; historical training traces unavailable",
+    "algorithm": "B",
+    "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+    "checkpoint_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+    "seed": 123,
+    "schedule_seed": 1000122,
+    "events": 5000,
+    "warmup": 1000,
+    "tau_mo": 60,
+    "seed_selection": "fixed before evaluation, not selected by outcome",
+    "signal_config": {
+      "use_flow": false,
+      "use_fast_flow": false,
+      "use_fill_imbalance": true,
+      "mo_flow_ewma_alpha": 0.01652854617838251,
+      "mo_flow_fast_ewma_alpha": 0.06449301496838222,
+      "fill_imbalance_alpha": 0.0005811643918498532,
+      "use_bayes": true,
+      "bayes_use_mixture": false,
+      "bayes_mixture_taus": [
+        15.0,
+        30.0,
+        60.0,
+        120.0,
+        240.0
+      ],
+      "bayes_tau_r": 60.0,
+      "bayes_prior_mode": "beta",
+      "bayes_cp_window": 5,
+      "bayes_p_low": 0.2,
+      "bayes_p_high": 0.8,
+      "use_quote_exposure": true
+    },
+    "weights_unchanged": true,
+    "checkpoint_unchanged": true,
+    "device": "cpu",
+    "numerical_threads": 1,
+    "learning": false,
+    "epsilon": 0.0,
+    "evaluation_mode": true,
+    "terminal_pnl": -0.06999999999999998,
+    "numpy": "2.4.2",
+    "torch": "2.10.0",
+    "source_sha256": {
+      "repro/paper_runtime.py": "0474c179608c07ae722a0e7b9ca74f5da77119168b11f34bb0043b146279da2b",
+      "repro/paper_helpers.py": "fc0f8039d8e412261104412ea793c1a32d42c8c406888f4848b2580108b817a8",
+      "src/agents/dqn_distributional_with_throttle.py": "6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde",
+      "src/agents/regime_switching_stress_test.py": "90a406d3fb615da03953d9d12fc40a9881f8cc1b98141d35bbedfdfa286f7059",
+      "src/sim/MM_LOB_SIM.py": "1398196abe41341ac92c8179ac9e7d53a0c416cca583daec0bde3e5e6368545a",
+      "src/sim/LOB_SIM_SANTA_FE.py": "0238c69ef9bee8d323d6ea20c7cbf924d2cd6af7cbcb5d657c296c4c1ce6aa18",
+      "src/sim/bayes_online_MM_input.py": "1e07d6843b425910b6c31491092826e164c891300807f6230986bf34cbd4e3b3"
+    },
+    "age_coordinate": "Plot shows raw posterior mean regime age in MO events; network input is clip(log1p(age)/log1p(300), 0, 1).",
+    "filter_history_limit": 300,
+    "age_normalization_reference": 300
+  },
+  "signal_example_protocol_sha256": "e5e0cf971f2e164eb98637e69fdf151c09684a4af70a07f221d20863f2aa8d0c",
+  "historical_signal_figures": {
+    "bayes_single_estimation_example.png": {
+      "sha256": "95c1c76352bc3ecacd7ca5f2e9a712f6908158361bae947f3aa7ee168f83bfa0",
+      "status": "historical training trace unavailable; replaced only in generator output by documented new canonical-B seed-123 illustration",
+      "pixel_match_expected": false
+    },
+    "quote_exposure_single_estimation_example.png": {
+      "sha256": "6b2d1dca3233cad8ce3850ff63ab20cae3bfd197894a93e580b93332408abe88",
+      "status": "historical training trace unavailable; replaced only in generator output by documented new canonical-B seed-123 illustration",
+      "pixel_match_expected": false
+    }
+  },
+  "historical_signal_search": {
+    "plotting_source": "MM_LOB_SIM/DeepSarsaQRunner_REGIME.py, fill imbalance and Bayesian flow diagnostic blocks (lines 4661-4781 at archived source hash)",
+    "observed_outputs": "Training code plots mm_df within an episode and saves raster images. It does not save the per-event diagnostic arrays. Searches of notebook caches and numeric exports did not recover the selected 5000-event training traces.",
+    "bayesian_legend": "The selected historical Bayesian PNG also had a documented raster m-to-iota legend patch. New plots render iota directly from data and do not read or patch raster inputs.",
+    "scope": "The signal-example archive is a new frozen evaluation, not reconstructed historical training data. No training-performance or cross-algorithm conclusion is based on this illustration."
+  },
+  "source_sha256": {
+    "MM_LOB_SIM/regime_switching_diagnostic.ipynb": "9eaa8eed68cb17cf34c7ebe3d5afcfeec10627cdafd2d9c6461cf17c8eec59e0",
+    "MM_LOB_SIM/nb_harness_episode.py": "5bf93372aa1096689c443de28a5731cf215f037cc1eec1579b0b5fbe43ea5f31",
+    "MM_LOB_SIM/DeepSarsaQRunner_REGIME.py": "f9dd4e9cede32c014445f4b90aafb7aa1edb403d0eaa45646237635437fe7c9d",
+    "MM_LOB_SIM/relabel_iota_legend.py": "2effe5def585aa38fa5d8a063faee699fe2d93bcd02a4fca52f9fed72afd749f"
+  },
+  "plotting_environment": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.2",
+    "backend": "Agg"
+  },
+  "portable_generator": "repro/plot_paper_episode.py",
+  "signal_plot_design": "Original dimensions, fonts and colors retained; labels clarify LOB event, raw Regime age (MOs), and Quote exposure. Bayesian iota is rendered directly.",
+  "generated_signal_figures": {
+    "bayes_single_estimation_example.png": {
+      "sha256": "6e718b08f13919451de9f07fc7316797632247539e99a24df9a26a1cb1a9b10e",
+      "dimensions": [
+        989,
+        489
+      ]
+    },
+    "quote_exposure_single_estimation_example.png": {
+      "sha256": "a24ac1b594a854a28c88b3ea97446f0273c9eeb65b2efd4237e975f32570a867",
+      "dimensions": [
+        989,
+        290
+      ]
+    }
+  }
+}

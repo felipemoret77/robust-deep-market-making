@@ -1,0 +1,24 @@
+{
+  "scope": "100 paired frozen-policy B/C stress evaluations per family; 50 archived pairs retained and 50 pairs appended. Published B-only stress plots still use their original 50 pairs.",
+  "events": 500000,
+  "warmup": 10000,
+  "learning": false,
+  "new_rollouts": 200,
+  "archived_replays": 4,
+  "archive_prefix_unchanged": true,
+  "protocol": "data/paper/bandit_100pairs/protocol.json",
+  "summary": "data/paper/bandit_100pairs/summary.json",
+  "generator": "repro/regen_scenario_bandit_shaded.py",
+  "evaluation_generator": "repro/evaluate_paper.py",
+  "models": {
+    "B": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+      "sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200"
+    },
+    "C": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_random_tau_curriculum_dro_tau_p256_b0p5_eps0p5_cap0p05_ramp0p5_pmix0p5__c_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_final_hfb729bdc32.pt",
+      "sha256": "bc87d3f3f9f23c20f8fc602aa21218ca16a901e76d727fec6569ef83c0226b65"
+    }
+  },
+  "checks": "Four archived terminal outcomes reproduced exactly; paired schedules and frozen network parameters verified; records available in adjacent JSON files."
+}

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "historical_checks": [
+    {
+      "experiment": "fig2_gamma_1e-06",
+      "old_parameters_match_archive": true
+    },
+    {
+      "experiment": "fig3_p_0.2",
+      "old_parameters_match_archive": true
+    },
+    {
+      "experiment": "fig4_new_tau_60",
+      "old_parameters_match_archive": true
+    },
+    {
+      "experiment": "fig2_at_best",
+      "old_parameters_match_archive": true
+    },
+    {
+      "experiment": "eta",
+      "old_parameters_match_archive": true
+    }
+  ],
+  "new_compact_vs_full_log": true,
+  "new_deterministic_repeat": true,
+  "naive_reuse_validated": true,
+  "elapsed_seconds": 25.492411499843
+}

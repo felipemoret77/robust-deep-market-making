@@ -1,0 +1,334 @@
+{
+  "description": "Genuine numerical observations and recovered deterministic protocol for five historical paper figures. No pixel-derived data.",
+  "selected_outputs": {
+    "total_pnl_0001.png": {
+      "sha256": "eef1f39ffc68f1fd52bc55ccb751ab9f111f6f7509609996430b3ef3b49a78b1",
+      "rgba_sha256": "68914265a85bff5295baa097c028d44f4bcdf8a05ea579027e6f9a13d6455e0e",
+      "size": [
+        1050,
+        600
+      ]
+    },
+    "MM_inv_0001.png": {
+      "sha256": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
+      "rgba_sha256": "118b4c019675ff150607347bb86f0cbfb7863bd99a1466e1048a8dc1d9d1f503",
+      "size": [
+        1050,
+        600
+      ]
+    },
+    "degradation_vs_tau_regime.png": {
+      "sha256": "bd02f1a22809f4f05cb9b7473a03de76b1bcfe4b7803ae6ab6fd0817e0ca1a93",
+      "rgba_sha256": "e3b3f02ffd2c3dc6793df286650877b1a66559f77616f4ba3de9e408a9bc8123",
+      "size": [
+        1650,
+        750
+      ]
+    },
+    "random_tau_stress.png": {
+      "sha256": "f5d7da3e4edd4a8002f42e755b101aa1ff380ef924297efab9ffdfbcc961583e",
+      "rgba_sha256": "23e4173e9c9cb792c5565293aff8d2ac2cb068551114cc238230d757b46c8bfe",
+      "size": [
+        1034,
+        660
+      ]
+    },
+    "correlated_regime_stress.png": {
+      "sha256": "a5f27b08fe9cad23af3fc4d34af113deb9faa7e32b7aecedf5cca0e3d1f262c2",
+      "rgba_sha256": "846284f6a5435736fad372a759b97b279363222babc83560751a8e7d26b025a3",
+      "size": [
+        1033,
+        660
+      ]
+    }
+  },
+  "sources": [
+    {
+      "family": "random",
+      "source": "notebook_cache/CELL_26_mc_phaseb_fixed_vs_random_tau_f92727af.pkl",
+      "sha256": "adb860d3b4d9d736c5c967c2cfcb7dadefe909caa89019db531381243c512f1b",
+      "notebook_cell": 27,
+      "cell_source_sha256": "5532792dc864e8a34722f55f8eafd845bf41cd705d229c5f69ebfe18a1bc0056"
+    },
+    {
+      "family": "correlated",
+      "source": "notebook_cache/CELL_28_mc_phaseb_persistent_side_d804fbb3.pkl",
+      "sha256": "cd2240b40b02664ddc296bc9d22c6dd876cb1c8952f32e4bc017c83f61521a41",
+      "notebook_cell": 29,
+      "cell_source_sha256": "09e55221bed061320683dd756d78ed9399701e5dfaf2d87a4fcc9c3a3335b2df"
+    },
+    {
+      "source": "regime_switching_diagnostic.ipynb",
+      "sha256": "9eaa8eed68cb17cf34c7ebe3d5afcfeec10627cdafd2d9c6461cf17c8eec59e0"
+    },
+    {
+      "source": "nb_sweeps_rerun.log",
+      "sha256": "4414d78863d60e6c58a77222d20340342dce4f05f8765f49abdd65f22a04c1c5"
+    },
+    {
+      "source": "regen_sweeps_from_log.py",
+      "sha256": "09bcf0c04995329baf30989155c58524cbf7215d3398e69694aade4aa60433dc"
+    },
+    {
+      "source": "regime_switching_stress_test.py",
+      "sha256": "90a406d3fb615da03953d9d12fc40a9881f8cc1b98141d35bbedfdfa286f7059",
+      "purpose": "Histogram style inherited by notebook cell 2"
+    }
+  ],
+  "stationary_episode": {
+    "recovery": "Exact regeneration recipe recovered from the July 29 2026 figure task Python artifact; executed with shipped simulator and checkpoint. Both resulting selected PNGs are byte-identical.",
+    "original_recipe_sha256": "7b526704fad24b79f7c80bae2e94987280ab2b79c451ce89813f13f491689cf5",
+    "recipe_created_utc": "2026-07-29T18:27:08.815Z",
+    "selected_images_installed_utc": "2026-07-29T18:28:07.687Z",
+    "seed": 124,
+    "run_id": 1,
+    "events": 5000,
+    "warmup_events": 1000,
+    "buy_mo_prob": 0.5,
+    "lam": 0.06,
+    "mu": 0.1,
+    "delta": 0.02,
+    "inventory_bound": 8,
+    "time_throttle_seconds": 1.0,
+    "phi": 0.001,
+    "checkpoint": {
+      "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_inv_wall_dampened_reward_clr200f0p30_best_ma50.pt",
+      "sha256": "6f16ba7be66a2a10c1ddd7fa56613aa7b920659a77e60603cd7cf1d366e5446c",
+      "parent": null,
+      "metadata": {
+        "USE_PURE_MM": true,
+        "best_params": {
+          "lr": 0.0015,
+          "weight_decay": 0.01,
+          "lr_decay_type": "linear",
+          "gamma": 0.97,
+          "epsilon_start": 0.05,
+          "epsilon_min": 0.05,
+          "epsilon_decay": 0.995,
+          "epsilon_decay_type": "linear",
+          "batch_size": 128,
+          "target_update_steps": 2000,
+          "inv_limit": 8,
+          "n_neurons": 256,
+          "n_hidden": 1,
+          "activation": "relu",
+          "elu_alpha": null,
+          "replay_capacity": 150000,
+          "n_steps": 5,
+          "use_sarsa": false,
+          "use_double": true,
+          "use_dueling": true,
+          "use_distributional": true,
+          "dist_v_min": -2.0,
+          "dist_v_max": 2.0,
+          "dist_atoms": 51,
+          "use_per": true,
+          "use_noisy_net": true,
+          "per_alpha_start": 0.6,
+          "per_alpha_end": 0.4,
+          "per_beta_start": 0.4,
+          "per_beta_end": 1.0,
+          "inv_penalty_coeff": 0.001,
+          "n_actions": 4,
+          "use_tob_update": false,
+          "n_tob_moves": 10,
+          "use_event_update": false,
+          "n_events": 100,
+          "use_time_update": true,
+          "min_time_interval": 1.0
+        },
+        "pure_mm_offsets": [
+          [
+            -1,
+            -1
+          ],
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "lam": 0.06,
+        "mu": 0.1,
+        "delta": 0.02,
+        "GLOBAL_SEED": 123,
+        "EPISODE_LENGTH": 5000,
+        "ITER_TO_EQUILIBRIUM": 1000,
+        "N_EPISODES": 2000,
+        "episode": 1965,
+        "best_ma_window": 50,
+        "best_ma_value": 0.3495000000000001,
+        "best_ma_episode": 1965,
+        "USE_REGIME_SWITCH": false,
+        "REGIME_DISTRIBUTION": "exponential",
+        "REGIME_ALPHA": 1.5,
+        "REGIME_L_MIN": 10,
+        "REGIME_EXP_TAU": 20,
+        "REGIME_P_LO": 0.2,
+        "REGIME_P_HI": 0.8,
+        "EWMA_ALPHA": 0.1,
+        "FAST_FLOW_EWMA_ALPHA": null,
+        "USE_ADVERSARIAL": false,
+        "USE_FLOW_EWMA": false,
+        "USE_FAST_FLOW_EWMA": false,
+        "USE_INVENTORY_WALL": true,
+        "USE_TERMINAL_BONUS": false,
+        "USE_DAMPENED_REWARD": true,
+        "USE_FILL_IMBALANCE": false,
+        "USE_ADV_TAU": false,
+        "ADV_TAU_MODE": "alpha_recalc",
+        "ADV_TAU_OBJECTIVE": "final_pnl",
+        "ADV_FREEZE_MM": 100,
+        "ADV_FREEZE_ADV": 15,
+        "ADV_WARMUP_EPISODES": 200
+      }
+    },
+    "final_pnl": 0.36999999999999966,
+    "inventory_range": [
+      -2,
+      4
+    ]
+  },
+  "stress_experiments": {
+    "episodes": 50,
+    "events_per_episode": 500000,
+    "warmup_events": 10000,
+    "fixed_tau": 60,
+    "tau_grid": [
+      15,
+      30,
+      60,
+      120,
+      240
+    ],
+    "random_seed_range": [
+      500123,
+      500172
+    ],
+    "correlated_seed_range": [
+      700123,
+      700172
+    ],
+    "fixed_schedule_seed_offset": 10000000,
+    "stress_schedule_seed_offset": 20000000,
+    "correlated_rho": 0.85,
+    "flow_probability_support": [
+      0.2,
+      0.8
+    ],
+    "checkpoint_note": "Existing historical Algorithm B cache outcomes retained; current checkpoint selection does not retroactively change these observations."
+  },
+  "degradation": {
+    "episodes_per_configuration": 100,
+    "seed_range": [
+      10123,
+      10222
+    ],
+    "taus": [
+      0,
+      15,
+      30,
+      60,
+      120,
+      240
+    ],
+    "phis": [
+      0.001,
+      0.005
+    ],
+    "aggregation": "The selected export uses four-decimal means and sample standard deviations from the preserved rerun log; SEM=std/sqrt(100). These exact plotting inputs are archived.",
+    "limitation": "The original pickle is incomplete. Per-seed outcomes have now been regenerated with the recorded frozen-policy protocol; all historical mean/std values agree within their four-decimal rounding.",
+    "log_source_start_line": 406,
+    "regenerated_outcomes": "data/paper/historical_results/A_sweeps/per_episode.csv"
+  },
+  "archive_sha256": {
+    "data/paper/historical_results/correlated.npz": "bafaff3ccffa09478c6852621c6532cec461e95829d9f1ac0e7775b67eeafb55",
+    "data/paper/historical_results/degradation_summary.csv": "b77ea11f41d2e00972866368f8b81e47dac2ae04307bf9f63387368775a70a49",
+    "data/paper/historical_results/degradation_summary_excerpt.txt": "f3581817264e8c03ea4233b6a5241557362d81732275b48974558ebeabba665f",
+    "data/paper/historical_results/episode_seed124.npz": "ee91ecb4accb836dfc8a4e1cab6651f6dc19bb48ba344da17e6929beab1c1571",
+    "data/paper/historical_results/random.npz": "f51e44d84ae86b843fbe5781b9c842731bd3cf663e50e2ad2fff0dfc35f80c1a",
+    "data/paper/historical_results/portable_checks.json": "bb7f6534bbfb5d79c978aa7e0e7a7a723d67041b1dcbe8358a518765c5315166"
+  },
+  "historical_outputs": {
+    "total_pnl_0001.png": {
+      "sha256": "eef1f39ffc68f1fd52bc55ccb751ab9f111f6f7509609996430b3ef3b49a78b1",
+      "rgba_sha256": "68914265a85bff5295baa097c028d44f4bcdf8a05ea579027e6f9a13d6455e0e",
+      "size": [
+        1050,
+        600
+      ]
+    },
+    "MM_inv_0001.png": {
+      "sha256": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
+      "rgba_sha256": "118b4c019675ff150607347bb86f0cbfb7863bd99a1466e1048a8dc1d9d1f503",
+      "size": [
+        1050,
+        600
+      ]
+    },
+    "degradation_vs_tau_regime.png": {
+      "sha256": "bd02f1a22809f4f05cb9b7473a03de76b1bcfe4b7803ae6ab6fd0817e0ca1a93",
+      "rgba_sha256": "e3b3f02ffd2c3dc6793df286650877b1a66559f77616f4ba3de9e408a9bc8123",
+      "size": [
+        1650,
+        750
+      ]
+    },
+    "random_tau_stress.png": {
+      "sha256": "5bb15e96644d63de64f8544212c56b14d0f46c9c708a5bf48eaa17494ab3ca62",
+      "rgba_sha256": "713ba551d31e4daa0086dfc7f4a8f16464e761c37c913fe63294d2fa585f2bcc",
+      "size": [
+        1036,
+        662
+      ]
+    },
+    "correlated_regime_stress.png": {
+      "sha256": "8d9783baf029434e685d7994efd317b4326105cdda12a8d127d8832ffda336df",
+      "rgba_sha256": "7ba1369b3ced0b698f996c6310d58b2ed68d7092c8119589395dd3b5ef3282a5",
+      "size": [
+        1035,
+        662
+      ]
+    }
+  },
+  "current_selection": {
+    "date": "2026-10-04",
+    "changed_figures": [
+      "random_tau_stress.png",
+      "correlated_regime_stress.png"
+    ],
+    "reason": "Selected the reviewed portable exports from the exact cached numerical outcomes and notebook plotting code. Only minor bounding-box/layout differences from the historical PNGs. The original hashes remain in historical_outputs.",
+    "stationary_and_degradation": "Original selected PNG bytes reproduced exactly."
+  },
+  "rendering_notes": [
+    "Historical stress plots: random 1036x662 and correlated 1035x662. Portable exports: random 1034x660 and correlated 1033x660.",
+    "Exact cached 50-episode vectors, histogram bin edges/counts, colors, labels and sample means retained. No image-derived data.",
+    "Repeating with Matplotlib 3.10.1 produced the same small layout differences; the historical interactive layout state is not fully recoverable.",
+    "Notebook cell 2 imports regime_switching_stress_test after its initial style cell. The imported module sets the effective 15/13 label/tick style and legend geometry."
+  ],
+  "portable_script": {
+    "path": "repro/plot_historical_results.py",
+    "sha256": "b6c13cb869e2b68710589ce651623d16da36843a8b762da30540763d4c0c9d25"
+  },
+  "per_seed_A_recovery": {
+    "status": "passed",
+    "rollouts": 1800,
+    "groups": 18,
+    "provenance": "data/paper/historical_results/A_sweeps/provenance.json"
+  }
+}

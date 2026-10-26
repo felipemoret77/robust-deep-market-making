@@ -1,0 +1,18 @@
+{
+  "protocol_id": "71db86af7842c2aa32abe1266fb4c997425737b99345584b1c2211aa404fb206",
+  "rows": 110000,
+  "paired_reference_episodes": 1000,
+  "bootstrap_resamples": 10000,
+  "bootstrap_seed": 20261007,
+  "source_sha256": "42a77102fb1055c1f813f910ee79c5bee901ec6fe26a03dd843ddb09acae3943",
+  "script_sha256": "7a4f9cc69800817eeaea73870c28411faa1629c9214f74de0a596ae5b4c5e9b0",
+  "outputs": {
+    "summary.csv": "2acce00d8f1c671a3aa6d174e84d83355161babaf14c0fb42212077dc2506186",
+    "comparison_paper_paired_and_full.pdf": "7b841e779eb48ae3baedd129e82158497a56690dca958e19286e0bd84a9ed573",
+    "comparison_paper_paired_and_full.png": "d5947ee87b3fe9a085c5f13de998c518b33667b9df72d27b2af7cd7f7cf03491",
+    "paired_changes_vs_paper.csv": "0cf345bec3877b0eb1d6a8839833136e5eb46e6bc133c78cba85aded80bde883",
+    "fifo_interventions.json": "2f37493c89cc8e7b5bcbeb917f2bdfdbf703cfa2ce3a6472383930261e6fc4e0",
+    "frontier_corrected_10000x5000.png": "77d58e224b7e6c14d312ecca02e115b59532f44a5bd0be0378086e09340953d5",
+    "frontier_corrected_10000x5000.pdf": "c53afa1d5c6ff479806845e1bf4285e042f1e6deb011bf24535fe45fa1502d80"
+  }
+}

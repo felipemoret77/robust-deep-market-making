@@ -1,0 +1,29 @@
+{
+  "regime_mc.npz": {
+    "source": "data/paper/corrected_evaluation/per_episode.csv",
+    "source_sha256": "bf804d3eb6efa5a7e683a1cda39f96a723a8cb30a7a6c86298367a273fad5642",
+    "sha256": "05006b62a8279e57464f6650aab6395e8a4177667b67b7bd9328e8d1650f2615",
+    "episodes": 100,
+    "events": 100000,
+    "kind": "complete corrected frozen-checkpoint evaluation",
+    "provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  "bandit_random.npz": {
+    "source": "data/paper/corrected_evaluation/per_episode.csv",
+    "source_sha256": "bf804d3eb6efa5a7e683a1cda39f96a723a8cb30a7a6c86298367a273fad5642",
+    "sha256": "bc136e9cbbaf43d56abff868274afbeae52dd3642da3172c032b9cebfe8314ac",
+    "episodes": 100,
+    "events": 500000,
+    "kind": "complete corrected frozen-checkpoint evaluation",
+    "provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  "bandit_correlated.npz": {
+    "source": "data/paper/corrected_evaluation/per_episode.csv",
+    "source_sha256": "bf804d3eb6efa5a7e683a1cda39f96a723a8cb30a7a6c86298367a273fad5642",
+    "sha256": "09e6d9dd4cf6e1da7e236071c835202bdb4cba8d19a29f7eb444539cd81d0ce3",
+    "episodes": 100,
+    "events": 500000,
+    "kind": "complete corrected frozen-checkpoint evaluation",
+    "provenance": "data/paper/corrected_evaluation/provenance.json"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "checks": [
+    "generator",
+    "detailed balance",
+    "probability mass",
+    "nonnegative probabilities",
+    "independent forward ODE",
+    "Gauss-Legendre integration",
+    "stationary initialization",
+    "mirror symmetry",
+    "short horizon",
+    "long horizon"
+  ],
+  "max_ode_error": 6.368169880310859e-14,
+  "max_gauss_error": 2.0539125955565396e-15
+}

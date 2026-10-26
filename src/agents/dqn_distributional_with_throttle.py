@@ -102,6 +102,7 @@ See the learn() method for the full SMDP pipeline documentation.
 import os
 import random
 import tempfile
+from c51_evaluation import action_scores_from_logits
 from typing import Dict, Any, Optional, List, Tuple
 from collections import deque  # for n-step buffer
 
@@ -2052,6 +2053,19 @@ class DeepRLController(RLController):
     # to scalar Q-values via E[Z] = Σ_i p_i * z_i before argmax.
     # ================================================================
 
+    def _action_scores_from_net(self, net: torch.nn.Module, state_batch: torch.Tensor) -> torch.Tensor:
+        """Stable ranking in frozen C51 evaluation; training keeps its old path.
+
+        Scores are shifted by a common constant. Keep them separate from
+        _q_values_from_net, used for value plots, logging and learning targets.
+        """
+        if self.enable_learning or not self.use_distributional:
+            return self._q_values_from_net(net, state_batch)
+        if net.training:
+            raise RuntimeError("Frozen C51 evaluation requires net.eval().")
+        _, logits = net(state_batch, return_logits=True)
+        return action_scores_from_logits(logits, self.support)
+
     def _q_values_from_net(self, net: torch.nn.Module, state_batch: torch.Tensor) -> torch.Tensor:
         """
         Compute scalar Q-values from a network, handling both standard and
@@ -2288,7 +2302,7 @@ class DeepRLController(RLController):
             if self.epsilon > 0 and np.random.rand() < self.epsilon:
                 return int(np.random.choice(valid_indices))
             with torch.no_grad():
-                q_values = self._q_values_from_net(self.q_net, state_tensor)  # (1, n_actions)
+                q_values = self._action_scores_from_net(self.q_net, state_tensor)  # (1, n_actions)
                 if valid_mask is not None:
                     mask_t = torch.tensor(valid_mask, dtype=torch.bool, device=self.device)
                     q_values = q_values.clone()
@@ -2303,7 +2317,7 @@ class DeepRLController(RLController):
 
         # Exploit: greedy argmax over VALID Q-values
         with torch.no_grad():
-            q_values = self._q_values_from_net(self.q_net, state_tensor)  # (1, n_actions)
+            q_values = self._action_scores_from_net(self.q_net, state_tensor)  # (1, n_actions)
             if valid_mask is not None:
                 mask_t = torch.tensor(valid_mask, dtype=torch.bool, device=self.device)
                 q_values = q_values.clone()
@@ -2346,7 +2360,7 @@ class DeepRLController(RLController):
         B = state_batch.size(0)
 
         with torch.no_grad():
-            q_values = self._q_values_from_net(net, state_batch)  # (B, n_actions)
+            q_values = self._action_scores_from_net(net, state_batch)  # (B, n_actions)
 
             # Apply validity mask to greedy selection: set Q of invalid
             # actions to -inf so argmax never picks them.

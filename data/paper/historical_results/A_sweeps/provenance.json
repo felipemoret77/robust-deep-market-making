@@ -1,0 +1,11 @@
+{
+  "kind": "Regeneration, not extraction from the incomplete historical pickle.",
+  "rollouts": 1800,
+  "events": 100000,
+  "warmup": 10000,
+  "checkpoint_weights_frozen": true,
+  "group_validation": "All18 historical mean/std pairs reproduced within their four-decimal rounding tolerance.",
+  "generator": "repro/recover_A_sweeps.py",
+  "outcomes": "data/paper/historical_results/A_sweeps/per_episode.csv",
+  "original_rounded_plotting_inputs_preserved": true
+}

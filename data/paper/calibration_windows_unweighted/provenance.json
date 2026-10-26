@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "selection": "current paper and slides",
+  "data": "data/paper/glft/calibration",
+  "generator": "repro/plot_calibration_windows.py",
+  "validation": {
+    "independent_OLS": "normal equations and direct slope",
+    "SEM": "sample standard deviation divided by sqrt(20)"
+  },
+  "files": {
+    "data/paper/calibration_windows_unweighted/window_seed_statistics_unweighted.csv": "7645120a447563d8b3a69089f8f0313af7161383b532789efec47725a7507c47",
+    "data/paper/calibration_windows_unweighted/window_points_unweighted.csv": "47834a1eb772781031234c65d9e34bab5b19273dabaccdfc26d8880b28810b13",
+    "data/paper/calibration_windows_unweighted/calibration_plot_manifest.json": "18d349bdf032bdf751afc3cc16dcea0b17db4b843c69b6ed3915675b8dc42edc",
+    "data/paper/calibration_windows_unweighted/validation.json": "44ec3c2c813b9c61551bd5579ca0c7008dd1335241f636a84031a197976dc6c2"
+  },
+  "simulations_repeated": false,
+  "calibration_parameters_changed": false
+}

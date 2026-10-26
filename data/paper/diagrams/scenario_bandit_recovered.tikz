@@ -1,0 +1,40 @@
+      \begin{tikzpicture}[
+          node distance=4mm and 5mm,
+          >={Stealth[length=2mm]},
+          every node/.style={font=\tiny, rounded corners=2pt, draw,
+                             align=center, inner sep=3pt}]
+        \node[fill=snsblue!12] (pool) {Scenario pool $\{\xi_i\}_{i=1}^{M}$};
+        \node[fill=accentorange!18, below=of pool] (sampler)
+          {Bandit\\standardize $d_i\!\to\!\nu_i$\\softmax $\tilde w_i\propto e^{\beta_{\mathrm{sb}}\nu_i}$\\
+           mix $w_i\!=\!(1\!-\!\varepsilon)\tilde w_i\!+\!\varepsilon/M$\\
+           cap $w_i\le 0.05$};
+        \node[fill=accentgreen!18, below=of sampler] (rollout)
+          {Rollout policy $\pi_\theta$ under $\xi_i$\\(+ ordinary Rainbow update)};
+        \node[fill=red!15, below=of rollout] (loss)
+          {Arm-$i$ bandit loss\\$\ell_i=-H_T(\theta;\xi_i)$};
+        \node[fill=accentorange!10, below=of loss] (update)
+          {EWMA update per episode $\mathrm{ep}$\\$d_i^{(\mathrm{ep}+1)}=(1-\eta_{\mathrm{ewma}})d_i^{(\mathrm{ep})}+\eta_{\mathrm{ewma}}\ell_i$};
+
+        \draw[->,line width=0.8pt] (pool) -- node[draw=none, fill=none,
+          right, font=\tiny, xshift=1mm] {arms $\xi_i$} (sampler);
+        \draw[->,line width=0.8pt] (sampler) -- node[draw=none, fill=none,
+          right, font=\tiny, xshift=1mm] {draw $\xi_i\sim w$} (rollout);
+        \draw[->,line width=0.8pt] (rollout) -- node[draw=none, fill=none,
+          right, font=\tiny, xshift=1mm] {score $H_T$} (loss);
+        \draw[->,line width=0.8pt] (loss) -- node[draw=none, fill=none,
+          right, font=\tiny, xshift=1mm] {difficulty update} (update);
+
+        \draw[->, dashed, line width=0.8pt]
+          (update.east) -- ++(0.55,0) |-
+          node[draw=none, fill=none, pos=0.75, above, font=\tiny,
+               xshift=2.5mm]
+            {updated $d_i$}
+          (sampler.east);
+
+        \draw[->, dashed, line width=0.8pt]
+          (update.west) -- ++(-0.55,0) |-
+          node[draw=none, fill=none, pos=0.75, above, font=\tiny,
+               align=center, xshift=-4mm]
+            {refresh easiest\\10\% from $P_0$}
+          (pool.west);
+      \end{tikzpicture}

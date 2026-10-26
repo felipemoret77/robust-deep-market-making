@@ -1,0 +1,2 @@
+# Archived byte hashes must survive checkout unchanged, including CSV CRLFs.
+data/paper/** -text -whitespace

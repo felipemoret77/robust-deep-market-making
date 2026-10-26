@@ -1,0 +1,258 @@
+[
+  {
+    "path": "paper/figures/censored_waiting_different_throttles.png",
+    "sha256": "f180cea753272a465a3d9fbe0efdbfff225997710b0f23eba4d3ad211b8a7d8a",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "unweighted pooled and per-seed OLS; equal-seed normalization and SEM from archived probes",
+    "generation_provenance": "data/paper/calibration_windows_unweighted/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/pnl_cumulated_pnl_glft_vs_naive.png",
+    "sha256": "8e4cc610a02f0f8c2a12d2478601a378700d90db1c7e1692bd788ef69f9cfacb",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/glft_naive_pnl_lifetime_hist.png",
+    "sha256": "e5cdd3ff210acd9eec7619363ce5da0f1bbbc5ad41ea94465d2a117dfb3dc9c5",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/dqn_vs_as_vs_glft.png",
+    "sha256": "2ba34bf7251e5afcd8d8e1ce388f6f5335025e0dafd18090ac05e1238dfba544",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/glft_degradation_vs_tau_regime.png",
+    "sha256": "3f290c4a215d3e8e27a640ce2275c5b0c8a78554be50c053689865e902a07d02",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/total_pnl_0001.png",
+    "sha256": "7974d95c2a565a928b40a85c982cb64badc7487726f82c92f9bd8843e5dc01b5",
+    "portable_replot": "repro/plot_historical_results.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/MM_inv_0001.png",
+    "sha256": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
+    "portable_replot": "repro/plot_historical_results.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/glft_frontier_complete.png",
+    "sha256": "3c2827c5b2e2e7f393fe30496935dd88f2eec2083821ff891121e7be573d206c",
+    "portable_replot": "repro/frontier.py plot",
+    "status": "selected corrected frontier: 110000 archived outcomes; paired bootstrap SE",
+    "generation_provenance": "data/paper/frontier_10000/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/regime_model_diagram.png",
+    "sha256": "77d3178b9f511b03b9893c926e30fab31693d292575e1d84c9f1fe850c1013bf",
+    "portable_replot": "repro/plot_paper_diagrams.py",
+    "status": "portable explicit vector source; replacement preserves scientific content",
+    "generation_provenance": "data/paper/diagrams/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/regime_switching_one_episode_example.png",
+    "sha256": "7326748ca550a9e9f92d62f318349a6746f57426fd818f89e0423d1b69b316fb",
+    "portable_replot": "repro/plot_paper_episode.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/degradation_vs_tau_regime.png",
+    "sha256": "fcb8850df398e73568f8a62b4b82d9cdd0df2273f62579e993447fc4a7f61f77",
+    "portable_replot": "repro/plot_historical_results.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/regime_trained_final_phase_b.png",
+    "sha256": "ac705151df916004be0a1d7a4186c84635a6ec40db360e0254f0afa9fad97838",
+    "portable_replot": "repro/plot_paper_episode.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/regime_trained_pnl_mean_across_time.png",
+    "sha256": "8b5b5779965c39f7d7df95067214243d1f331c3aa0ae10ff59b23c1328d0b3d0",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/inventory_distribution_phaseA_phaseB.png",
+    "sha256": "885877070532adadad12ee891adb2ed8202e2990cb01af7d998a194cea728d24",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/pnl_distribution_phaseA_phaseB.png",
+    "sha256": "ae22793261920c9a9a85b794dfde28205b761bb107c4123919975fd46c4c51eb",
+    "portable_replot": "repro/regen_regime_mc_figs.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/p_buy_mhat_vs_inv.png",
+    "sha256": "65886e5edec3b913a8cb37281cb4750d7fdb30a59b9de5eaa616d04d62e63cd6",
+    "portable_replot": "repro/plot_paper_heatmaps.py",
+    "status": "recomputed canonical B with controller action mask",
+    "generation_provenance": "data/paper/heatmaps/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/inventory_vs_spread.png",
+    "sha256": "d6726731ca0bd587e0d15e3e79157ec83509c32e92608a1b0ed84c6b6acd2ab9",
+    "portable_replot": "repro/plot_paper_heatmaps.py",
+    "status": "recomputed canonical B with controller action mask",
+    "generation_provenance": "data/paper/heatmaps/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/bayes_m_vs_spread.png",
+    "sha256": "5302abd60e8a16f0b6dfd352b28522f0e0b4d81ec80587d4c029cb9c4609da82",
+    "portable_replot": "repro/plot_paper_heatmaps.py",
+    "status": "recomputed canonical B with controller action mask",
+    "generation_provenance": "data/paper/heatmaps/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/bayes_single_estimation_example.png",
+    "sha256": "c8847e49441012dd7309012c4e253a5523f378bb137ce01a5c2c6495d91183c9",
+    "portable_replot": "repro/plot_paper_episode.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/quote_exposure_single_estimation_example.png",
+    "sha256": "56c1a6abb6f624a0bd2ab18ad183e3ec0303c0cb5ba9570e42da366ef9d9a957",
+    "portable_replot": "repro/plot_paper_episode.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/regime_tau_sweep_decay_phasea_vs_phaseb.png",
+    "sha256": "658944c1652c75f7d6d710dd024e6630a88f773504053f1a3bd95ed18f38f3e4",
+    "portable_replot": "repro/plot_paper_sweep.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/random_tau_stress.png",
+    "sha256": "07258f2f5d21296963355e02d9e5e5fc0d449e95e6133801d444d06f0314b3a7",
+    "portable_replot": "repro/plot_historical_results.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/correlated_regime_stress.png",
+    "sha256": "492f17c7a6aa316391fae67a6601578ebdeb8fe69e98b44c8c03453fb6a6772b",
+    "portable_replot": "repro/plot_historical_results.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/scenario_bandit_diagram.png",
+    "sha256": "b9fd18f8b91b8655b01bc9a083245f8d50e54fe2c3d4b25ef6484d43d36ea4a9",
+    "portable_replot": "repro/plot_paper_diagrams.py",
+    "status": "portable explicit vector source; replacement preserves scientific content",
+    "generation_provenance": "data/paper/diagrams/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/scenario_bandit_random_tau.png",
+    "sha256": "861c9b9734ee6b7c795948505b4eaafaadb4feb8f20ae21b9cafed88fbf9d663",
+    "portable_replot": "repro/regen_scenario_bandit_shaded.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/scenario_bandit_correlated_regime_stress.png",
+    "sha256": "e8c717bac51f61972c9e37985040398cbf5add3de09b63d60f55cbe0e0cd0533",
+    "portable_replot": "repro/regen_scenario_bandit_shaded.py",
+    "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
+    "pixel_match_expected": true,
+    "generation_provenance": "data/paper/corrected_evaluation/provenance.json"
+  },
+  {
+    "path": "paper/figures/as_miss_pi_q_lines.png",
+    "sha256": "b3a516ee228802ccb4fe8f54cabdaa4f3f936b87b0415a9875f5229f902e8120",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/as_miss_pi_heatmap.png",
+    "sha256": "9993577165f4f76771913693ffb8584deed1a14473293f433f1009d40f8ea71c",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/as_miss_qbar_vs_p.png",
+    "sha256": "ef15d3532edd32fa161962f9c0ed2b532429cc7d7f256ce9071a01808fe37a4a",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/as_miss_boundary_mass_vs_p.png",
+    "sha256": "e7533098e677b1b0f4ce6fa253260eedcd3f549e58a56d0fac8c96f54c836af5",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/as_miss_expected_pnl_curves.png",
+    "sha256": "0a411b58182ea04e19d603c093a538b075dd3d91053509415d9212a036d223de",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  },
+  {
+    "path": "paper/figures/as_miss_pnl_decomposition.png",
+    "sha256": "e1df373df4ad0f3e734ad063e5d8724ce2b5c861924fa021806f57a7cb6c2777",
+    "portable_replot": "repro/glft_figures.py",
+    "status": "selected 4810-episode GLFT regeneration; unweighted calibration; finite-horizon analytical validation",
+    "generation_provenance": "data/paper/glft_regenerated/provenance.json",
+    "pixel_match_expected": true
+  }
+]

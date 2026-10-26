@@ -1,0 +1,20 @@
+{
+  "A": 0.17033610590375425,
+  "kappa": 2.477788840405135,
+  "sigma": 0.3,
+  "gamma": 1e-06,
+  "T": 843.7053657268544,
+  "inv_limit": 8,
+  "r_fill_factor": 0.7251996239404914,
+  "tick_size": 0.01,
+  "v0": 0.04766695147354438,
+  "delta_bar": 0.4038547376597519,
+  "eta_empirical_rate": 0.09082600819923334,
+  "eta_reference_rate": 0.12524276792328612,
+  "eta_episodes": 10,
+  "eta_seed_base": 1434,
+  "reused_bare_LOB_quantities": [
+    "T",
+    "v0"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "stationary": {
+    "rmse": 0.09835067629895748,
+    "mean_absolute_error": 0.0901835758205964,
+    "mean_bias": -0.08104531191249735,
+    "largest_absolute_error": 0.13477627397902237,
+    "rms_residual_in_empirical_se": 2.7858312101748863,
+    "largest_absolute_residual_in_empirical_se": 4.062450427153219,
+    "outside_empirical_pointwise_95ci": 8,
+    "conditional_bootstrap_rmse_95ci": [
+      0.0786394110622488,
+      0.1308409543722259
+    ]
+  },
+  "transient": {
+    "rmse": 0.09337503463735046,
+    "mean_absolute_error": 0.0867339688961201,
+    "mean_bias": 0.0867339688961201,
+    "largest_absolute_error": 0.13870476013016764,
+    "rms_residual_in_empirical_se": 2.6023205467525323,
+    "largest_absolute_residual_in_empirical_se": 3.864936985126463,
+    "outside_empirical_pointwise_95ci": 9,
+    "conditional_bootstrap_rmse_95ci": [
+      0.07124914693657367,
+      0.12792832672344676
+    ]
+  },
+  "rmse_reduction_fraction": 0.05059082305120621,
+  "conditional_bootstrap_rmse_improvement_95ci": [
+    -0.0468454546109424,
+    0.058043088691660076
+  ],
+  "uncertainty_note": "Residual/SE treats the analytical curves as fixed; empirical SE only. Bootstrap clusters are common evaluation seeds, resampled jointly across p. No calibration, horizon or reduced-model uncertainty is included. These are descriptive diagnostics, not a formal model-validation p-value or equivalence test."
+}

@@ -1,0 +1,94 @@
+{
+  "created_utc": "2026-10-08T08:50:37.128850+00:00",
+  "method": {
+    "regression": "Unweighted OLS of log intensity against effective distance, both pooled and per seed.",
+    "intensity": "Observed fills divided by observed exposure; observations pooled within each distance.",
+    "points": "Equal-weight mean over 20 seeds of log(intensity_seed / A_fit_seed).",
+    "bars": "One standard error across seeds: sample standard deviation (ddof=1) / sqrt(20).",
+    "lines": "Negative pooled unweighted slope times distance; unchanged from previous plot.",
+    "simulations_rerun": false,
+    "selected_full_range_parameters_changed": false,
+    "candidate_only": true,
+    "manuscript_and_slides_updated": false
+  },
+  "validation": {
+    "source_counts_and_exposure": "passed",
+    "twenty_seeds_per_window": "passed",
+    "pooled_unweighted_parameters_unchanged": "passed",
+    "independent_OLS_check": "passed",
+    "SEM_check": "passed"
+  },
+  "comparison_with_previous": [
+    {
+      "window": 0.5,
+      "max_absolute_point_change": 0.0012357584770326113,
+      "max_absolute_sem_change": 0.004724326355351166
+    },
+    {
+      "window": 1.0,
+      "max_absolute_point_change": 0.0003630626392612246,
+      "max_absolute_sem_change": 0.0030770752901516096
+    },
+    {
+      "window": 10.0,
+      "max_absolute_point_change": 0.00011697681383093794,
+      "max_absolute_sem_change": 0.0020470668571431205
+    },
+    {
+      "window": 60.0,
+      "max_absolute_point_change": 0.00011499467100639649,
+      "max_absolute_sem_change": 0.0024518738231489663
+    },
+    {
+      "window": 300.0,
+      "max_absolute_point_change": 0.008285923083732216,
+      "max_absolute_sem_change": 0.009708385584833204
+    }
+  ],
+  "source_sha256": {
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_0.5s_runs.json.gz": "724690b346371fbd89e248eb3ce9a3f0dc3ad0dc118f980940dfb913b14579d4",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_0.5s_summary.json": "9ae70fadaea0317ca5e018ad01e596cd32856d9adfafaac87bf74f1d173fd91a",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_1s_runs.json.gz": "8cb1b4014c1cf7980f3838086a82516548c3d5b880b17856920e6b109274b3ce",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_1s_summary.json": "7320e4c94898ebf709945208e497d3fe51b7381359e9d94c75be9f131e803310",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_10s_runs.json.gz": "adba8e98ab0161d5a855e58549cc1f6f51f33d69059efb269f8ec990f4549841",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_10s_summary.json": "ceaea301160d345502c264a65819f980a5ea38e646c1ca1f5c46838809a4c344",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_60s_runs.json.gz": "cdf5adc4083504e2f08199bdf5033e859ec3339c6cb727abdbfaf2d2470a5cc5",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_60s_summary.json": "6b82cc08007f4fe613806012c1cbef5c9ac8a8e334bab9cb6356f75434f0cf31",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_300s_runs.json.gz": "9d5a6c2b94ae055b1326d756abcb5a3fd1fc1a27f12e08212182130875826ccc",
+    "/Users/felipemoret/Desktop/robust-deep-market-making/data/paper/glft/calibration/window_300s_summary.json": "e3f62ef0082f7d3731a3205d976a345b1263222968368c269f47ab0b13875db1"
+  },
+  "source_manifest_sha256": "315e150a79c31789bfcd37f8b1b90e8f0a843b1a3dbb43e6179a723cf168ce80",
+  "script_sha256": "e16ce53d1efd1339daaa2a733a516312628898779435775f38ae7aca335e54de",
+  "numpy_version": "2.4.2",
+  "matplotlib_version": "3.10.8",
+  "selected_full_range_fit": {
+    "A_fit": 0.11985784533125485,
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3,
+    "x": 0.11294121069889276,
+    "finite_window_factor": 1.0586579669604224,
+    "included_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "zero_fill_distances": [],
+    "full_range_all_positive": true,
+    "regression": "unweighted OLS in log rate"
+  },
+  "output_sha256": {
+    "window_seed_statistics_unweighted.csv": "7645120a447563d8b3a69089f8f0313af7161383b532789efec47725a7507c47",
+    "censored_waiting_different_throttles.pdf": "9f8cf252aa576af8d52466056280ee83f8ce5d3237f61f95b28e000c237d548b",
+    "censored_waiting_different_throttles.png": "f180cea753272a465a3d9fbe0efdbfff225997710b0f23eba4d3ad211b8a7d8a",
+    "window_points_unweighted.csv": "47834a1eb772781031234c65d9e34bab5b19273dabaccdfc26d8880b28810b13",
+    "calibration_plot_manifest.json": "18d349bdf032bdf751afc3cc16dcea0b17db4b843c69b6ed3915675b8dc42edc"
+  }
+}

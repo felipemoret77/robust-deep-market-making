@@ -1,0 +1,33 @@
+{
+  "expected": [
+    "censored_waiting_different_throttles",
+    "GLFT_censored_waiting_times_calib_half_second",
+    "pnl_cumulated_pnl_glft_vs_naive",
+    "glft_naive_pnl_lifetime_hist",
+    "dqn_vs_as_vs_glft",
+    "glft_degradation_vs_tau_regime",
+    "as_miss_pi_q_lines",
+    "as_miss_pi_heatmap",
+    "as_miss_qbar_vs_p",
+    "as_miss_boundary_mass_vs_p",
+    "as_miss_expected_pnl_curves",
+    "as_miss_pnl_decomposition",
+    "glft_frontier_complete"
+  ],
+  "completed": {
+    "censored_waiting_different_throttles": "475907a19796ade820980bb683c7728ff2cbfefcec3955231e78addd1bcfb8b1",
+    "GLFT_censored_waiting_times_calib_half_second": "30822d31cc1331d2891418fe102d8fac02163cb77e902416bcb883f68e0381b9",
+    "pnl_cumulated_pnl_glft_vs_naive": "8e4cc610a02f0f8c2a12d2478601a378700d90db1c7e1692bd788ef69f9cfacb",
+    "glft_naive_pnl_lifetime_hist": "e5cdd3ff210acd9eec7619363ce5da0f1bbbc5ad41ea94465d2a117dfb3dc9c5",
+    "dqn_vs_as_vs_glft": "cd239ab5687661d328aca926eacd32f29b3e9167a11792b7347f69b1426b6a83",
+    "glft_degradation_vs_tau_regime": "3f290c4a215d3e8e27a640ce2275c5b0c8a78554be50c053689865e902a07d02",
+    "as_miss_pi_q_lines": "b3a516ee228802ccb4fe8f54cabdaa4f3f936b87b0415a9875f5229f902e8120",
+    "as_miss_pi_heatmap": "9993577165f4f76771913693ffb8584deed1a14473293f433f1009d40f8ea71c",
+    "as_miss_qbar_vs_p": "ef15d3532edd32fa161962f9c0ed2b532429cc7d7f256ce9071a01808fe37a4a",
+    "as_miss_boundary_mass_vs_p": "e7533098e677b1b0f4ce6fa253260eedcd3f549e58a56d0fac8c96f54c836af5",
+    "as_miss_expected_pnl_curves": "0a411b58182ea04e19d603c093a538b075dd3d91053509415d9212a036d223de",
+    "as_miss_pnl_decomposition": "e1df373df4ad0f3e734ad063e5d8724ce2b5c861924fa021806f57a7cb6c2777",
+    "glft_frontier_complete": "3c2827c5b2e2e7f393fe30496935dd88f2eec2083821ff891121e7be573d206c"
+  },
+  "complete": true
+}

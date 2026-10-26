@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "dpi": 300,
+  "font_family": "DejaVu Sans",
+  "math_fontset": "cm",
+  "regime_model_diagram": {
+    "size_pixels": [
+      1895,
+      576
+    ],
+    "colors": {
+      "buy": "#288c50",
+      "sell": "#be3c3c",
+      "annotation": "#003a70",
+      "band": "#f0f0f0",
+      "connector": "#b2b2b2"
+    },
+    "time_boundaries": [
+      149,
+      456,
+      621,
+      1023,
+      1235,
+      1590
+    ],
+    "probability_rows": [
+      176,
+      321,
+      144,
+      369,
+      226
+    ],
+    "band_rows": [
+      124,
+      396
+    ],
+    "balanced_row": 260,
+    "axis_origin": [
+      149,
+      443
+    ],
+    "labels": [
+      {
+        "text": "$p_1$ (buy-heavy)",
+        "xy": [
+          300,
+          139
+        ]
+      },
+      {
+        "text": "$p_2$",
+        "xy": [
+          538,
+          343
+        ]
+      },
+      {
+        "text": "$p_3$",
+        "xy": [
+          822,
+          108
+        ]
+      },
+      {
+        "text": "$p_4$ (sell-heavy)",
+        "xy": [
+          1128,
+          401
+        ]
+      },
+      {
+        "text": "$p_5$",
+        "xy": [
+          1412,
+          188
+        ]
+      }
+    ],
+    "braces": [
+      {
+        "from": 149,
+        "to": 456,
+        "label": "$L_1\\sim\\mathrm{Exp}(1/\\tau_r)$"
+      },
+      {
+        "from": 456,
+        "to": 621,
+        "label": "$L_2$"
+      },
+      {
+        "from": 621,
+        "to": 1023,
+        "label": "$L_3$"
+      }
+    ],
+    "interpretation": "Illustrative piecewise-constant probabilities and arbitrary regime lengths, not simulated or estimated data. Pixel-space coordinates define the vector layout."
+  },
+  "scenario_bandit_diagram": {
+    "size_pixels": [
+      889,
+      867
+    ],
+    "nodes": [
+      {
+        "id": "pool",
+        "bounds": [
+          283,
+          78,
+          634,
+          143
+        ],
+        "color": "#e0e7ee",
+        "lines": [
+          "Scenario pool $\\{\\xi_i\\}_{i=1}^{M}$"
+        ]
+      },
+      {
+        "id": "sampler",
+        "bounds": [
+          261,
+          192,
+          657,
+          404
+        ],
+        "color": "#f6e4d7",
+        "lines": [
+          "Bandit",
+          "standardize $d_i\\!\\to\\!\\nu_i$",
+          "softmax $\\tilde w_i\\propto e^{\\beta_{\\mathrm{sb}}\\nu_i}$",
+          "mix $w_i=(1-\\varepsilon)\\tilde w_i+\\varepsilon/M$",
+          "cap $w_i\\leq 0.05$"
+        ]
+      },
+      {
+        "id": "rollout",
+        "bounds": [
+          229,
+          453,
+          689,
+          549
+        ],
+        "color": "#d6e8e1",
+        "lines": [
+          "Rollout policy $\\pi_\\theta$ under $\\xi_i$",
+          "(+ anchored C51 update)"
+        ]
+      },
+      {
+        "id": "loss",
+        "bounds": [
+          318,
+          598,
+          600,
+          694
+        ],
+        "color": "#ffd9d9",
+        "lines": [
+          "Arm-$i$ bandit loss",
+          "$\\ell_i=-H_T(\\theta;\\xi_i)$"
+        ]
+      },
+      {
+        "id": "update",
+        "bounds": [
+          166,
+          742,
+          751,
+          848
+        ],
+        "color": "#faf0e9",
+        "lines": [
+          "EWMA update per episode $u$",
+          "$d_i^{(u+1)}=(1-\\eta_{\\mathrm{ewma}})d_i^{(u)}+\\eta_{\\mathrm{ewma}}\\ell_i$"
+        ]
+      }
+    ],
+    "arrow_labels": [
+      "arms $\\xi_i$",
+      "draw $\\xi_i\\sim w$",
+      "score $H_T$",
+      "difficulty update"
+    ],
+    "feedback_right": [
+      [
+        751,
+        795
+      ],
+      [
+        841,
+        795
+      ],
+      [
+        841,
+        298
+      ],
+      [
+        660,
+        298
+      ]
+    ],
+    "feedback_left": [
+      [
+        166,
+        795
+      ],
+      [
+        76,
+        795
+      ],
+      [
+        76,
+        110
+      ],
+      [
+        279,
+        110
+      ]
+    ],
+    "changes_from_recovered_source": [
+      "Rollout label: anchored C51 update instead of ordinary Rainbow update, matching the paper anchor equation.",
+      "Episode index u instead of ep, matching current manuscript notation.",
+      "Matplotlib vector layout recreates the selected paper PNG geometry; original TikZ is retained as provenance."
+    ]
+  }
+}

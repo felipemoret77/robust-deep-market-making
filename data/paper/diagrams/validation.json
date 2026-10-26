@@ -1,0 +1,42 @@
+{
+  "checks": {
+    "regime_model_diagram": {
+      "repeated_render_byte_identical": {
+        "png": true,
+        "pdf": true,
+        "svg": true
+      },
+      "svg_image_elements": 0,
+      "selected_paper_png_unchanged": true,
+      "dimensions": [
+        1895,
+        576
+      ],
+      "pdfimages_list": "page   num  type   width height color comp bpc  enc interp  object ID x-ppi y-ppi size ratio\n--------------------------------------------------------------------------------------------"
+    },
+    "scenario_bandit_diagram": {
+      "repeated_render_byte_identical": {
+        "png": true,
+        "pdf": true,
+        "svg": true
+      },
+      "svg_image_elements": 0,
+      "selected_paper_png_unchanged": true,
+      "dimensions": [
+        889,
+        867
+      ],
+      "pdfimages_list": "page   num  type   width height color comp bpc  enc interp  object ID x-ppi y-ppi size ratio\n--------------------------------------------------------------------------------------------"
+    }
+  },
+  "renderer_sha256": "b193cbe0c3c015c2e3e82676ff2815e3f53731665f0d3e70643106a8fc518712",
+  "render_inputs_sha256": "38645c7c5c3b9a93e4773536b58f40e27a4579ab46c648172ded91c040a2e528",
+  "scope": "Source rendering is deterministic in the recorded environment; previous selected paper PNGs were preserved. Recreated layout is not claimed pixel-identical to the old exports.",
+  "validation_phase": "Before parent integration of the replacement PNGs",
+  "render_environment": {
+    "matplotlib": "3.10.8",
+    "dpi": 300,
+    "font_family": "DejaVu Sans",
+    "math_fontset": "cm"
+  }
+}

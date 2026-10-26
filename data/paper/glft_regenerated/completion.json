@@ -1,0 +1,13 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-08T00:06:54.890373+00:00",
+  "episodes": 4810,
+  "evaluation_events": 81050000,
+  "parameters": {
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3
+  },
+  "all_figures_generated": true,
+  "published_assets_modified": false
+}

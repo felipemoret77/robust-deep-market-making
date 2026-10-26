@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment": "frontier_fresh_seeds",
+  "completed": true,
+  "runs": 11000,
+  "policies": 11,
+  "seeds_per_policy": 1000,
+  "source_experiment": "paper_tests_1_2_20261003/test1_fresh_seeds",
+  "source_manifest_sha256": "115969111cfea21581351c8ef1ef646adc5e562f3efce876e916ac303226f2d9",
+  "source_runner_sha256": "8e54d99133b31b986b8b4ddd39f61364bb78957ed73573db2feb29dd63bee3ef",
+  "source_summarizer_sha256": "ac1949eaaf881e7fa9cc19a1f161950290ad68084477d15b0fc09a88eb8c5d06",
+  "source_status": {
+    "status": "complete",
+    "completed": 550,
+    "total": 550,
+    "episodes": 11000,
+    "total_episodes": 11000,
+    "elapsed_s": 3935.811664375011,
+    "pid": 76911
+  },
+  "config": "config/frontier_fresh_seeds.json",
+  "config_sha256": "996c69a4a0919980c6b1fecdab1258bfd96411ef408a9da209babe4ce6f4c0ec",
+  "outcomes": {
+    "file": "per_run.csv.gz",
+    "sha256": "fea83861755ec24b7c83dfcd1eab9c01148852920cc578c01541bec50efdbf05",
+    "uncompressed_sha256": "325c95c9f56cead0553bfdb90a2f3113f26799414a36c428ed1bf530d8b4e0a6",
+    "uncompressed_bytes": 714878
+  },
+  "sources": {
+    "src/sim/MM_LOB_SIM.py": "1398196abe41341ac92c8179ac9e7d53a0c416cca583daec0bde3e5e6368545a",
+    "src/sim/LOB_SIM_SANTA_FE.py": "0238c69ef9bee8d323d6ea20c7cbf924d2cd6af7cbcb5d657c296c4c1ce6aa18",
+    "src/agents/dqn_distributional_with_throttle.py": "6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde",
+    "src/glft/MM_GLFT_naive_comparison.py": "a3bcf6804f14f55bf632a9369c552f2db8fc942242068cf2a1090b800d1ce378",
+    "src/glft/GLFT_policy_factory.py": "dd12cbd64da3a3db00551c5199f35e8aee90e8205013e0638b43514b4dbc7688",
+    "src/glft/MM_policy_5.py": "34c1ac997e3bff9348400cd192263158d734a2d678d1ff7aaa3686d9eeac0f84"
+  },
+  "weights_frozen": true,
+  "training_seed_overlap": 0,
+  "published_figure": {
+    "file": "paper/figures/glft_frontier_complete.png",
+    "sha256": "e97398d3a18d3245f69ca43a190636d395453da3f63ed884a4a3d5bbd10634c1",
+    "source_candidate_sha256": "e97398d3a18d3245f69ca43a190636d395453da3f63ed884a4a3d5bbd10634c1"
+  },
+  "plot_style": {
+    "figsize": [
+      10,
+      7
+    ],
+    "dpi": 220,
+    "font_size": 12,
+    "matplotlib": "3.10.8",
+    "error_bars": "mean +/- 1 SEM; SD +/- approximate 1 SE"
+  },
+  "scope": "Frozen checkpoint evaluation; no retraining. Archived CSV preserves the original bytes."
+}

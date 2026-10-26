@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "fit": {
+    "A_fit": 0.11985784533125485,
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3,
+    "x": 0.11294121069889276,
+    "finite_window_factor": 1.0586579669604224,
+    "included_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "zero_fill_distances": [],
+    "full_range_all_positive": true,
+    "regression": "unweighted OLS in log rate"
+  },
+  "simulation_reused": true
+}

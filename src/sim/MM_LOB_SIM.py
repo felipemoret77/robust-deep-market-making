@@ -31,7 +31,7 @@ from bayes_online_MM_input import (
 
 
 # =============================================================================
-# Factory: create Santa Fe or QRM engine from a single interface
+# Factory: create the paper's Santa Fe engine
 # =============================================================================
 
 def _create_lob_engine(
@@ -46,26 +46,18 @@ def _create_lob_engine(
     mean_size_MO: float,
     rng,
     buy_mo_prob: Union[float, Callable] = 0.5,
-    # --- QRM selection ---
+    # Retained for historical call signatures; only None is supported.
     qrm_params: Optional[dict] = None,
 ):
     """
     Instantiate the LOB engine.
 
-    If *qrm_params* is ``None`` (default), creates a Santa Fe engine
-    (``LOB_simulation``).  Otherwise creates ``LOB_simulation_QRM``
-    with the QRM-specific keys contained in *qrm_params*.
+    Creates the Santa Fe engine (``LOB_simulation``). The compatibility
+    argument *qrm_params* must be ``None``.
 
     ``buy_mo_prob`` can be a float (constant) or a callable
     ``(step_idx: int) -> float`` for regime-switching MO flow.
 
-    Expected *qrm_params* keys (all optional with defaults in the
-    QRM constructor):
-        intens_val, intens_val_bis, statprob,
-        theta, theta_reinit, tick_qrm,
-        size_q, size_s, aes,
-        intensity_model, use_dynamic_pref,
-        intens_levels, intens_k1
     """
     # --- Shared kwargs (parent constructor) ---
     base_kw = dict(
@@ -82,8 +74,7 @@ def _create_lob_engine(
     )
 
     if qrm_params is not None:
-        from LOB_SIM_QRM import LOB_simulation_QRM
-        return LOB_simulation_QRM(**base_kw, **qrm_params)
+        raise ValueError("The paper uses the Santa Fe engine; qrm_params must be None")
 
     return LOB_simulation(**base_kw)
 

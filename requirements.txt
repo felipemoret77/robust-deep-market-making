@@ -1,5 +1,6 @@
 # Core scientific + deep-RL stack used by the simulator, agents and figures.
-# Versions are lower bounds known to work; pin exactly for archival releases.
+# Development compatibility bounds only. For paper evaluation, install
+# requirements-tested.txt and use config/evaluation_environment.json.
 numpy>=1.24
 scipy>=1.10
 pandas>=2.0
@@ -7,3 +8,4 @@ matplotlib>=3.7
 torch>=2.0
 tqdm>=4.65
 Pillow>=10.0
+tensorboard>=2.12

@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "published_at": "2026-10-09T09:36:23.531839+02:00",
+  "destination": "/Users/felipemoret/Desktop/glft_regeneration",
+  "figures": {
+    "dqn_vs_as_vs_glft": {
+      "png": "2ba34bf7251e5afcd8d8e1ce388f6f5335025e0dafd18090ac05e1238dfba544",
+      "pdf": "95ea15c3269bdadb4f8d1b5f7c7be24fa0b3cead9eaa608b82d3ea3e2b462827"
+    },
+    "total_pnl_0001": {
+      "png": "7974d95c2a565a928b40a85c982cb64badc7487726f82c92f9bd8843e5dc01b5",
+      "pdf": "f4e4e3eb72842c634f4690b2d94f3903fd71fc4d6d17caa5ba2e9e1c91eaef3b"
+    },
+    "MM_inv_0001": {
+      "png": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
+      "pdf": "c3d4877e4149b3bea4092866d2c72ea7f75e6aef55a056abdead9d0e203d4ff1"
+    },
+    "regime_switching_one_episode_example": {
+      "png": "7326748ca550a9e9f92d62f318349a6746f57426fd818f89e0423d1b69b316fb",
+      "pdf": "5f314eaca69ecbe435a0a5c981314a842c6736e72f7af16009e565fd00db33e8"
+    },
+    "regime_trained_final_phase_b": {
+      "png": "ac705151df916004be0a1d7a4186c84635a6ec40db360e0254f0afa9fad97838",
+      "pdf": "0dd0124226dd1ebf4c75cbc57983148fd687feb89a560bf42aaa06a0c7113f12"
+    },
+    "bayes_single_estimation_example": {
+      "png": "c8847e49441012dd7309012c4e253a5523f378bb137ce01a5c2c6495d91183c9",
+      "pdf": "15bffb6ed3bd366c70ba1a67c5c6e687a8df4f0dc4caa5989427e0b3ee0bf292"
+    },
+    "quote_exposure_single_estimation_example": {
+      "png": "56c1a6abb6f624a0bd2ab18ad183e3ec0303c0cb5ba9570e42da366ef9d9a957",
+      "pdf": "7da60795f362a18923e19c45a2f319b8594c12eab5cb4038adc7b30dfbb995e7"
+    },
+    "degradation_vs_tau_regime": {
+      "png": "fcb8850df398e73568f8a62b4b82d9cdd0df2273f62579e993447fc4a7f61f77",
+      "pdf": "afccbadc4232918b6b04335aa071fcf05d8c28aa8b07e5366c422d2636084ea2"
+    },
+    "regime_trained_pnl_mean_across_time": {
+      "png": "8b5b5779965c39f7d7df95067214243d1f331c3aa0ae10ff59b23c1328d0b3d0",
+      "pdf": "8487ef75b8dd4824fa085a8e61d8dd61b1762d8a7f24fbe9552e3875c9d1f1fb"
+    },
+    "inventory_distribution_phaseA_phaseB": {
+      "png": "885877070532adadad12ee891adb2ed8202e2990cb01af7d998a194cea728d24",
+      "pdf": "b30a580ddeca21f531da06f2bb2c24d4134dcc2dc357367d9ff29c1f2dd86e02"
+    },
+    "pnl_distribution_phaseA_phaseB": {
+      "png": "ae22793261920c9a9a85b794dfde28205b761bb107c4123919975fd46c4c51eb",
+      "pdf": "1b590c17010ad58ddbfb6ab5c2fd27351209815cd85f9ca0d93b3a6d76018e45"
+    },
+    "regime_tau_sweep_decay_phasea_vs_phaseb": {
+      "png": "658944c1652c75f7d6d710dd024e6630a88f773504053f1a3bd95ed18f38f3e4",
+      "pdf": "09dac8635d8767080bf04c21f7e2ed3330e6a36750149aa83bb7ef89d1f34ec2"
+    },
+    "random_tau_stress": {
+      "png": "07258f2f5d21296963355e02d9e5e5fc0d449e95e6133801d444d06f0314b3a7",
+      "pdf": "b776b363cda2b0b091b158da16b640d02b0b198f1fa6ae3d4d9fb71bb9a576eb"
+    },
+    "correlated_regime_stress": {
+      "png": "492f17c7a6aa316391fae67a6601578ebdeb8fe69e98b44c8c03453fb6a6772b",
+      "pdf": "61c65d4fd414b0afd3a96b73d0f47e189591228f1061814cfaf361d324b4533f"
+    },
+    "scenario_bandit_random_tau": {
+      "png": "861c9b9734ee6b7c795948505b4eaafaadb4feb8f20ae21b9cafed88fbf9d663",
+      "pdf": "cfa7152623ab214fd0a0a6c8ecffe237e82c88921125c6dc9d91a05a9205d4d6"
+    },
+    "scenario_bandit_correlated_regime_stress": {
+      "png": "e8c717bac51f61972c9e37985040398cbf5add3de09b63d60f55cbe0e0cd0533",
+      "pdf": "ab048595f9f0290838c9e1c9842ad390fea36fc439ebb3f4149740bfba56f206"
+    }
+  },
+  "paper_and_slides_modified": false
+}

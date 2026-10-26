@@ -1,0 +1,35 @@
+{
+  "parameters": {
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3
+  },
+  "fit": {
+    "A_fit": 0.11985784533125485,
+    "A": 0.11321677923549382,
+    "kappa": 2.240448473943383,
+    "sigma": 0.3,
+    "x": 0.11294121069889276,
+    "finite_window_factor": 1.0586579669604224,
+    "included_distances": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0
+    ],
+    "zero_fill_distances": [],
+    "full_range_all_positive": true,
+    "regression": "unweighted OLS in log rate"
+  },
+  "source": "/Users/felipemoret/Desktop/calibracao_garaglio_05a5_20261007",
+  "source_protocol": "789e2e957e1107729a3572e1213f9b7705d930ea060c553295cd68cb9b798d95",
+  "summary_sha256": "5be2dabb6b0197665781b2a371e6ea7ef6a1fa85ccbb531e836c08c685709d30",
+  "completion_sha256": "5ee422d7207770817d61aa683ec8aab0a323f6120fb2b23543c8887334f6b28a",
+  "calibration_id": "e143e50f1e147d00cfc3ea73b01ce7112226b03619c5321709cdf0d45a9037f1"
+}

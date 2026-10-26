@@ -1,0 +1,25 @@
+{
+  "description": "Observed B/500128 first divergence plus fixed state probes. A uses the six base coordinates of the same probes; these are unit-test inputs, not claimed A rollouts.",
+  "source": "teste1_c51_fifo_regimes_20261008/diagnostics/cause_500128",
+  "event": 18020,
+  "decision_index": 2589,
+  "stable_action": 5,
+  "checkpoint_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+  "reference_generator": "data/paper/frontier_10000/candidate.py:stable_action_scores",
+  "reference_generator_sha256": "b87810dca0b31f1964d8e32a8dac16670aebd5f0d0a64c8fd0fd524481ca0d17",
+  "action_masks_inventory": [
+    -8,
+    0,
+    8
+  ],
+  "files": {
+    "candidate_current.json": "3798a9c386c6f129d301f64de9406acfff1369cd40bdb4e4d78f5877a90f4af8",
+    "predictions.npz": "76d5e57e1b34f385ad70a72305d71209cd5491224d495ef18fa0f3076bfb21dc",
+    "action_reference.npz": "f520bfd4602b3df2000601b5f6ce41744d2bd152691945a504957d2bc402bcdb",
+    "first_divergence.json": "8320382ed41edbd93af93f2b3476e87982bf3333e088295b16a0fae68bb65856",
+    "legacy_controller.py": "6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde",
+    "validation_torch251.json": "e987618874afd053db0ba52a9ed73e1a68c57deb9d76f365c1d32548fdd48a94",
+    "validation_torch210.json": "e941c8459d619dcab76f216486a190db2c861f4d47fd5e882b4add8eb3c454e6",
+    "validation_legacy_frontier.json": "92dc2899ed541e05c5c53e55b0f46e306a43252e08fd5163f8ce7cf446e6b65a"
+  }
+}

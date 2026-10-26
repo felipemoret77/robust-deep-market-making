@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "kind": "Source-based vector renderings; no raster image embedding, tracing, or pixel copying.",
+  "regime_model_diagram": {
+    "source_status": "Original drawing source not recovered in the paper repository, MM_LOB_SIM, or market_making_with_alpha_signals (including ignored files). Recreated declarative vector source preserves the selected illustration and manuscript definition.",
+    "scientific_source": "paper/main.tex: Flow-Regime Model subsection, eqs. describing uniform buy probability and exponential MO-clock durations.",
+    "selected_png": "paper/figures/regime_model_diagram.png",
+    "illustrative_not_empirical": true,
+    "original_selected_png_sha256": "d2ff8c0081e967e4255d0994af8735eba085bf9e057834f84936bf1d36983250",
+    "generated_png_sha256": "77d3178b9f511b03b9893c926e30fab31693d292575e1d84c9f1fe850c1013bf",
+    "generated_pdf_sha256": "3259d1787eccf4b211575583259826700db3849a9aaf9585963bbda455cb2d7b",
+    "generated_svg_sha256": "a58aec793871c5616198b38e8a3c0c43faf3892028ea776035bb8f8cae2b5505",
+    "replacement_note": "The original_selected_png_sha256 records the pre-reconstruction export. The generated hashes identify the source-based replacement proposed for the selected_png path."
+  },
+  "scenario_bandit_diagram": {
+    "source_status": "Recovered TikZ fragment, adapted to current paper notation and anchored C51 update.",
+    "recovered_from": "market_making_with_alpha_signals/SNS_PhD_Presentation.tex",
+    "recovered_line_start": 691,
+    "recovered_line_end": 730,
+    "recovered_document_sha256": "6068c6c3f235623f1f2bfe27781e4e48a5d4544335206076bf8345ee7c04df0d",
+    "archived_fragment": "scenario_bandit_recovered.tikz",
+    "archived_fragment_sha256": "dcbb08da185f27d01e915bee3f02804263862639c50aed1f3d640c953e0d8e9f",
+    "scientific_source": "paper/main.tex: Algorithm C: Scenario-Bandit Robust Fine-Tuning, including L_C and EWMA equations.",
+    "selected_png": "paper/figures/scenario_bandit_diagram.png",
+    "original_selected_png_sha256": "2317d5d03a3c01a0b115743b2e18fa3fdfeac4ebcc56fc34194a68f628bf18a1",
+    "generated_png_sha256": "b9fd18f8b91b8655b01bc9a083245f8d50e54fe2c3d4b25ef6484d43d36ea4a9",
+    "generated_pdf_sha256": "5f58ce18ed172858bd8a7c3528faecee53d335c88921ad5681887d300626c15f",
+    "generated_svg_sha256": "fa71f062059867b4cac2620a18eced85a90c39d0b613ece87073f7e48710a5f7",
+    "replacement_note": "The original_selected_png_sha256 records the pre-reconstruction export. The generated hashes identify the source-based replacement proposed for the selected_png path."
+  },
+  "render_inputs": {
+    "diagram_spec.json": "38645c7c5c3b9a93e4773536b58f40e27a4579ab46c648172ded91c040a2e528"
+  },
+  "renderer": "repro/plot_paper_diagrams.py",
+  "pixel_identity_expected": false,
+  "raster_dependency": false,
+  "requires_external_latex": false,
+  "pixel_identity_scope": "Generated replacement versus original historical PNG: false. Re-running this generator versus the integrated replacement PNG: expected true in the tested rendering environment.",
+  "render_environment": {
+    "matplotlib": "3.10.8",
+    "dpi": 300,
+    "font_family": "DejaVu Sans",
+    "math_fontset": "cm"
+  }
+}

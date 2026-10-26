@@ -21,10 +21,11 @@
 \captionsetup[subfigure]{justification=centering,singlelinecheck=false}
 
 \hypersetup{
-  colorlinks=true,
-  linkcolor=black,
-  citecolor=blue,
-  urlcolor=blue
+  colorlinks=false,
+  pdfborder={0 0 1},
+  linkbordercolor={1 0 0},
+  citebordercolor={0 1 0},
+  urlbordercolor={0 0 1}
 }
 
 \setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
@@ -61,7 +62,7 @@
 
 \begin{document}
 \maketitle
-\blfootnote{Code, trained models, and paper source are available at
+\blfootnote{\raggedright\urlstyle{same} Code, trained models, and paper source:
 \url{https://github.com/felipemoret77/robust-deep-market-making}.}
 
 \begin{abstract}
@@ -71,17 +72,18 @@ extension, provide closed-form quoting rules, but rest on assumptions that
 break down at realistic microstructure timescales.  One of them is that
 order flow is stationary, while empirical evidence points to the existence
 of regimes, possibly associated with algorithmic execution of metaorders.
-In this case, existing methods provide negative PnL.  In this paper, we
+In our experiments, persistent directional flow makes the stationary
+controllers unprofitable.  In this paper, we
 develop a deep reinforcement-learning market maker (RLMM)---a Rainbow-style
 distributional DQN (C51) which is calibrated and tested in a
 zero-intelligence limit order book.  We find that, in the stationary
-setting, RLMM outperforms GLFT across the entire observed risk--return
-frontier.  The RLMM is more robust to flow asymmetry than GLFT, but, like
-any stationarily trained strategy, it still suffers large drawdowns from
-inventory saturation under persistent directional imbalance.  Augmenting
-the state of RLMM with two auxiliary signals---a Bayesian online
-change-point filter over the directional flow bias and a queue-adjusted
-quote-exposure imbalance---restores profitability.  A final scenario-bandit
+setting, RLMM outperforms GLFT at comparable levels of PnL dispersion.
+The stationarily trained RLMM is more robust to flow asymmetry
+than GLFT, but still suffers inventory saturation and large drawdowns
+under persistent directional flow.  Training a separate RLMM under
+regime-switching flow, with a Bayesian flow-belief signal and a
+queue-adjusted quote-exposure signal, restores positive mean PnL in our
+experiments.  A final scenario-bandit
 step that reweights low-return regime scenarios further improves
 performance under random-persistence and correlated-direction stress.
 \end{abstract}
@@ -178,25 +180,26 @@ policy would actually have received under consistent queue and
 priority dynamics.  Because simplified heuristics ignore FIFO
 priority, they bias the comparison between policies.  We therefore
 train and evaluate both the RL agent and the analytical benchmarks
-inside the same queue-aware event-driven simulator, running each
-policy on matched realizations of the order-flow process.
+inside the same queue-aware event-driven simulator, using paired
+random seeds for the RLMM comparisons. Their actions affect the book, so
+realized order-flow paths can differ across policies.
 
 \paragraph{Contributions.}
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=2pt]
 \item We calibrate a GLFT policy to a queue-faithful event-driven
   LOB simulator via censored waiting-time estimation of the fill
   intensity and a volatility signature plot for the diffusion scale,
-  and show that the resulting policy dominates the at-best baseline in
-  risk--return terms across a broad range of risk-aversion levels.
+  and assess the trade-off between mean PnL and inventory control
+  relative to an at-best baseline.
 \item We train a distributional Deep Q-Network (DQN) with a
   categorical representation of the return distribution (C51) on the same simulator, and
-  show empirically that it outperforms GLFT on the entire observed
- risk--return frontier under paired-seed evaluation.
+  show empirically that it outperforms GLFT at comparable levels of
+  PnL dispersion under paired-seed evaluation.
 \item We identify inventory saturation under persistent directional
   order flow as the dominant failure of stationarily trained
   market-making agents and the GLFT benchmark.
-\item We fine-tune the stationary-optimal controller on
- regime-switching market-order flow using two belief-style
+\item We train a separate controller on
+ regime-switching market-order flow using two
   auxiliary signals: a Bayesian online change-point filter for the
   latent directional order flow bias and a queue-adjusted
   quote-exposure imbalance for the agent's own resting quotes.  This
@@ -211,7 +214,7 @@ policy on matched realizations of the order-flow process.
 The remainder of the paper is organized as follows.
 Section~\ref{sec:problem_setup} introduces our event-driven
 zero-intelligence (Santa Fe) LOB simulator, calibrates the GLFT policy
-through censored waiting-time estimation and a volatility signature
+using censored waiting times and a volatility signature
 plot, benchmarks it against the at-best baseline, and presents first
 evidence that the closed form breaks under static asymmetry and
 persistent directional flow.  Section~\ref{sec:learning_formulation}
@@ -223,8 +226,8 @@ risk--return frontier to define the Algorithm~A controller.
 Section~\ref{sec:robustness} then introduces the regime-switching flow
 model and exposes the inventory-saturation failure of this
 stationarily trained controller, which
-Section~\ref{sec:nonstat_training} addresses through Algorithm~B
-fine-tuning driven by a Bayesian change-point flow belief and a
+Section~\ref{sec:nonstat_training} addresses by training Algorithm~B
+independently with a Bayesian change-point flow belief and a
 queue-adjusted quote-exposure imbalance.
 Section~\ref{sec:interpretability} interprets the resulting policy via
 local value-function slices that reveal its learned inventory-skew and
@@ -235,7 +238,7 @@ Section~\ref{sec:scenario_bandit_finetuning} presents the Algorithm~C
 scenario-bandit robust fine-tuning step that upweights low-return
 regime scenarios, before a final section gathers the discussion and
 conclusion; two appendices derive the Bayesian online flow filter
-(Appendix~\ref{app:bayesian_flow_filter}) and the closed-form GLFT
+(Appendix~\ref{app:bayesian_flow_filter}) and the finite-horizon GLFT
 misspecification curve (Appendix~\ref{app:glft_misspecification}).
 
 
@@ -243,8 +246,8 @@ misspecification curve (Appendix~\ref{app:glft_misspecification}).
 \label{sec:problem_setup}
 
 \paragraph{Market model.}
-The core market simulator is a 
-continuous-time, event-driven, zero-intelligence (ZI) LOB simulator, sometimes called Santa Fe model 
+We use an event-driven, continuous-time, zero-intelligence (ZI) LOB
+simulator in the Santa Fe tradition
 \citep{smith2003,farmer2005predictive}.  We briefly summarize the
 model here; a comprehensive treatment, including the
 empirical motivation for each parameter definition and its calibration, can be found in
@@ -309,11 +312,11 @@ at distance \(\delta\) in ticks from the mid decays exponentially,
 where \(A>0\) is the baseline fill intensity and \(\kappa>0\) controls
 how quickly the execution probability vanishes as the quote moves away
 from the mid; here \(\delta\) is the quote offset relative to the
- mid-price reference, measured on the LOB price grid.  Under
-the additional assumption of an exponential-utility (CARA) objective with
-risk-aversion coefficient \(\gamma_{\mathrm{GLFT}} > 0\) and a diffusive mid-price with
-volatility \(\sigma\), \citet{gueant2013dealing} show that the optimal 
-quoted prices of the MM admit the closed form
+ mid-price reference, measured on the LOB price grid.  Under a constant
+absolute risk aversion (CARA) objective with risk aversion
+\(\gamma_{\mathrm{GLFT}} > 0\) and a Brownian mid-price with volatility
+\(\sigma\), we use the GLFT asymptotic approximation to the optimal
+quotes~\citep{gueant2013dealing}:
 \begin{align}
   p_t^{a}
   &= m_t
@@ -336,8 +339,8 @@ derivation treats prices as continuous; in our implementation we
 discretize $p_t^{b}$ and $p_t^{a}$ by rounding the bid down and the
 ask up to admissible tick indices before submitting them to the LOB.
 
-In this form, GLFT cleanly separates \emph{spread setting} from
-\emph{inventory skew}: the term $\tfrac{1}{\gamma_{\mathrm{GLFT}}}\log(1+\gamma_{\mathrm{GLFT}}/\kappa)$
+The GLFT quotes combine spread and inventory adjustments.
+The term $\tfrac{1}{\gamma_{\mathrm{GLFT}}}\log(1+\gamma_{\mathrm{GLFT}}/\kappa)$
 sets the baseline half-spread (common to both sides and independent
 of inventory), while the square-root term, scaled by the
 inventory-dependent factor $(2q_t \mp 1)/2$, generates the
@@ -378,16 +381,19 @@ depths.  The
 calibration episodes are disjoint from the evaluation episodes, so
 there is no leakage between calibration and benchmarking.
 
+Calibration uses stationary symmetric flow, with equal buy and sell MO
+probabilities. Quote distance is measured from the submitted tick-rounded
+price to the mid-price immediately before insertion.
 The main input of the GLFT strategy is the fill intensity of Eq.~\ref{eq:Lambda}. To estimate it, following the approach in \citet{laruelle2013optimal}, we proceed as follows: for each quote distance $\delta$, a probe limit order is observed
 over a fixed window of length $\Delta T_{\mathrm{calib}}$, the same
 for every probe.  For the $i$-th probe we denote by $\tau_i$ the
 elapsed time from posting until the probe is filled, whenever that
 happens within the observation window; if the window expires before
 any fill, the observation is right-censored and $\tau_i$ is not
-observed.  The probe is never canceled before $\Delta T_{\mathrm{calib}}$:
-it rests passively in the book from posting until either it fills or
-the window expires, at which point it is canceled and a fresh probe
-is posted at the next window boundary.  We summarize each probe by the pair
+observed. Observation ends at the first fill or the window deadline.
+Any remaining probe is canceled and replaced at the next eligible event;
+fills after the deadline are treated as censored. For a full observation window, we
+summarize each probe by the pair
 \begin{equation}
   \tilde{\tau}_i = \min(\tau_i,\,\Delta T_{\mathrm{calib}}),
   \qquad
@@ -395,28 +401,20 @@ is posted at the next window boundary.  We summarize each probe by the pair
 \end{equation}
 where $\tilde{\tau}_i$ is the effective exposure time contributed by
 the probe (the full window if it was censored, the fill time
-otherwise) and $I_i$ is the indicator of a non-censored fill.  Under
+otherwise) and $I_i$ is the indicator of a non-censored fill. For windows
+interrupted by simulation end, the observed duration from posting to
+simulation end replaces
+$\Delta T_{\mathrm{calib}}$ in these expressions. Under
 the exponential-rate assumption of GLFT, see Eq. \ref{eq:Lambda}, the maximum-likelihood
 estimator of the intensity is then
 \begin{equation}
   \hat{\Lambda}(\delta)=\frac{\sum_i I_i}{\sum_i \tilde{\tau}_i},
 \end{equation}
-the ratio of observed fills to total exposure time.  The inferred
-curve depends on $\Delta T_{\mathrm{calib}}$: short windows give
-steeper near-book estimates, while longer windows flatten the fit
-as mid-price drift makes the fill intensity non-stationary
-(time-varying), violating the constant-rate/exponential assumption
-underlying the estimator
-(Figure~\ref{fig:glft_calib}).  We choose $\Delta T_{\mathrm{calib}}$
-small enough to keep the fill intensity approximately stationary but large enough to
-accumulate statistics at the deepest probe distances, consistent
-with \citet{laruelle2013optimal}.  Concretely, we set
-$\Delta T_{\mathrm{calib}} = 0.5$ seconds of simulated time throughout:
-the near coincidence of the fits for the $0.5\,\mathrm{s}$ and
-$1\,\mathrm{s}$ windows in Figure~\ref{fig:glft_calib} indicates that
-the estimated intensity is already stable at this scale, whereas the
-fits flatten visibly for longer windows as mid-price drift
-contaminates the estimate.
+the ratio of observed fills to total exposure time. The fitted intensity
+curve depends on the observation window: longer windows produce flatter
+estimates (Figure~\ref{fig:glft_calib}). We use
+$\Delta T_{\mathrm{calib}}=0.5\,\mathrm{s}$ to limit changes in quote
+distance during observation.
 
 \begin{figure}[htbp]
   \centering
@@ -424,30 +422,32 @@ contaminates the estimate.
   \caption{Censored waiting-time calibration of
   $\Lambda(\delta)=Ae^{-\kappa\delta}$ under five window durations
   $\Delta T_{\mathrm{calib}}$.  Points show the
-  empirical linearized log-intensity per quote distance $\delta$,
-  averaged over $N_{\mathrm{rep}}=20$ independent calibration runs;
-  error bars are the standard error of the mean. Dashed lines are the
-  log-linear regression fits.  Short windows yield steeper fits;
-  long windows flatten due to mid-price drift within the observation
-  window.}
+  normalized log-intensity $\log(\hat\Lambda(\delta)/\hat A_{\mathrm{fit}})$,
+  averaged over $N_{\mathrm{rep}}=20$ independent calibration runs,
+  each with $10^6$ LOB events per requested distance;
+  error bars are the standard error of the mean. Dashed lines show
+  unweighted log-linear fits over $0.5$--$2.5$ ticks. Short windows yield steeper
+  fitted intensity curves, while longer windows produce flatter estimates.}
   \label{fig:glft_calib}
 \end{figure}
 
 The probing scheme delivers an empirical intensity curve
 $\{\hat{\Lambda}(\delta_k)\}_{k=1}^{K_\delta}$ over a finite grid of quote
-distances $\delta_k$.  The GLFT parameters $(A, \kappa)$ are then
-recovered by a least-squares fit of the exponential model
-$\Lambda(\delta)=A\,e^{-\kappa\delta}$ in log-space.  For the
-calibration window $\Delta T_{\mathrm{calib}} = 0.5\,\mathrm{s}$
-adopted here, the fit yields
+distances $\delta_k$. We pool fills and exposure times by effective quote
+distance and fit $\hat\Lambda(\delta)=A_{\mathrm{fit}}e^{-\kappa\delta}$
+by ordinary least squares in log-space. For the selected window
+$\Delta T_{\mathrm{calib}}=0.5\,\mathrm{s}$, the fit uses distances from
+$0.5$ to $5$ ticks. The finite-window correction gives
+$A=A_{\mathrm{fit}}x/(e^x-1)$, where
+$x=\kappa^2\sigma^2\Delta T_{\mathrm{calib}}/2$. The resulting parameters are
 \begin{equation}
-  \hat{A} = 0.1507\ \mathrm{s}^{-1},
+  \hat{A} = 0.1132\ \mathrm{s}^{-1},
   \qquad
-  \hat{\kappa} = 2.335\ \mathrm{ticks}^{-1},
+  \hat{\kappa} = 2.240\ \mathrm{ticks}^{-1},
   \label{eq:glft_calib_values}
 \end{equation}
 and these are the values used for the GLFT benchmark throughout the
-paper, as well as in the closed-form misspecification analysis of
+paper, as well as in the analytical misspecification analysis of
 Appendix~\ref{app:glft_misspecification}.
 
 The volatility $\sigma$ entering the GLFT solution is not
@@ -479,37 +479,18 @@ which we adopt as the diffusion scale entering the GLFT
 coefficients. 
 
 \paragraph{Performance of analytical market making benchmarks.}
-We run the two analytical market making benchmarks on numerical simulations of the LOB according to the Santa Fe model. Figure~\ref{fig:glft_vs_naive} reports a paired-seed
-comparison over $N_{\mathrm{sim}} = 1000$ episodes of
-$N_{\mathrm{steps}} = 5000$ LOB events each. We observe that GLFT clearly
-dominates the at-best baseline in risk--return terms across a broad risk-aversion
-range.   Two regularities
-emerge: First, GLFT yields a small mean PnL advantage over the
-at-best baseline only at the lowest risk aversion tested, and this
-advantage reverses as risk aversion grows (paired Wilcoxon test on the
-per-seed difference $\Delta = \mathrm{PnL}_{\mathrm{GLFT}} -
-\mathrm{PnL}_{\text{at-best}}$ gives median $\Delta = +0.02$, $-0.015$,
-$-0.10$ for $\gamma_{\mathrm{GLFT}} = 10^{-6}, 10^{-3}, 10^{-1}$, with
-$p \approx 0.05$, $0.008$, $\ll 10^{-4}$).  At higher
-$\gamma_{\mathrm{GLFT}}$ the inventory skew sacrifices spread capture
-for a tighter inventory distribution, so the principal benefit of GLFT
-over the at-best baseline is inventory control rather than mean PnL.  A
-useful limiting case clarifies the role of the inventory-skew
-term: as $\gamma_{\mathrm{GLFT}} \to 0$ the GLFT half-spread reduces to
-$\approx 1/\kappa$ and the inventory-skew term
-vanishes, so the GLFT quotes degenerate into essentially
-unskewed touch-following quotes that closely resemble the at-best
-baseline.  Empirically, the two policies then achieve a
-comparable mean PnL in this risk-neutral limit, but the at-best
-baseline exhibits a markedly wider PnL distribution, since its
-inventory is left to drift unbounded in the absence of any active
-inventory control.  Second, the variation of $\gamma_{\mathrm{GLFT}}$ traces the
-expected risk--return trade-off: a larger $\gamma_{\mathrm{GLFT}}$ tightens
-inventory control but sacrifices raw PnL, while a smaller $\gamma_{\mathrm{GLFT}}$
-increases the expected return at the cost of greater inventory
-risk.  Taken together, these results show that the classical
-closed-form inventory-skew logic remains effective in an
-event-driven stochastic simulator.
+Figure~\ref{fig:glft_vs_naive} compares GLFT with the at-best baseline
+over $1000$ episodes of $5000$ LOB events per configuration, using
+separate seed sets. At $\gamma_{\mathrm{GLFT}}=10^{-6}$, GLFT has a
+slightly higher sample mean PnL than the baseline. Across the three settings,
+higher risk aversion lowers mean PnL and concentrates inventory more tightly
+around zero.
+In the continuous GLFT formula, the base half-spread tends to $1/\kappa$
+and the inventory adjustment vanishes as $\gamma_{\mathrm{GLFT}}\to0$.
+In the simulator, tick rounding can make different continuous quotes
+produce the same submitted prices. The observed comparison therefore
+reflects both the analytical inventory adjustment and its implementation
+on the tick grid.
 
 \begin{figure}[htbp]
   \centering
@@ -531,7 +512,8 @@ event-driven stochastic simulator.
   \end{subfigure}
   \end{minipage}}
   \caption{GLFT vs.\ the at-best baseline over $N_{\mathrm{sim}} = 1000$
-  paired-seed episodes of $N_{\mathrm{steps}} = 5000$ LOB events, with
+  episodes per configuration of $N_{\mathrm{steps}} = 5000$ LOB events,
+  using separate seed sets, with
   $\gamma_{\mathrm{GLFT}}\in \{10^{-6}, 10^{-3}, 10^{-1}\}$.
   (\subref{fig:glft_pnl_cum}) Mean cumulative PnL.
   (\subref{fig:glft_hist_joint}) Terminal PnL (left) and
@@ -561,10 +543,12 @@ AS models.
 We first quantify the deterioration in PnL due to the assumption of a balanced market order flow when it is instead stationary but asymmetric ($p_{\mathrm{buy}} \neq 0.50$).
 Figure~\ref{fig:misspec_comparison} quantifies this
 misspecification cost as a function of the actual $p_{\mathrm{buy}}$. We observe that the expected PnL of a GLFT strategy peaks, as expected, at $p_{\mathrm{buy}} = 0.50$ but crosses into loss-making territory once the asymmetry
-exceeds $|p_{\mathrm{buy}} - 0.50| \approx 0.08$. Interestingly, it is possible to obtain a closed-form approximation (see Appendix~\ref{app:glft_misspecification}) for the expected PnL, which is also reported in the figure.
+exceeds $|p_{\mathrm{buy}} - 0.50| \approx 0.08$. We also report a
+finite-horizon analytical approximation initialized at zero inventory,
+derived in Appendix~\ref{app:glft_misspecification}.
 
 
-The figure also shows the same quantity for the reinforcement-learning market maker (RLMM) presented in
+The figure also shows the RLMM introduced in
 Sections~\ref{sec:learning_formulation}--\ref{sec:stationary_results}, which instead remains profitable on a substantially wider band
 ($p_{\mathrm{buy}} \in [0.40, 0.60]$) but inherits the same
 structural fragility.
@@ -572,12 +556,13 @@ structural fragility.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.7\linewidth]{dqn_vs_as_vs_glft.png}
-  \caption{Expected  PnL as a function of $p_{\mathrm{buy}}$
-  for the empirical GLFT benchmark (blue), and the
-  closed-form GLFT-under-misspecification approximation of Appendix~\ref{app:glft_misspecification} (dashed blue).  The orange line is obtained implementing the RLMM strategy
-  presented in
-  Sections~\ref{sec:learning_formulation}--\ref{sec:stationary_results}.
-  }
+  \caption{Expected terminal PnL under fixed flow asymmetry. Solid curves
+  show RLMM (orange) and GLFT (blue) in the FIFO simulator, using 100
+  episodes of 5,000 LOB events per probability. Error bars show pointwise
+  95\% confidence intervals for the empirical means. The dashed curve
+  shows the reduced analytical model of
+  Appendix~\ref{app:glft_misspecification}, initialized at $q_0=0$
+  with a fixed reference horizon $T\approx844$ simulated time units.}
   \label{fig:misspec_comparison}
 \end{figure}
 
@@ -587,18 +572,18 @@ policy under persistent directional regimes: the buy-MO probability
 is piecewise-constant, held fixed within each regime, with regime
 durations drawn exponentially with mean $\tau_r$ MO events (the
 generative model is fully specified in
-Section~\ref{sec:robustness}).  Terminal PnL decreases
-monotonically as the persistence $\tau_r$ grows, turning a
-profitable stationary strategy into a systematically loss-making
-one---and no parameter of the closed form can absorb this, because
-the quotes are flow-blind by construction.  This failure mode, not
+Section~\ref{sec:robustness}). Mean terminal PnL is near zero at
+$\tau_r=15$ and becomes increasingly negative as regimes lengthen.
+The calibrated policy therefore loses profitability under persistent
+directional flow, which its quotes do not explicitly account for.
+This failure mode, not
 the stationary comparison, is the central problem addressed in the
 remainder of the paper: Sections~\ref{sec:learning_formulation}
 and~\ref{sec:stationary_results} construct the controller and
 establish that it dominates GLFT under stationary flow;
 Sections~\ref{sec:robustness}--\ref{sec:scenario_bandit_finetuning}
-then diagnose the controller's own regime fragility and repair it
-with an online flow belief and robust fine-tuning.
+then diagnose the controller's own regime fragility and address it
+with regime-aware training and scenario-bandit fine-tuning.
 
 \begin{figure}[htbp]
   \centering
@@ -607,8 +592,9 @@ with an online flow belief and robust fine-tuning.
   a function of the mean regime duration $\tau_r$ (MO clock): the
   buy-MO probability is constant within each regime and regime
   durations are exponentially distributed with mean $\tau_r$ MO
-  events, at regime width $\omega = 0.30$ (generative model in
-  Section~\ref{sec:robustness}).  The
+  events, with $p_{\mathrm{buy}}\in[0.20,0.80]$ ($\omega=0.30$;
+  generative model in Section~\ref{sec:robustness}), using 100 episodes
+  of 100,000 LOB events per setting. The
   dotted line indicates the no-regime baseline.
   }
   \label{fig:glft_degradation_tau}
@@ -667,8 +653,8 @@ the throttle on which the MM observes, acts, and learns.
 Between two consecutive decision times the simulator processes a random
 number $N_t \ge 1$ of intermediate book events, indexed by
 $n = 0, 1, \ldots, N_t-1$ within decision interval~$t$, each
-producing a reward $r_{t,n}$ (mark-to-market plus realized
-cash flows).  Since $N_t$ varies
+producing an event-level reward $r_{t,n}$ defined in
+Eq.~\eqref{eq:reward}.  Since $N_t$ varies
 across decisions, a fixed one-step discount would weigh decisions
 with many or few intermediate events inconsistently.  To keep the
 Bellman target on the same event-clock scale regardless of how many
@@ -729,7 +715,7 @@ The first signal is a Bayesian online change-point filter~\citep{adams2007bocpd}
 the signed market-order stream.  At each MO arrival the filter
 updates a posterior over the latent buy-MO probability and the
 current run length of the regime.  The MM does not observe
-the latent schedule $p_{\mathrm{buy}}(t)$, but it receives only a compact
+the latent schedule $p_{\mathrm{buy}}(t)$; the filter provides a compact
 belief summary,
 \begin{equation}
   b_t = \bigl(\widehat{\iota}_t,\;\bar{\ell}_t\bigr),
@@ -738,8 +724,9 @@ belief summary,
 where $\widehat{\iota}_t$ is the posterior estimate of the directional
 flow bias, defined as $\widehat{\iota}_t = 2\widehat p_t - 1$ with
 $\widehat p_t$ the posterior mean buy-MO probability, and
-$\bar{\ell}_t$ is the posterior expected run length. The Bayesian
-recursion that produces this belief summary is derived in
+$\bar{\ell}_t$ is the posterior expected run length. The regime-age
+signal is log-scaled and normalized before entering the network, as
+detailed alongside the Bayesian recursion in
 Appendix~\ref{app:bayesian_flow_filter}.  The Bayesian filter advances asynchronously on the MO event clock
 (one update per market-order arrival), while the MM acts on the
 throttle clock with $\tau_c = 1$~s.  At each decision time $t$, the
@@ -780,7 +767,8 @@ This signal is deliberately instantaneous rather than a smoothed
 fill statistic: it tells the agent whether its current quoting
 decision leaves it more exposed to buy- or sell-side market-order
 pressure before the next fill is realized.  The auxiliary feature vector is
-therefore $e_t=(b_t,x_t)$.
+therefore $e_t=(b_t,x_t)$ before preprocessing. The flow-bias and
+quote-exposure signals are used directly.
 
 Each action selects a pair of tick offsets $(\Delta_b, \Delta_a)$
 relative to the current best quotes.  The resulting bid and ask
@@ -830,24 +818,24 @@ skews remain reachable dynamically by holding a one-sided action over
 consecutive decision epochs.  A smaller action space has fewer
 action-conditioned return distributions to fit and concentrates
 exploration on economically distinct alternatives, which aids
-convergence---most visibly under the non-stationary fine-tuning of
+convergence---most visibly under the non-stationary training of
 Algorithm~B (ablation below).
 
 \paragraph{Action-space ablation.}
 Retraining with the full nine-action grid under otherwise identical
-conditions---same seeds, network, reward, and warm-start, so the two
+conditions---same seeds, network, reward, and initialization protocol, so the two
 arms differ only in the action set---confirms this.  Under stationary
 flow, where the training budget is ample, both grids converge to the
 same performance (mean terminal PnL $+0.339$ vs.\ $+0.331$ over
 $N_{\mathrm{sim}}=300$ paired episodes, within one standard error; the
 three extra cells are selected only $10.3\%$ of the time).  Under the
-shorter, non-stationary fine-tuning of Algorithm~B, however, the
+shorter, non-stationary training of Algorithm~B, however, the
 six-action controller converges markedly better, dominating the
-nine-action grid at every checkpoint over the $4000$ fine-tuning
+nine-action grid at every checkpoint over the $4000$ training
 episodes (best training terminal-PnL moving average $+0.097$ vs.\
 $-0.005$).  Fewer actions thus make little difference when data is
 plentiful, but converge substantially better under the limited-budget,
-non-stationary fine-tuning that matters for robustness.
+non-stationary training that matters for robustness.
 
 
 At each throttle-triggered decision, the agent selects one such
@@ -858,24 +846,16 @@ than equality) reflects the event-driven nature of the simulator: the
 throttle gate is evaluated only when the next LOB event (arrival or
 cancel) is processed, and the first such event after
 $t_{\text{last}} + \tau_c$ generally lands a small random offset past
-that boundary.  A safety layer enforces $p_t^b < p_t^a$ to prevent self-crossing.
-This only binds when the agent selects $(-1,-1)$ while the observed
-spread is at most 2 ticks (with $\mathrm{spr}_t = 1$ the two quotes
-would cross, with $\mathrm{spr}_t = 2$ they would coincide); in our
-simulations such a configuration occurs in approximately 8\% of
-decisions, so the clamp is rarely active.  More importantly, the same
-layer enforces the hard inventory bound.  The action set $\mathcal{A}$
-is \emph{not} restricted: the policy still selects from the full
-six-element grid.  After selection, a post-hoc projection is applied;
-when $q_t = +q_{\max}$, the bid leg of the chosen
-$(\Delta_b,\Delta_a)$ is dropped while the ask leg is still posted as
-proposed, so no additional fills can push the inventory further long;
-symmetrically when $q_t = -q_{\max}$, the ask leg is dropped.  The
-reward and next state are computed on the post-gating quote, so the
-network learns the consequences of the projection rather than
-choosing over a state-dependent action set, and the hard bound
-$|q_t| \le q_{\max}$ is never violated regardless of the learned
-quoting policy.
+that boundary.  With a one-tick spread, an action that would improve
+a quote instead places it at the best price on that side. A separate
+safeguard keeps the MM's ask at least one tick above its bid.
+The safety layer also enforces the hard inventory bound by suppressing the bid at
+$q_t=+q_{\max}$ and the ask at $q_t=-q_{\max}$.
+At inventory limits, the MM chooses among three offsets on the side
+that reduces inventory. When computing the Bellman target, the
+maximization also considers only these three actions if the next
+state is at an inventory limit. All six actions remain available
+away from the inventory limits.
 
 A second piece of bookkeeping concerns how quotes are managed across
 decision steps.  The MM's resting orders persist between decisions.
@@ -889,54 +869,53 @@ price--time priority and erase the spread-capture edge, so queue
 priority is treated as an economic resource the agent earns by
 holding.
 
-The reward\footnote{We index rewards by the decision time at which
-the action is taken: $r_t$ is the reward of the transition
-$(s_t,a_t,s_{t+1})$, accrued over the interval $(t,t+1]$ and hence
-only observable at time $t+1$.  This transition-indexed convention,
-standard in the deep $Q$-learning literature \citep{mnih2015}, is
-equivalent to the $R_{t+1}$ indexing of \citet{suttonbarto2018}; we
-keep the single index $t$ so that the transition tuple
-$(s_t,a_t,r_t,s_{t+1},N_t)$ and the $n$-step sums below carry one
-time index per decision.} is a dampened fill PnL---each newly
-executed quantity is revalued immediately against the post-decision
-mid-price, minus a quadratic inventory penalty augmented by what we
-refer to as an inventory-\emph{wall} term---a one-sided quadratic
-soft-barrier penalty, in the spirit of penalty methods for
-constrained optimization---that activates only beyond a soft
-threshold $q_w \in (0, q_{\max})$,
+We define the reward at the book-event level and aggregate it
+over each decision interval. For event $n$ within interval $t$,
+the reward is the dampened fill PnL minus quadratic inventory
+and inventory-wall penalties:
 \begin{equation}
   \label{eq:reward}
-  r_t
+  r_{t,n}
   =
-  \sum_{f\in\mathcal{F}_t}
-  \Delta q(f)\bigl(m_{t+1}-p(f)\bigr)
+  \sum_{f\in\mathcal{F}_{t,n}}
+  \Delta q(f)\bigl(m^{+}_{t,n}-p(f)\bigr)
   \;-\;
-  \varphi\, q_{t+1}^{2}
+  \varphi\bigl(q^{+}_{t,n}\bigr)^2
   \;-\;
-  \varphi\bigl(|q_{t+1}|-q_{w}\bigr)_{+}^{2}.
+  \varphi\bigl(|q^{+}_{t,n}|-q_w\bigr)_+^2.
 \end{equation}
-Here \(\mathcal{F}_t\) is the set of fills received between decision
-times \(t\) and \(t+1\); since the MM keeps at most one resting
-unit-lot order per side and a filled quote is not replenished until
-the next decision epoch, \(\mathcal{F}_t\) contains at most one fill
-per side, so \(|\mathcal{F}_t|\le 2\).
-Further, \(m_{t+1}\) is the post-action mid-price,
-\(p(f)\) is the execution price of fill \(f\),
-\(\Delta q(f)\) is the signed executed quantity (positive for
-buy-side fills, negative for sell-side fills), \(q_{t+1}\) is the
-post-decision inventory, and \(\varphi>0\) controls the risk--return
-trade-off between spread capture and inventory containment.  When the
-throttle yields $N_t>1$ intermediate events, this per-decision reward
-is the offset-weighted sum $\sum_{n=0}^{N_t-1}\gamma^{n} r_{t,n}$ of
-Eq.~\eqref{eq:smdp_reward}, each intermediate contribution discounted
-by its within-interval offset $n$.  The operator $(u)_{+}=\max(u,0)$ ensures the
+Here, $\mathcal{F}_{t,n}$ contains the fills received during
+that event, while $m^{+}_{t,n}$ and $q^{+}_{t,n}$ denote the
+mid-price and inventory immediately afterwards.
+The signed fill quantity $\Delta q(f)$ is positive for
+purchases and negative for sales, and $p(f)$ is the execution
+price. Prices are expressed in ticks.
+
+The reward $r_t$ used for the decision transition
+$(s_t,a_t,s_{t+1})$ is the discounted sum of these event-level
+contributions, as defined in
+Eq.~\eqref{eq:smdp_reward}.\footnote{We index decision-level rewards by the
+decision time at which the action is taken: $r_t$ is the reward of
+the transition $(s_t,a_t,s_{t+1})$, accrued over the interval
+$(t,t+1]$ and hence only observable at time $t+1$. This
+transition-indexed convention, standard in the deep $Q$-learning
+literature \citep{mnih2015}, is equivalent to the $R_{t+1}$ indexing
+of \citet{suttonbarto2018}; we keep the single index $t$ so that the
+transition tuple $(s_t,a_t,r_t,s_{t+1},N_t)$ and the $n$-step sums
+below carry one time index per decision.}
+
+The coefficient $\varphi\ge0$ controls the risk--return trade-off
+between spread capture and inventory containment. The
+inventory-wall term is a one-sided quadratic soft-barrier penalty
+with threshold $q_w\in(0,q_{\max})$.
+The operator $(u)_{+}=\max(u,0)$ ensures the
 wall term is inactive while
-\(|q_{t+1}|\le q_{w}\) and grows quadratically once the inventory
+\(|q^{+}_{t,n}|\le q_{w}\) and grows quadratically once the inventory
 exceeds the soft threshold; in our experiments we set
 \(q_{w}=q_{\max}/2\), so the wall sharply increases the marginal inventory
 penalty over the outer half of the admissible inventory range,
 discouraging the policy from drifting close to the hard cap
-\(|q_t|\le q_{\max}\) enforced by the unilateral quote-gating layer.
+\(|q^{+}_{t,n}|\le q_{\max}\) enforced by the unilateral quote-gating layer.
 The MM is updated on this decision grid by temporal-difference
 learning~\citep{sutton1988td} with discounted bootstrap targets, an
 SMDP form of $Q$-learning~\citep{watkins1992qlearning}.  For one transition of
@@ -949,8 +928,9 @@ denotes the periodically synchronized target parameters.  Training
 minimizes the temporal-difference error between the online
 $Q$-estimate $Q_\theta(s_t, a_t)$ and this bootstrapped target.  In the
 Double-DQN variant used here~\citep{vanhasselt2016}, action selection
-in the target uses the online network while evaluation uses the target
-network, giving the one-step (bootstrapped) target $G_t^{(1)}$:
+in the target uses the online network with the inventory-dependent
+action mask described above, while evaluation uses the target network,
+giving the one-step (bootstrapped) target $G_t^{(1)}$:
 \begin{equation}
   G_t^{(1)}
   =
@@ -980,31 +960,44 @@ prioritized experience replay (PER)~\citep{schaul2016prioritized},
 NoisyNet exploration~\citep{fortunato2018noisy}, $n$-step targets,
 and C51.
 The architecture builds a shared representation
-$h_t = \phi_\theta(s_t)$, then splits into a value stream and an
-advantage stream, combined as
+$h_t = \phi_\theta(s_t)$, followed by value and advantage streams
+that produce logits for each return atom:
 \begin{equation}
-  Q_\theta(s_t,a)
+  \ell_{\theta,k}(s_t,a)
   =
-  V_\theta(h_t)
+  V_{\theta,k}(h_t)
   +
-  A_\theta(h_t,a)
+  A_{\theta,k}(h_t,a)
   -
   \frac{1}{|\mathcal A|}
-  \sum_{a'} A_\theta(h_t,a').
+  \sum_{a'} A_{\theta,k}(h_t,a').
 \end{equation}
-Here, \(V_\theta(h_t)\) is the estimate of the state-value, 
-\(A_\theta(h_t,a)\) is the estimated advantage of action \(a\) relative to the state-value baseline, and
-\(|\mathcal A|\) is the number of discrete actions.
-To improve data efficiency, replay sampling is prioritized so that
-transitions on which the network was most wrong are revisited more
-often.  Each transition $i$ in the buffer carries a non-negative
-\emph{priority score} $p_i$ set to the magnitude of its last
-training error---in our distributional (C51) MM, the
-categorical cross-entropy between the projected target and the
-predicted return distributions, the distributional analogue of the
-absolute TD-error---and refreshed whenever the
-transition is replayed.  The next sample is then drawn with
-probability
+Here, $\theta$ denotes the network parameters and $k=1,\ldots,N$
+indexes the return atoms; $|\mathcal A|$ is the number of discrete
+actions. A softmax over atoms gives the return probabilities.
+Their expectation over the fixed support defines $Q_\theta(s_t,a)$.
+Replay favors transitions with larger prediction errors. For C51,
+we measure this error by the Kullback--Leibler divergence between
+the target and predicted return distributions:
+\[
+  D_{\mathrm{KL}}(\pi^{\mathrm{target}}\|\pi_\theta)
+  =
+  \sum_{k=1}^{N}
+  \pi_k^{\mathrm{target}}
+  \log\!\left(
+    \frac{\pi_k^{\mathrm{target}}}{\pi_{\theta,k}}
+  \right).
+\]
+Here, $\pi_k^{\mathrm{target}}$ and $\pi_{\theta,k}$ are the target
+and predicted probabilities at C51 atom $k$ for the replayed
+state--action pair. Each replay priority $p_i$ is updated from this
+divergence, subject to an adaptive cap that limits the influence of
+individual transitions.\footnote{The cap is three times an exponentially
+smoothed minibatch median of KL divergences, with a numerical floor
+of $10^{-6}$. The smoothing coefficient is $0.01$, and the running
+estimate is initialized at $1$.}
+Cross-entropy remains the C51 training loss. Replay transitions are
+sampled with probability
 \begin{equation}
   P(i)=
   \frac{(p_i+\varepsilon_{0})^\alpha}
@@ -1070,20 +1063,20 @@ target distribution by minimizing the categorical cross-entropy loss
 \end{equation}
 
 To propagate reward information faster across the decision grid,
-the $1$-step bootstrap above is replaced by an $n$-step return~\citep{suttonbarto2018}
-that chains $n$ consecutive decision-level rewards
-$r_t, r_{t+1}, \ldots, r_{t+n-1}$, defined as in
-Equation~\eqref{eq:smdp_reward}, before bootstrapping.  Each decision
+the $1$-step bootstrap above is replaced by an $n$-step return~\citep{suttonbarto2018}.
+It combines $n$ consecutive decision rewards, defined in
+Equation~\eqref{eq:smdp_reward}, before bootstrapping. Each decision
 interval $t+i$ spans $N_{t+i}$ book events, so the per-decision
 discount is $\gamma^{N_{t+i}}$ rather than a fixed $\gamma$.  The
-cumulative discount from the root decision $t$ to the start of
-decision $t+i$ is then
+cumulative number of book events from decision $t$ to the start of
+decision $t+i$ is
 \begin{equation}
   M_i \;=\; \sum_{j=0}^{i-1} N_{t+j},
-  \qquad M_0 = 0,
+  \qquad M_0 = 0.
 \end{equation}
-i.e.\ the total number of micro-step events elapsed.  The $n$-step
-target generalizes the one-step target $G_t^{(1)}$ above:
+The corresponding cumulative discount factor is $\gamma^{M_i}$.
+The standard $n$-step target generalizes the one-step target
+$G_t^{(1)}$ above:
 \begin{equation}
   G_t^{(n)}
   \;=\;
@@ -1098,6 +1091,11 @@ the random-duration discounting keeps the per-decision discount factors consiste
 the event clock.  Larger $n \ge 1$ propagates reward information
 further, reducing the one-step bootstrap bias at the cost of higher
 variance in the value targets.
+
+In Algorithms~B and~C, the discounted reward sum is clipped to
+$[V_{\min},V_{\max}]$ before adding the bootstrap contribution.
+The resulting target distribution is then projected onto the C51
+support.
 
 The main architectural and optimization hyperparameters of the neural
 MM are summarized in Table~\ref{tab:dqn_hyperparams}.
@@ -1114,9 +1112,12 @@ MM are summarized in Table~\ref{tab:dqn_hyperparams}.
     Feature trunk & One hidden layer with 256 units \\
     Activation & ReLU \\
     Value/action head & Dueling C51 head over six quote-offset actions;
-      101 atoms on the support $[-3,3]$ \\
-    Discount and TD horizon & Per-event discount $\gamma=1-10^{-3}$;
-      $n=3$ decision-level SMDP targets \\
+      101 atoms \\
+    C51 support and reward-sum clipping bounds & Algorithms~B/C:
+      $V_{\min}=-3$, $V_{\max}=3$ \\
+    Discount and TD horizon & Algorithm~A: $\gamma=0.97$, $n=5$;
+      Algorithms~B/C: $\gamma=0.999$, $n=3$.
+      Discounts are per event; SMDP targets span $n$ decisions \\
     Optimization and replay & AdamW with initial learning rate
       $3\times 10^{-4}$; batch size 64; prioritized replay buffer
       of size $10^5$; target-network update every 2000 gradient steps \\
@@ -1124,6 +1125,13 @@ MM are summarized in Table~\ref{tab:dqn_hyperparams}.
   \end{tabular}
 \end{table}
 
+Algorithm~A uses a discount factor of 0.97, favouring near-term
+spread capture and inventory control under symmetric flow.
+Algorithms~B and~C use 0.999 to give greater weight to future
+inventory exposure under persistent directional flow.
+A stationary-flow ablation found higher mean PnL with slightly
+higher PnL variability at the lower discount factor.\footnote{At
+$\varphi=0.006$, only $\gamma$ was varied in the A configuration.}
 
 \FloatBarrier
 \section{Stationary Order Flow Results}
@@ -1131,10 +1139,9 @@ MM are summarized in Table~\ref{tab:dqn_hyperparams}.
 
 We report the performance of the trained Rainbow DQN under
 stationary and symmetric order flow against the calibrated GLFT
-benchmark and the at-best baseline.  All results use paired-seed
-evaluation episodes (same exogenous flow realizations across
-policies), and training and evaluation episodes are strictly
-disjoint.
+benchmark and the at-best baseline. Policies are evaluated using
+paired random seeds. Their actions affect the book, so realized
+order-flow paths can differ across policies.
 
 \begin{figure}[htbp]
   \centering
@@ -1156,9 +1163,9 @@ disjoint.
   inventory bound $q_{\max} = 8$).  (\subref{fig:dqn_pnl})
   Positive and steadily growing cumulative PnL accumulated through
   passive spread capture.  (\subref{fig:dqn_inv}) Inventory
-  trajectory: the quadratic penalty $\varphi q^2$ keeps excursions
-  bounded within $\pm q_{\max}$, with frequent mean-reversion
-  toward zero.}
+  trajectory: the inventory penalty discourages large positions, while
+  blocking inventory-increasing quotes enforces the hard bounds
+  $\pm q_{\max}$.}
   \label{fig:dqn_episode}
 \end{figure}
 
@@ -1170,21 +1177,25 @@ confirming that the policy is genuine spread-capture market
 making rather than directional trading.
 
 Comparing the performance of GLFT and Rainbow DQN requires a matching of the risk aversion parameter of the former with the inventory penalty of the latter. Since the mapping is not evident, we run simulations for both models under different values of these parameters and then compare the results in a return-risk plane. Figure~\ref{fig:dqn_frontier} shows the results over
-$N_{\mathrm{sim}} = 1000$ paired-seed evaluation episodes,
+$N_{\mathrm{sim}} = 10\,000$ paired-seed evaluation episodes per configuration, using seeds
+excluded from training and keeping all checkpoints fixed,
 sweeping $\gamma_{\mathrm{GLFT}}$ for GLFT (blue) and $\varphi$ for the Rainbow DQN
 (orange), with the at-best baseline (gray) as a further comparison.  It is evident that the
-DQN frontier lies above the GLFT frontier throughout the observed
-risk range, indicating that the reinforcement-learning method finds better strategies than GLFT.
+DQN frontier lies above the GLFT frontier over their shared risk range,
+indicating higher mean PnL at comparable levels of dispersion.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.7\linewidth]{glft_frontier_complete.png}
-  \caption{Risk--return efficient frontier over
-  $N_{\mathrm{sim}} = 1000$ paired-seed evaluation episodes: the
+  \caption{Risk--return frontier over $N_{\mathrm{sim}} = 10\,000$
+  paired-seed episodes per configuration of 5,000 LOB events after 1,000 warm-up events,
+  using evaluation seeds excluded from training. The
   GLFT curve (blue) sweeps $\gamma_{\mathrm{GLFT}}$, the Rainbow DQN curve (orange)
   sweeps $\varphi$, and the at-best baseline (gray) serves as
   a reference point.  Each marker is labeled by its swept
-  parameter value.}
+  parameter value. Bars show one bootstrap standard error of the mean
+  (vertical) and sample standard deviation (horizontal), estimated
+  from 10,000 paired resamples.}
   \label{fig:dqn_frontier}
 \end{figure}
 
@@ -1265,42 +1276,34 @@ is no regime switching and $\tau_r$ plays no role), which isolates the
 effect of pure asymmetry before the persistence sweep of
 Figure~\ref{fig:degradation_tau} below.  The Rainbow DQN (orange) and
 the GLFT policy run inside the LOB simulator (solid blue, ``empirical'')
-are evaluated by Monte-Carlo; the dashed blue curve is the closed-form
-analytical approximation to the GLFT solution under a misspecified flow.  In short, the GLFT
+are evaluated by Monte-Carlo; the dashed blue curve evaluates a reduced
+birth--death model over a finite horizon, starting from zero inventory.
+The GLFT
 agent computes its quotes assuming symmetric flow, so under
 the true buy-MO probability $p_{\mathrm{buy}}$  the realized ask-side fills come
 from the buy-MO flow of intensity $2 p_{\mathrm{buy}}\mu$
 and the bid-side fills from the sell-MO flow of intensity
-$2(1-p_{\mathrm{buy}})\mu$; the agent realizes only a queue-adjusted fraction of this arrival flow, captured by the effective fill rate $A_{\mathrm{eff}}$ introduced below.
+$2(1-p_{\mathrm{buy}})\mu$; actual execution also depends on the
+submitted quotes and the book state.
 
-In a realized FIFO LOB the agent shares queues with other resting
-orders and can lose priority through the discrete decision clock, so it
-captures only a fraction of the ideal GLFT intensity $Ae^{-\kappa\delta}$;
-we absorb this into an \emph{effective baseline rate}
-$A_{\mathrm{eff}}=\eta A$, with the queue-competition factor
-$\eta\approx0.82$ calibrated once offline as the ratio of the measured
-to the GLFT-predicted symmetric fill rate.  Under a true buy probability
+We introduce an \emph{effective fill-rate correction},
+$A_{\mathrm{eff}}=\eta A$, to match the symmetric-flow execution rate of
+the implemented GLFT policy. We estimate $\eta\approx1.09$ as the ratio
+of the measured fill rate to the GLFT reference rate. Under a true buy probability
 $p_{\mathrm{buy}}$, the realized ask- and bid-side fill rates pick up
 factors $2p_{\mathrm{buy}}$ and $2(1-p_{\mathrm{buy}})$ on this effective
-intensity, so the inventory evolves as a bounded birth--death chain
-(outward transitions suppressed at the hard cap).  Its stationary law is
-a tilted discrete Gaussian and the induced expected-PnL curve admits a
-closed form; Appendix~\ref{app:glft_misspecification} gives the
-self-contained derivation---the calibration of $\eta$, the stationary
-law, the drift-corrected expected PnL, and the diagnostic plots.
-The comparison is informative on two counts.  First, the two GLFT
-curves are nearly indistinguishable, which validates the
-analytical-misspecification approximation as a faithful proxy for the
-empirical GLFT policy.  Second, the Rainbow DQN curve sits
-\emph{above} both GLFT benchmarks at every level of asymmetry
-$|p_{\mathrm{buy}} - 0.50| > 0$, with the gap widening as the flow
-becomes more skewed---quantifying the headline of
-Section~\ref{sec:problem_setup}: the RLMM remains profitable over
-$p_{\mathrm{buy}} \in [\,0.40, 0.60\,]$ while both GLFT variants
-cross into losses at $|p_{\mathrm{buy}} - 0.50| \approx 0.08$, so the
-learned policy inherits the same structural fragility as any
-stationarily trained strategy but operates on a more favorable
-envelope.
+intensity. In this reduced model, inventory evolves as a bounded
+birth--death chain, with outward transitions suppressed at the hard cap.
+Its stationary law is a tilted discrete Gaussian; the plotted PnL curve
+instead integrates the evolving inventory distribution from $q_0=0$.
+Appendix~\ref{app:glft_misspecification} derives both expressions and
+describes the calibration of $\eta$ and the drift correction.
+The analytical approximation captures the deterioration of GLFT
+performance under flow asymmetry, with remaining differences from the
+FIFO simulations. At the tested levels of flow asymmetry,
+RLMM achieves higher mean terminal PnL than both GLFT benchmarks. It
+remains profitable on average for $p_{\mathrm{buy}}\in[0.40,0.60]$,
+covering a wider range of imbalance than GLFT.
 
 \paragraph{Single-episode diagnostic.}
 The static-asymmetry view of Figure~\ref{fig:misspec_comparison}
@@ -1320,8 +1323,7 @@ steadily accumulates profit, consistent with the stationary results
 of Section~\ref{sec:stationary_results}, whereas under regime-switching it
 suffers compounding drawdowns during persistent directional regimes. The bottom panel reveals the
 mechanism: during sustained buy-heavy or sell-heavy regimes, the
-agent's inventory is pushed to the hard inventory limit ($\pm 8$), where it
-remains trapped until the regime reverts.  Each such episode of
+agent's inventory repeatedly reaches the hard limits ($\pm 8$).  Each such episode of
 inventory saturation generates adverse-selection losses that erode
 the spread-capture edge.
 
@@ -1387,22 +1389,19 @@ more persistent.
   \label{fig:degradation_tau}
 \end{figure}
 
-In the remainder of the paper we therefore introduce a Algorithm~B
-fine-tuning stage that re-trains the Algorithm~A controller
-\emph{directly} on the regime-switching time series defined
-above, augmented with a Bayesian change-point representation of
+In the remainder of the paper we therefore train Algorithm~B
+independently on the regime-switching time series defined
+above, with a Bayesian change-point representation of
 directional flow and a queue-adjusted quote-exposure imbalance.
 
 \section{Training under Non-Stationary Order Flow}
 \label{sec:nonstat_training}
 
-Algorithm~B---our regime-aware fine-tuning---improves the
-Algorithm~A controller of
-Section~\ref{sec:stationary_results} on the regime-switching flow
+Algorithm~B is trained independently on the regime-switching flow
 defined in Section~\ref{sec:robustness}, with the auxiliary feature
 vector $e_t=(b_t,x_t)$ of Section~\ref{sec:learning_formulation} now
-activated (it was switched off in Algorithm~A).  The purpose is to turn
-the stationary spread-capture policy into a controller that can
+activated (it was switched off in Algorithm~A).  The purpose is to learn
+a controller that can
 condition quotes on the partially observed order-flow regime without
 changing the action space, reward, or simulator.
 
@@ -1447,8 +1446,8 @@ Algorithm~B controller trained under regime-switching flow ($\tau_r = 60$
 MO events, $\omega = 0.30$) with the auxiliary signals described
 above.  The same regime-switching episode is used to compare three
 policies: the Algorithm~A baseline under symmetric flow (gray,
-reference trajectory), the Algorithm~A controller exposed to
-regime-switching without any fine-tuning (orange), and the Algorithm~B
+reference trajectory), the Algorithm~A controller evaluated under
+regime-switching flow (orange), and the Algorithm~B
 agent under regime-switching (blue); the gray and orange
 trajectories are, by construction, the same simulation already
 analyzed in Figure~\ref{fig:regime_episode}.  Two observations
@@ -1459,7 +1458,7 @@ illustrative episode, at roughly one third of the Algorithm~A symmetric-flow
 benchmark---in line with the $37\%$ population figure from the
 Monte-Carlo analysis below---with a paired improvement over the
 non-adapted Algorithm~A controller of about two thirds of that benchmark
-in this episode (about $80\%$ at the population level). Second,
+in this episode (about $76\%$ at the population level). Second,
 the inventory panel
 makes the mechanism explicit: the blue trajectory is markedly
 tighter and rarely touches the hard $\pm q_{\max}$ caps, indicating
@@ -1489,9 +1488,9 @@ events, $\omega = 0.30$.  Figure~\ref{fig:regime_trained_mean}
 reports the mean cumulative PnL $\pm 1$~std across episodes for the
 three policies.  Normalizing by the mean terminal PnL of the
 Algorithm~A symmetric-flow benchmark, the non-adapted Algorithm~A controller under
-regime-switching falls to roughly $-46\%$, while the Algorithm~B controller
+regime-switching falls to roughly $-39\%$, while the Algorithm~B controller
 ends around $37\%$.  The paired recovery of Algorithm~B relative to the
-non-adapted Algorithm~A controller is therefore about $80\%$ of the
+non-adapted Algorithm~A controller is therefore about $76\%$ of the
 stationary Algorithm~A benchmark.  A paired $t$-test on terminal PnL rejects
 equality at the $0.01\%$ level ($p < 10^{-4}$), so the
 improvement is not only economically large but also statistically
@@ -1514,9 +1513,9 @@ Figure~\ref{fig:regime_trained_inv} aggregates the inventory
 trajectories from the same Monte-Carlo run.  The time-averaged
 inventory standard deviation is normalized to the Algorithm~A
 symmetric-flow baseline.  Under regime-switching, the non-adapted
-Algorithm~A controller widens to $1.89\times$ that baseline, as directional
+Algorithm~A controller widens to $1.85\times$ that baseline, as directional
 regimes drag the position to the caps, whereas Algorithm~B contracts to
-$0.55\times$ the same baseline.  Algorithm~B more than closes the
+$0.56\times$ the same baseline.  Algorithm~B more than closes the
 regime-induced inventory dispersion gap, confirming that the PnL gain
 comes from genuine inventory containment rather than from lucky
 directional bets.
@@ -1541,7 +1540,7 @@ distribution widens sharply and shifts to negative raw PnL.  The
 Algorithm~B distribution (green), on the contrary, shifts back into positive
 raw PnL and is substantially tighter than the regime-switching
 distribution of the non-adapted Algorithm~A controller (its width is comparable
-to the symmetric-flow baseline: $10\%$ vs.\ $10\%$); its mean
+to the symmetric-flow baseline: $11\%$ vs.\ $10\%$); its mean
 corresponds to a little over one third of the stationary Algorithm~A benchmark
 rather than a loss-making outcome.
 
@@ -1551,8 +1550,8 @@ rather than a loss-making outcome.
   \caption{Terminal-PnL histograms across $N_{\mathrm{sim}} = 100$
   paired-seed episodes ($N_{\mathrm{steps}} = 100\,000$ events).
   Relative to the Algorithm~A symmetric-flow mean, the (mean, std) are
-  $(100\%,10\%)$ for Algorithm~A symmetric flow (gray), $(-46\%,38\%)$ for
-  Algorithm~A under regime-switching (orange), and $(37\%,10\%)$ for
+  $(100\%,10\%)$ for Algorithm~A symmetric flow (gray), $(-39\%,34\%)$ for
+  Algorithm~A under regime-switching (orange), and $(37\%,11\%)$ for
   Algorithm~B (green); dashed lines mark the per-policy means.  The
   Algorithm~B distribution is shifted right and substantially tighter than
   the non-adapted regime-switching distribution, indicating a
@@ -1571,24 +1570,27 @@ inferred regime, the inventory, the available spread, and the
 quote-exposure signal in the directions predicted by the classical market-making
 theory.
 
-The Algorithm~B controller is not a closed-form quoting rule, but its
-learned value function can still be interrogated locally.  We do this
-by anchoring each probe at a representative state observed at a
-controller decision epoch in a regime-switching evaluation episode.
-Holding all remaining state coordinates fixed at their observed
-values, we vary two economically meaningful features on a grid.  At
-each point on the grid, we evaluate the C51 network through its implied scalar
-value.
+We probe the learned value function around a constructed reference
+state. Each heatmap varies two features while holding all remaining
+coordinates fixed.\footnote{The reference state has a one-tick spread,
+zero inventory, four units at each represented depth level, and zero
+flow bias and quote-exposure imbalance. The normalized regime-age
+input is fixed at $0.7$, using the transformation defined in
+Appendix~\ref{app:bayesian_flow_filter}.}
+At each point on the grid, we evaluate the C51 network through its
+implied scalar value.
 \begin{equation}
   \widehat V_\theta(s)
   =
-  \max_{a\in\mathcal A} Q_\theta(s,a)
+  \max_{a\in\mathcal A(s)} Q_\theta(s,a)
   =
-  \max_{a\in\mathcal A}
+  \max_{a\in\mathcal A(s)}
   \sum_{i=1}^{N} z_i\,\pi_i(s,a),
 \end{equation}
-where maximization is over the six quoting actions used by the
-agent, and the second equality uses the C51 representation of each
+where $\mathcal A(s)$ contains the actions retained by the controller's
+inventory-dependent mask: all six away from the limits, and three offsets
+on the inventory-reducing side at either limit. The second equality uses
+the C51 representation of each
 action value as the mean of its categorical return distribution; the
 atom support $\{z_i\}_{i=1}^{N}$ and the atom count $N=101$ are those
  introduced for the C51 head in Section~\ref{sec:learning_formulation}.
@@ -1597,7 +1599,7 @@ value surface.
 
 \paragraph{Heatmap slices.}
 Figure~\ref{fig:interp_heatmaps} reports three heatmap slices of the
-Algorithm~B learned value function $\widehat V_\theta(s)=\max_a Q_\theta(s,a)$,
+Algorithm~B learned value function defined above,
 each varying the two state coordinates shown on its axes.  In
 Figure~\ref{fig:interp_heatmaps}(\subref{fig:interp_heat_inv_bayes}),
 the inventory--regime slice shows the clearest inventory-skew logic:
@@ -1619,7 +1621,7 @@ extreme.  Together, these local slices are consistent with Algorithm~B
 having internalized the qualitative trade-off that motivated its reward
 design---capture spread only when doing so does not push inventory into
 a one-sided regime---although they probe the value surface only around
-representative anchor states.
+the chosen reference state.
 
 \begin{figure}[htbp]
   \centering
@@ -1686,12 +1688,10 @@ vulnerable before the next market order arrives.
     \caption{Quote-exposure imbalance diagnostic.}
     \label{fig:interp_quote_exposure_example}
   \end{subfigure}
-  \caption{Representative-episode diagnostics for the auxiliary signals used
-  by Algorithm~B (each panel shows one representative evaluation episode).
-  The Bayesian filter provides a smoothed belief over the
-  latent directional regime and its run length, while the
-  queue-adjusted quote-exposure imbalance provides an instantaneous
-  measure of the asymmetry in the agent's own resting quotes.}
+  \caption{Auxiliary signals from one 5,000-event evaluation episode of
+  Algorithm~B with frozen weights. The Bayesian filter estimates flow bias
+  and mean regime age; the queue-adjusted quote-exposure imbalance measures
+  the asymmetry in the agent's exposure to bid and ask fills.}
   \label{fig:interp_signal_examples}
 \end{figure}
 
@@ -1699,12 +1699,9 @@ vulnerable before the next market order arrives.
 \label{sec:stress_tests}
 
 The Algorithm~B evaluation above matches the training family
-($\tau_r = 60$ MO events, $p_{\mathrm{buy}} \in [0.20, 0.80]$).  To test
-whether the controller learned a genuinely robust response rather than a
-policy tuned to that single persistence scale, we run three paired-seed
-stress diagnostics: within each panel the compared policies or
-specifications share the same exogenous seed and differ only in the
-regime-generation rule.  The last two use longer episodes
+($\tau_r = 60$ MO events, $p_{\mathrm{buy}} \in [0.20, 0.80]$). To assess
+robustness beyond the training persistence scale, we run three stress
+tests using paired random seeds. The last two use longer episodes
 ($500\,000$ vs.\ $100\,000$ LOB events), so their PnL levels should be
 read within each figure.
 
@@ -1713,12 +1710,12 @@ We sweep the mean regime duration $\tau_r \in \{15,30,60,120,240\}$ MO
 events at fixed width $p_{\mathrm{buy}}\in[0.20, 0.80]$, evaluating both
 the stationary Algorithm~A and the Algorithm~B controller over $N_{\mathrm{sim}}=100$
 paired episodes of $100\,000$ LOB events~(Figure~\ref{fig:phaseb_tau_sweep});
-the Algorithm~A curve reproduces the degradation of
-Figure~\ref{fig:degradation_tau} and is shown again only as the
-reference against Algorithm~B.  Algorithm~A decays monotonically, from about
-$30\%$ at $\tau_r=15$ to $-91\%$ at $\tau_r=240$, loss-making once
-regimes are persistent.  Algorithm~B stays
-profitable throughout, falling only from about $46\%$ to $23\%$: it
+Algorithm~A shows the same degradation pattern as in
+Figure~\ref{fig:degradation_tau}, serving here as the reference against
+Algorithm~B.  Algorithm~A decays monotonically, from about
+$29\%$ at $\tau_r=15$ to $-85\%$ at $\tau_r=240$, loss-making at
+longer regime durations.  Algorithm~B stays
+profitable throughout, falling only from about $45\%$ to $35\%$: it
 gives up part of the stationary spread-capture edge but does not
 collapse under long-lived directional pressure.
 
@@ -1744,10 +1741,10 @@ $L_k\sim\mathrm{Exp}(1/\tau_k)$ and $p_{\mathrm{buy}}\in[0.20,0.80]$; the
 agent does not observe $\tau_k$.  Against the fixed-$\tau_r=60$ benchmark
 over $N_{\mathrm{sim}}=50$ paired episodes of $500\,000$ events
 (Figure~\ref{fig:random_tau_stress}), the mean terminal PnL drops only about
-$6.9\%$.  The effect is distributional rather than central: random
-persistence widens the paired-effect distribution and thickens its left
-tail. Thus, Algorithm~B remains robust to randomizing the memory scale, at the
-cost of higher tail risk.
+$6.1\%$.  The observed PnL distribution becomes more dispersed, with
+lower outcomes in its left tail. Algorithm~B therefore retains positive
+mean PnL when the memory scale varies, but some episodes yield substantially
+lower returns.
 
 \begin{figure}[htbp]
   \centering
@@ -1755,8 +1752,8 @@ cost of higher tail risk.
     \includegraphics[width=\linewidth]{random_tau_stress.png}
     \caption{Random-persistence stress: each regime draws its own
     $\tau_k\in\{15,30,60,120,240\}$ before its exponential duration,
-    vs.\ a fixed-$\tau_r=60$ benchmark.  The main change is increased
-    left-tail risk.}
+    vs.\ a fixed-$\tau_r=60$ benchmark. The observed PnL distribution
+    is more dispersed, with lower outcomes in its left tail.}
     \label{fig:random_tau_stress}
   \end{subfigure}
   \hfill
@@ -1768,7 +1765,8 @@ cost of higher tail risk.
     correlation on the directional side: regime signs are retained with
     probability $\rho_{\mathrm{side}}=0.85$, imbalance intensity
     $I_k\sim\mathrm{Uniform}[0.00,0.30]$.
-    The stress increases downside tail risk.}
+    The observed PnL distribution is more dispersed, with lower
+    outcomes in its left tail.}
     \label{fig:correlated_regime_stress}
   \end{subfigure}
   \caption{Algorithm~B stress tests, both over $N_{\mathrm{sim}}=50$
@@ -1783,24 +1781,22 @@ random-$\tau_k$ duration mechanism ($\tau_k\sim\mathrm{Uniform}\{15,30,60,120,24
 $L_k\sim\mathrm{Exp}(1/\tau_k)$) and add temporal correlation
 on the directional side.  Concretely, at each regime boundary the
 sign $s_k\in\{-1,+1\}$ is retained with probability
-$\rho_{\mathrm{side}}=0.85$, the imbalance intensity (magnitude of the
-deviation of $p_{\mathrm{buy},k}$ from the symmetric value $0.5$) is
-$I_k\sim\mathrm{Uniform}[0.00,0.30]$, and
+$\rho_{\mathrm{side}}=0.85$. The imbalance magnitude relative to
+symmetric flow is $I_k\sim\mathrm{Uniform}[0.00,0.30]$, and
 $p_{\mathrm{buy},k}=0.50+s_k I_k$.  This keeps the support
 $p_{\mathrm{buy}}\in[0.20,0.80]$ but clusters the same-side pressure,
 a harder adverse-selection environment.  Algorithm~B remains profitable
 (Figure~\ref{fig:correlated_regime_stress}): the mean terminal PnL falls
-about $16.4\%$ versus the fixed benchmark $\tau_r=60$, with a
-substantially larger left tail, but without returning to the loss-making
-regime of the stationarily trained controller.
+about $15.8\%$ versus the fixed benchmark $\tau_r=60$. The observed
+PnL distribution is more dispersed, with lower outcomes in its left tail,
+while mean PnL remains positive.
 
 Taken together, these tests support reading Algorithm~B as a robustness
 intervention rather than a fit to a simulator seed or timescale: it
  continues to earn money when $\tau_r$ is swept far from the training point,
 when persistence varies randomly between regimes, and when the regime
-signs become highly correlated.  The remaining failure mode is not a
-collapse of mean PnL but an increase in downside tail risk under the
-most persistent, correlated paths.
+signs become highly correlated. Mean PnL remains positive, but some
+persistent, correlated paths produce substantially lower returns.
 
 \section{Algorithm C: Scenario-Bandit Robust Fine-Tuning}
 \label{sec:scenario_bandit_finetuning}
@@ -1824,11 +1820,11 @@ together with the seed used to generate that sequence:
   =
   \bigl((\tau_{i,k},L_{i,k},p_{i,k})_{k=1}^{K_i},\,\zeta_i\bigr).
 \]
-Here $K_i$ denotes the (scenario-dependent) number of regimes stored in
-$\xi_i$, chosen at generation time as the smallest count such that the
-cumulative regime length $\sum_{k=1}^{K_i} L_{i,k}$ covers the expected
-number of market orders $\widehat M$ in an episode
-(Section~\ref{sec:nonstat_training}, Eq.~\eqref{eq:mo_horizon}).
+Here $K_i$ denotes the number of regimes stored in $\xi_i$, generated
+until their cumulative duration covers the estimated episode count
+$\widehat M$ with an additional buffer.\footnote{The buffer is
+$1000$ market orders.} The estimate $\widehat M$ is defined in
+Section~\ref{sec:nonstat_training}, Eq.~\eqref{eq:mo_horizon}.
 The scalar $\zeta_i$ is the random seed used to generate the regime tuple;
 the per-regime scale $\tau_{i,k}$ is retained only for reproducibility
 and is not needed to evaluate the schedule.
@@ -1866,7 +1862,7 @@ $P_0$ is the \emph{scenario-level} equal-weight mixture of these two
 families: a draw $\xi\sim P_0$ first selects one of the two families
 with a fair coin and then generates the entire regime schedule
 $(\tau_k,L_k,p_k)_{k\ge1}$ from that family's law, appending regimes
-until the cumulative length covers $\widehat M$ as described above.
+until the cumulative length covers the buffered horizon described above.
 The two families therefore mix only across scenarios, never within
 one.  The pool
 $\{\xi_i\}_{i=1}^{M}$, with $M=256$, is initialized with $128$
@@ -1882,11 +1878,17 @@ Standard training resamples a new scenario each iteration from the
 reference generator $P_0$ and updates the controller via the same
 Rainbow/C51 temporal-difference rule used in
 Algorithm~B (Section~\ref{sec:learning_formulation}), which targets the
-average-case expected discounted per-decision return
+average-case expected discounted episode return
 \begin{equation}
-  \max_\theta \; \E_{\xi\sim P_0}\!\left[\sum_{t=0}^{T-1} \Gamma_t\, r_t(\theta;\xi)\right].
+  \max_\theta \; \E_{\xi\sim P_0}\!\left[
+    \sum_{t=0}^{T-1}
+    \gamma^{\sum_{j=0}^{t-1}N_j}\, r_t(\theta;\xi)
+  \right].
   \label{eq:bandit_td_objective}
 \end{equation}
+Each decision reward is discounted by the total number of book
+events preceding its interval. For $t=0$, the empty sum is zero,
+so the first reward has weight one.
 The scenario bandit instead reuses and
 adaptively re-weights the finite pool $\{\xi_i\}$.
 
@@ -1895,32 +1897,38 @@ We denote by $\mathrm{PnL}_T(\theta;\xi)$ the terminal PnL of policy
 $\pi_\theta$ under scenario $\xi$ (terminal cash plus mark-to-market
 of the carried inventory, both evaluated once at $t=T$). On each replay, the current market-making policy interacts with the simulator
 step-by-step, generates its own actions and transition data, and the
-selected scenario receives an updated terminal score.  Let
-$H_T(\theta;\xi_i)$ denote the scalar score used by the bandit after
-rolling out the current policy on scenario $\xi_i$; in our
-implementation this is the penalized terminal PnL. Concretely, $H_T(\theta;\xi_i)$ takes $\mathrm{PnL}_T(\theta;\xi_i)$ and subtracts from it the sum over decisions $t=0,\ldots,T-1$ of the same
-quadratic and inventory-wall penalties that appear in the per-decision
-reward $r_t$ of Eq.~\eqref{eq:reward}:
+selected scenario receives an updated terminal score. Let
+$H_T(\theta;\xi_i)$ denote the implemented numerical score used by
+the bandit after rolling out the current policy on scenario $\xi_i$.
+It subtracts inventory penalties accumulated over all book events
+from terminal PnL, reusing the same numerical coefficient $\varphi$
+as the learning reward in Eq.~\eqref{eq:reward}:
 \[
   H_T(\theta;\xi_i)
   =
   \mathrm{PnL}_T(\theta;\xi_i)
   \;-\;
-  \sum_{t=0}^{T-1}
+  \varphi\sum_{t=0}^{T-1}\sum_{n=0}^{N_t-1}
   \Bigl[
-    \varphi\, q_{t+1}^{2}
+    \bigl(q^{+}_{t,n}\bigr)^2
     +
-    \varphi\bigl(|q_{t+1}|-q_{w}\bigr)_{+}^{2}
+    \bigl(|q^{+}_{t,n}|-q_w\bigr)_+^2
   \Bigr].
-\]  $H_T$ therefore differs from the discounted per-decision return of
-Eq.~\eqref{eq:bandit_td_objective} in two distinct ways:
-(i)~$H_T$ is \emph{undiscounted}, whereas the TD objective discounts
-each per-decision reward $r_t$ by the SMDP factor
-$\Gamma_t=\gamma^{N_t}$ (and $r_t$ itself already contains the
-within-decision $\gamma^n$ discounting of Eq.~\eqref{eq:smdp_reward});
-and (ii)~$H_T$ values carried inventory via \emph{terminal}
-mark-to-market, whereas $r_t$ values realized fills via the dampened
-per-decision term $\Delta q(f)(m_{t+1}-p(f))$.
+\]
+Here $q^{+}_{t,n}$ is the inventory immediately after event $n$
+within decision interval $t$, as in Eq.~\eqref{eq:reward}.
+The inner sum includes events during which quotes remain unchanged.
+
+The score $H_T$ is \emph{undiscounted}, whereas the learning return
+in Eq.~\eqref{eq:bandit_td_objective} applies the cumulative
+event-clock discount to each decision reward $r_t$, which already
+includes the within-interval discounting of
+Eq.~\eqref{eq:smdp_reward}. The score also uses full terminal PnL,
+including changes in the value of carried inventory, whereas
+$r_t$ aggregates the event-level dampened fill terms
+$\Delta q(f)(m^{+}_{t,n}-p(f))$.
+The score determines scenario difficulty and sampling, while the
+decision rewards drive the MM's temporal-difference updates.
 
 The scenario loss is
 \[
@@ -1994,11 +2002,26 @@ $w_{\max}=0.05$ and redistribute the excess mass over the remaining
 pool, preventing one scenario from dominating the entire fine-tuning. We linearly increase
 $\beta_{\mathrm{sb}}$ from $0.00$ to $0.50$ and linearly decrease $\varepsilon$ from
 $1.00$ to $0.50$ over the first half of fine-tuning, and with every $500$
-bandit update we regenerate the easiest $10\%$ of the pool with new draws from $P_0$. Newly inserted scenarios receive the current pool-average difficulty, so they are treated as neutral until their first rollout.  The bandit thus starts close to uniform sampling over $P_0$ and gradually concentrates sampling on the low-return scenarios discovered by the current market maker.
+bandit update we regenerate the easiest $10\%$ of the pool with new
+draws from $P_0$.\footnote{Refreshed scenarios inherit the pool's
+median difficulty.} The bandit thus starts close to uniform sampling
+over $P_0$ and gradually concentrates sampling on the low-return
+scenarios discovered by the current market maker.
 
-The neural-network update remains the ordinary Rainbow/C51 update used
-in Algorithm~B, and the network parameters are initialized from the
-trained Algorithm~B controller rather than from scratch.
+Algorithm~C starts from Algorithm~B. To help preserve the learned
+policy during fine-tuning, we penalize changes to the pretrained
+network parameters using L2 regularization:
+\[
+  \mathcal L_C(\theta)
+  =
+  \mathcal L_{\mathrm{C51}}(\theta)
+  +
+  \lambda_{\mathrm{anchor}}\|\theta-\theta_B\|_2^2,
+  \qquad \lambda_{\mathrm{anchor}}=10^{-3}.
+\]
+Here, $\theta_B$ is a fixed copy of the pretrained Algorithm~B
+network parameters, and $\mathcal L_{\mathrm{C51}}$ includes the
+replay importance-sampling weights.
 Figure~\ref{fig:scenario_bandit_loop} summarizes the complete
 selection--rollout-update loop.
 
@@ -2008,8 +2031,9 @@ selection--rollout-update loop.
   \caption{The Algorithm~C scenario-bandit loop.  Pool difficulties $d_i$
   are converted into sampling probabilities $w_i$ by standardization,
   softmax reweighting, an $\varepsilon$-uniform mix, and a per-arm
-  cap; a scenario $\xi_i \sim w$ is rolled out under the ordinary
-  Rainbow/C51 update, its penalized terminal score $H_T$ defines the
+  cap; a scenario $\xi_i \sim w$ is rolled out under a Rainbow/C51
+  update augmented by the anchoring penalty above. Its penalized
+  terminal score $H_T$ defines the
   arm loss $\ell_i = -H_T(\theta;\xi_i)$, and the selected arm's
   difficulty is updated by the EWMA.  Dashed arrows mark the feedback
   paths: updated difficulties feed the next selection, and the easiest
@@ -2019,9 +2043,9 @@ selection--rollout-update loop.
 
 \paragraph{Random-persistence bandit fine-tuning.}
 Figure~\ref{fig:bandit_random_tau} compares the Algorithm~B controller
-with the fine-tuned scenario-bandit controller under the random-$\tau$ stress. Relative to the Algorithm~B benchmark in this plot, scenario-bandit
-fine-tuning improves mean terminal PnL by about $16\%$ and reduces
-the empirical standard deviation to about $70\%$ of its Algorithm~B
+with the fine-tuned scenario-bandit controller under the random-$\tau$ stress. Relative to the Algorithm~B benchmark in this plot, Algorithm~C
+improves mean terminal PnL by about $14\%$ and reduces
+the empirical standard deviation to about $75\%$ of its Algorithm~B
 level. 
 
 \begin{figure}[htbp]
@@ -2042,7 +2066,8 @@ level.
     \label{fig:bandit_correlated_regime_stress}
   \end{subfigure}
   \caption{Algorithm~C scenario-bandit fine-tuning under both stress
-  families.  In each panel, ``Algorithm~C'' denotes the
+  families, with 100 paired episodes of $500\,000$ LOB events per panel.
+  In each panel, ``Algorithm~C'' denotes the
   Algorithm~B controller after the scenario-bandit fine-tuning of
   Section~\ref{sec:scenario_bandit_finetuning}.}
   \label{fig:bandit_combined}
@@ -2052,36 +2077,31 @@ level.
 Correlated-direction stress is more adversarial because the sign
 of the market-order imbalance persists across regime boundaries.
 Relative to the stress benchmark of Algorithm~B in 
-Figure~\ref{fig:bandit_correlated_regime_stress}, the adjustment of the scenario-bandit improves the mean terminal PnL by approximately $17\%$ and reduces the empirical standard deviation to approximately $76\%$ of its Algorithm~B
+Figure~\ref{fig:bandit_correlated_regime_stress}, Algorithm~C improves the mean terminal PnL by approximately $17\%$ and reduces the empirical standard deviation to approximately $75\%$ of its Algorithm~B
 level. 
 
-These two diagnostics clarify the role of the scenario bandit.
-Algorithm~B learns to use belief and quote-exposure features to survive
-non-stationary flow, but its training objective is still the average-case.
-The bandit changes which stored regimes are replayed more often,
-directing updates toward adverse realizations.
-The result is an RLMM whose performance is less sensitive to
-random regime persistence and more resilient to clustered directional
-pressure.
+Algorithm~C samples difficult scenarios more often, directing
+fine-tuning toward adverse order-flow conditions. Under both stress
+tests, it increases mean terminal PnL and reduces dispersion relative
+to Algorithm~B.
 
 \section{Discussion and Conclusion}
 
 Our findings are threefold.  First, classical analytical control
 remains a meaningful benchmark in realistic microstructure: GLFT,
 once properly calibrated, transfers well to an event-driven
-stochastic LOB and dominates the at-best baseline in risk--return terms.
+stochastic LOB and offers an interpretable trade-off between mean PnL
+and inventory control relative to an at-best baseline.
 Second, a
 distributional DQN is a viable controller for market making and
-outperforms GLFT over the entire observed stationary risk--return frontier,
+outperforms GLFT at comparable levels of PnL dispersion under stationary flow,
 showing that data-driven control can extract structure that
-closed-form policies miss.  Third, robustness rather than raw
-profitability is the central open problem: agents trained in a
-stationary order-flow simulator are strongly unprofitable under
-persistent directional flow, and this fragility is not resolved by
-larger networks or more training data alone.
+closed-form policies miss. Third, robustness remains a central challenge:
+in our experiments, controllers trained under stationary flow become
+unprofitable under persistent directional flow.
 
-The fine-tuning pipeline introduced here provides a first concrete
-answer: re-training the stationary-optimal controller on
+The regime-aware training introduced here provides a first concrete
+answer: training a separate controller on
 regime-switching flow with a Bayesian change-point belief over
 directional order flow and a queue-adjusted quote-exposure signal
 recovers profitability under non-stationary order flow.  The scenario-bandit fine-tuning step
@@ -2099,21 +2119,24 @@ resting order per side, so order sizing and multi-level quoting are out
 of scope.  (iii)~The regime model fixes the width at $\omega = 0.30$
 and uses exponential durations; richer regime structures (heavy-tailed
 durations, more than two directional modes, intraday seasonality) are
-not explored. 
+not explored. (iv)~With 100 paired episodes per stress test, the B/C
+comparisons describe empirical mean and dispersion; they do not
+reliably quantify rare-loss probabilities.
 
 \paragraph{Outlook.}
 These limitations point to concrete next steps.  A first direction is
-to move beyond the zero-intelligence simulator toward more realistic market models. A second is to enrich the action space with order sizing
-and multi-level quoting and to add execution-cost and queue-position
-features that the current compact state omits.
+to move beyond the zero-intelligence simulator toward more realistic market models.
+A second direction is to allow order sizing and multi-level quoting,
+and to account explicitly for execution costs.
 
 \paragraph{Conclusion.}
-The central contribution is a two-stage fine-tuning
-pipeline---a Bayesian regime belief with a queue-adjusted exposure
-signal (Algorithm~B), followed by scenario-bandit reweighting
-(Algorithm~C)---that turns a stationary-optimal RLMM into a
-controller that remains profitable under regime-switching flow and has
-a tighter stressed terminal-PnL tail.  
+The central contribution is a two-stage robust-training
+pipeline---independent regime-aware training with a Bayesian belief
+and queue-adjusted exposure signal (Algorithm~B), followed by
+scenario-bandit fine-tuning (Algorithm~C)---that yields a controller
+that remains profitable on average under the tested regime-switching
+conditions. Algorithm~C further increases mean terminal PnL and reduces
+dispersion in both stress tests.
 
 {\small
 \bibliographystyle{unsrtnat}
@@ -2127,7 +2150,7 @@ a tighter stressed terminal-PnL tail.
 
 This appendix derives the Bayesian belief used in the Algorithm~B state
 augmentation, adapting the Bayesian online change-point detection
-framework of \citet{adams2007bocpd} (see also \citealp{fearnhead2007online})
+framework of \citet{adams2007bocpd} (see also \citet{fearnhead2007online})
 to the signed market-order stream.  The filter is defined on the market-order clock: the
 index $t$ below counts market orders rather than all LOB events.  At
 the $t$-th market order the observed side is
@@ -2312,7 +2335,7 @@ Second, the posterior expected run length is
   =
   \sum_\ell g_t(\ell)\,\ell.
 \]
-The belief vector used in the Algorithm~B state is therefore
+The filter's belief summary is therefore
 \[
   b_t=(\widehat{\iota}_t,\bar{\ell}_t).
 \]
@@ -2321,11 +2344,29 @@ summarizes the inferred side of the current flow pressure, while
 $\bar{\ell}_t$ summarizes how old the current directional episode
 appears to be.
 
-\section{Closed-Form GLFT Misspecification Under Flow Asymmetry}
+Before entering the network, the posterior mean regime age is
+transformed into
+\[
+  \widetilde{\ell}_t
+  =
+  \min\left\{
+    1,\;
+    \frac{\log(1+\bar{\ell}_t)}{\log(1+5\tau_r)}
+  \right\}.
+\]
+Here, $\tau_r$ is the filter's assumed mean regime duration. Under its
+constant-hazard prior, the probability that a regime lasts beyond
+$5\tau_r$ MO events is $e^{-5}\approx0.7\%$. This motivates using
+$5\tau_r$ as the reference age for normalization. The logarithm
+compresses large ages, while the upper bound maps ages beyond this
+reference to one.
+
+\section{A Reduced GLFT Model Under Flow Asymmetry}
 \label{app:glft_misspecification}
 
-This appendix derives the analytical curve used in
-Figure~\ref{fig:misspec_comparison}.  The object is a GLFT market
+This appendix derives the stationary inventory law and the finite-horizon
+PnL approximation used in Figure~\ref{fig:misspec_comparison}.
+The object is a GLFT market
 maker whose quotes are computed under a symmetric order flow, but whose
 realized fills are generated by a static asymmetric market-order
 environment with buy probability $p\in(0,1)$.  The parameter $p$ remains
@@ -2362,7 +2403,7 @@ and the inventory-skew coefficient;
   }.
 \]
 Here $A$ and $\kappa$ are the exponential fill-intensity parameters,
-$\sigma$ is the diffusion scale, and $\gamma_{\mathrm{GLFT}}$ is the GLFT
+$\sigma$ is the diffusion scale, and $\gamma_{\mathrm{GLFT}}$ is the
 risk-aversion parameter.  At zero inventory, the continuous GLFT quote
 distance is
 \[
@@ -2383,41 +2424,32 @@ distance.
 The realized environment has total market-order intensity fixed, but
 splits that flow according to the buy probability $p$. In
 the ideal GLFT model, a quote at distance $\delta$ has fill intensity
-$A e^{-\kappa\delta}$.  In the FIFO simulator, however, the agent
-shares queues with other resting orders and can lose priority through
-discrete decision updates.  We therefore use the effective scale
+$A e^{-\kappa\delta}$. To match the symmetric-flow execution rate of
+the implemented GLFT policy, we introduce an effective fill-rate correction,
 \[
   A_{\mathrm{eff}}=\eta A,
   \qquad
   \eta
   =
   \frac{R_{\mathrm{empirical}}}
-       {2A e^{-\kappa\bar\delta}},
+       {2A e^{-\kappa\bar\delta}}.
 \]
-where $R_{\mathrm{empirical}}$ is the empirical two-sided fill rate of
-the simulator at symmetric flow, measured at the zero-inventory quote
-depth $\bar\delta$.  Operationally, if
-$N_{e}^{a,\mathrm{fill}}(\bar\delta)$ and
-$N_{e}^{b,\mathrm{fill}}(\bar\delta)$ are the ask- and bid-side fills
-observed in symmetric-flow calibration episode $e$, with
-$e=1,\ldots,E_{\mathrm{calib}}$, and $T_e$ is the corresponding
-episode exposure time, then
+We estimate $R_{\mathrm{empirical}}$ by averaging the two-sided
+fill rate across symmetric-flow episodes using the inventory-dependent
+GLFT policy:
 \[
   R_{\mathrm{empirical}}
   =
+  \frac{1}{E_{\mathrm{calib}}}
+  \sum_{e=1}^{E_{\mathrm{calib}}}
   \frac{
-    \sum_{e=1}^{E_{\mathrm{calib}}}
-    \left[
-      N_{e}^{a,\mathrm{fill}}(\bar\delta)
-      +
-      N_{e}^{b,\mathrm{fill}}(\bar\delta)
-    \right]
-  }{
-    \sum_{e=1}^{E_{\mathrm{calib}}} T_e
-  }.
+    N_e^{a,\mathrm{fill}}+N_e^{b,\mathrm{fill}}
+  }{T_e}.
 \]
-The denominator $2A e^{-\kappa\bar\delta}$ is the corresponding
-two-sided GLFT prediction at $p=1/2$.  With this convention, the
+Here, $N_e^{a,\mathrm{fill}}$ and $N_e^{b,\mathrm{fill}}$ count fills
+during episode $e$, whose duration is $T_e$. Dividing this estimate by
+the zero-inventory GLFT reference rate $2Ae^{-\kappa\bar\delta}$ gives
+$\eta$. With this convention, the
 realized interior fill rates under a true buy-MO probability $p$ are
 \begin{align}
   r_a(q;p)
@@ -2453,22 +2485,21 @@ The numerical curves in Figure~\ref{fig:misspec_comparison} and in
 the appendix diagnostics use the calibrated values of
 Eq.~\eqref{eq:glft_calib_values},
 \[
-  A=0.1507,\qquad
-  \kappa=2.335,\qquad
+  A=0.1132,\qquad
+  \kappa=2.240,\qquad
   \sigma=0.30,\qquad
   \gamma_{\mathrm{GLFT}}=10^{-6},\qquad
   Q=8,\qquad
-  \eta\simeq0.82 .
+  \eta\simeq1.09 .
 \]
 These values give
-$\delta_{\mathrm{base}}\simeq0.43$ ticks and
-$c_{\mathrm{skew}}\simeq5.90\times10^{-4}$, hence
-$\bar\delta\simeq0.43$ ticks.  In the PnL expressions below, $T$
-denotes the episode duration in the same time units as the rates
+$\delta_{\mathrm{base}}\simeq0.45$ ticks and
+$c_{\mathrm{skew}}\simeq6.94\times10^{-4}$, hence
+$\bar\delta\simeq0.45$ ticks. In the PnL expressions below, $T$
+denotes a fixed reference horizon in the same time units as the rates
 (distinct from the decision count $T$ of
-Section~\ref{sec:scenario_bandit_finetuning}), and
-$v_{\mathrm{tick}}$ is the monetary value of one tick; the plotted
-curves use $v_{\mathrm{tick}}=1$.
+Section~\ref{sec:scenario_bandit_finetuning}). The plotted PnL curves
+use a monetary tick value of $v_{\mathrm{tick}}=0.01$.
 
 \subsection{Stationary Inventory Distribution}
 
@@ -2755,19 +2786,29 @@ stationary expected spread-capture rate is therefore
   =
   \sum_{q=-Q}^{Q}\psi(q)g(q;p).
 \]
-Over an episode of duration $T$ and tick value $v_{\mathrm{tick}}$,
+For the finite-horizon PnL curves, inventory starts at zero. Let
+$\rho_t(q;p)=\Prob(q_t=q\mid q_0=0)$, where $t$ is elapsed simulation
+time. We compute this distribution from the forward equations with the
+transition rates above, using a matrix exponential. Its time average is
+\[
+  \bar\rho_T(q;p)=\frac{1}{T}\int_0^T\rho_t(q;p)\,\dd t.
+\]
+For duration $T$ and tick value $v_{\mathrm{tick}}$, expected spread
+capture is
 \begin{equation}
   \E[\mathrm{PnL}_{\mathrm{spread}}](p)
   =
   v_{\mathrm{tick}}T
   \sum_{q=-Q}^{Q}
-  \psi(q)
+  \bar\rho_T(q;p)
   \bigl[
     r_a(q;p)\delta_a(q)+r_b(q;p)\delta_b(q)
   \bigr].
   \label{eq:app_miss_spread_pnl}
 \end{equation}
-This is the GLFT-consistent expected-PnL expression under the original
+Replacing $\bar\rho_T(q;p)$ by $\psi(q)$ gives the corresponding result
+for stationary initialization. This is the GLFT-consistent expected-PnL
+expression under the original
 martingale mid-price assumption.  Indeed, if
 \[
   \dd S_t=\sigma\,\dd W_t
@@ -2833,12 +2874,13 @@ matches the analytical comparison, via
   T = t_{\mathrm{last}}-t_{\mathrm{first}},
 \]
 which gives $T\approx 844$ simulated time units for the run used in
-the plots.
+the plots. This fixed reference horizon approximates the random duration
+of the 5,000-event FIFO episodes.
 Then
 \[
   \E\left[\int_0^T q_t\,\dd S_t\right]
   =
-  v_0(2p-1)T\,\bar q(p),
+  v_0(2p-1)T\sum_{q=-Q}^{Q}q\,\bar\rho_T(q;p),
 \]
 and the full drift-corrected expected PnL is
 \begin{equation}
@@ -2846,10 +2888,10 @@ and the full drift-corrected expected PnL is
   =
   \E[\mathrm{PnL}_{\mathrm{spread}}](p)
   +
-  v_{\mathrm{tick}}v_0(2p-1)T\,\bar q(p).
+  v_{\mathrm{tick}}v_0(2p-1)T\sum_{q=-Q}^{Q}q\,\bar\rho_T(q;p).
 \end{equation}
-For $p>1/2$, the drift is positive while
-\eqref{eq:app_miss_qbar} gives $\bar q(p)<0$; for $p<1/2$, the
+For $p>1/2$, the drift is positive while the time-averaged expected
+inventory is negative; for $p<1/2$, the
 signs reverse.  Hence the drift correction is adverse on both sides
 of the symmetric point (Figure~\ref{fig:app_miss_pnl}).
 
@@ -2867,70 +2909,10 @@ of the symmetric point (Figure~\ref{fig:app_miss_pnl}).
     \caption{PnL decomposition.}
     \label{fig:app_miss_pnl_decomp}
   \end{subfigure}
-  \caption{Expected PnL under static flow misspecification.  The
-  spread-only curve is already damaged by boundary concentration, and
-  the drift-corrected curve adds the adverse mark-to-market component
-  created by inventory alignment against directional price pressure.}
+  \caption{Finite-horizon PnL under static flow asymmetry, starting from
+  zero inventory with $T\approx844$. Directional flow reduces spread
+  capture and adds an adverse mark-to-market contribution.}
   \label{fig:app_miss_pnl}
-\end{figure}
-
-\subsection{Symmetry and Local Shape}
-
-The transformation $p\mapsto1-p$ sends
-\[
-  \vartheta=\log\left(\frac{p}{1-p}\right)
-  \quad\text{to}\quad
-  -\vartheta,
-\]
-and the stationary law transforms by $q\mapsto-q$ (since $\psi(q)$ depends on $q$ only through $q^2$ and the tilt $\vartheta q$).  The spread-capture
-curve is therefore symmetric around $p=1/2$.  The drift correction is
-also symmetric because it is the product of two odd terms,
-$(2p-1)$ and $\bar q(p)$.  To obtain the local form of the logit,
-set $x=p-\tfrac12$.  Then
-\[
-  \vartheta
-  =
-  \log\left(\frac{p}{1-p}\right)
-  =
-  \log\left(\frac{1+2x}{1-2x}\right)
-  =
-  \log(1+2x)-\log(1-2x).
-\]
-Using
-$\log(1+u)-\log(1-u)=2(u+u^3/3+O(u^5))$ with
-$u=2x$ gives
-\[
-  \vartheta
-  =
-  4x+\frac{16}{3}x^3+O(x^5)
-  =
-  4\left(p-\frac12\right)
-  +
-  O\!\left((p-\tfrac12)^3\right).
-\]
-Consequently, by symmetry the odd Taylor coefficients vanish and the expected-PnL curve admits the local expansion
-\[
-  \E[\mathrm{PnL}](p)
-  =
-  \E[\mathrm{PnL}](1/2)
-  +
-  C\left(p-\frac12\right)^2
-  +
-  O\!\left((p-\tfrac12)^4\right).
-\]
-In the calibrated regime used for Figure~\ref{fig:misspec_comparison},
-the boundary and drift effects make the curvature negative, producing
-the inverted-U shape around the symmetric flow
-(Figure~\ref{fig:app_miss_local_quadratic}).
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.60\linewidth]{as_miss_local_quadratic_fit.png}
-  \caption{Exact drift-corrected misspecification curve and local
-  quadratic approximation around $p=1/2$.  The expansion captures the
-  central region, while higher-order boundary and drift effects become
-  visible farther into the more asymmetric specifications.}
-  \label{fig:app_miss_local_quadratic}
 \end{figure}
 
 \end{document}

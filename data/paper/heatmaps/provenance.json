@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "checkpoint": "checkpoints/deep_mm_mtm_pure_invp0.0010_g0p999_nstep3_h1x256_a6_regime_exponential_factored_noise_fully_noisy_inv_wall_dampened_reward_cyc_lr_fill_quote_exposure_bayes_on2_mix_off_truncated_off_best_ma100.pt",
+  "checkpoint_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+  "algorithm": "B",
+  "USE_MIXTURE": false,
+  "reference_state": {
+    "spread": 1.0,
+    "inventory": 0.0,
+    "pure_mm_bid_sizes": [
+      4.0,
+      4.0
+    ],
+    "pure_mm_ask_sizes": [
+      4.0,
+      4.0
+    ],
+    "bayes_m_hat": 0.0,
+    "bayes_expected_run_length": 0.7,
+    "fill_imbalance_ewma": 0.0
+  },
+  "evaluation": "Frozen weights, eval mode; V(s)=max Q(s,a) over the actions retained by the controller action mask.",
+  "mask_method": "_get_valid_action_mask",
+  "mask_semantics": "Canonical representatives of recovery-side offsets at inventory limits; all six actions elsewhere.",
+  "retained_indices_at_long_cap": [
+    0,
+    1,
+    4
+  ],
+  "retained_indices_at_short_cap": [
+    0,
+    2,
+    5
+  ],
+  "age_coordinate": "0.7 is the already normalized network feature, not 0.7 MO events.",
+  "stats": {
+    "p_buy_mhat_vs_inv": {
+      "min": -2.988581657409668,
+      "max": 1.9856274127960205,
+      "mean": -0.5385682582855225
+    },
+    "inventory_vs_spread": {
+      "min": -2.992166757583618,
+      "max": 2.331122398376465,
+      "mean": -0.44262459874153137
+    },
+    "bayes_m_vs_spread": {
+      "min": 1.7069811820983887,
+      "max": 2.331223726272583,
+      "mean": 2.043320894241333
+    }
+  },
+  "comparison": {
+    "p_buy_mhat_vs_inv": {
+      "grid_points": 697,
+      "boundary_points": 82,
+      "changed_points": 48,
+      "max_abs_difference": 0.022217988967895508,
+      "max_abs_unmasked_vs_previous": 0.0,
+      "interior_exactly_unchanged": true,
+      "max_difference_at": {
+        "x": 0.20000000000000018,
+        "y": 8.0,
+        "old": -2.853680372238159,
+        "new": -2.8758983612060547
+      },
+      "old_stats": {
+        "min": -2.985211133956909,
+        "max": 1.9856274127960205,
+        "mean": -0.5376304388046265
+      },
+      "corrected_stats": {
+        "min": -2.988581657409668,
+        "max": 1.9856274127960205,
+        "mean": -0.5385682582855225
+      }
+    },
+    "inventory_vs_spread": {
+      "grid_points": 697,
+      "boundary_points": 82,
+      "changed_points": 75,
+      "max_abs_difference": 0.14968132972717285,
+      "max_abs_unmasked_vs_previous": 0.0,
+      "interior_exactly_unchanged": true,
+      "max_difference_at": {
+        "x": 5.0,
+        "y": 8.0,
+        "old": -2.7314045429229736,
+        "new": -2.8810858726501465
+      },
+      "old_stats": {
+        "min": -2.9857306480407715,
+        "max": 2.331122398376465,
+        "mean": -0.4373159408569336
+      },
+      "corrected_stats": {
+        "min": -2.992166757583618,
+        "max": 2.331122398376465,
+        "mean": -0.44262459874153137
+      }
+    },
+    "bayes_m_vs_spread": {
+      "grid_points": 1681,
+      "boundary_points": 0,
+      "changed_points": 0,
+      "max_abs_difference": 0.0,
+      "max_abs_unmasked_vs_previous": 0.0,
+      "interior_exactly_unchanged": true,
+      "max_difference_at": {
+        "x": 1.0,
+        "y": -1.0,
+        "old": 1.9344840049743652,
+        "new": 1.9344840049743652
+      },
+      "old_stats": {
+        "min": 1.7069811820983887,
+        "max": 2.331223726272583,
+        "mean": 2.043320894241333
+      },
+      "corrected_stats": {
+        "min": 1.7069811820983887,
+        "max": 2.331223726272583,
+        "mean": 2.043320894241333
+      }
+    }
+  },
+  "original_generation": {
+    "source_bundle": "Heatmaps_B_mascara_20261003",
+    "source_sha256": {
+      "generate_heatmaps.py": "76a202089bad9b491ca6a644d18511ea58a6c77fb3b11d275563528720dc7ad2",
+      "provenance.json": "3d9ae7d184bda7e07ff1f2d089f6afa8d8333bd9c4dc6524ddd1834be73ccfae",
+      "reference_state.json": "7dc45af9e6ac36faae202d3be37371520949638388a5f7d7cb0c580855bd15f9",
+      "heatmap_data.npz": "c8671930b437d066bb70730dc70f47260b5b02df6e5ae39e851cdede4b7f99b6"
+    },
+    "validation": {
+      "unchanged_weights": true,
+      "raw_values_reproduce_previous_exactly": true,
+      "only_inventory_boundary_values_changed": true,
+      "protected_files_unchanged": 87
+    },
+    "prior_unmasked_array_sha256": "4dba1ad3882d56b5f8dc914beac94dfa49fc18595494b2b8b417436091e2a53c",
+    "note": "The final numeric archive and reference state are preserved byte-for-byte. This provenance uses repository-relative paths; original source hashes identify the generation audit."
+  },
+  "portable_generator": "repro/plot_paper_heatmaps.py",
+  "source_sha256": {
+    "repro/paper_runtime.py": "0474c179608c07ae722a0e7b9ca74f5da77119168b11f34bb0043b146279da2b",
+    "src/agents/dqn_distributional_with_throttle.py": "6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde",
+    "data/paper/heatmaps/reference_state.json": "7dc45af9e6ac36faae202d3be37371520949638388a5f7d7cb0c580855bd15f9"
+  },
+  "outputs_sha256": {
+    "heatmap_data.npz": "c8671930b437d066bb70730dc70f47260b5b02df6e5ae39e851cdede4b7f99b6",
+    "inventory_vs_spread.png": "d6726731ca0bd587e0d15e3e79157ec83509c32e92608a1b0ed84c6b6acd2ab9",
+    "inventory_vs_spread.pdf": "3e5b1bdff5ac535f8f70373cdb151ac99bf53e3589c167863846b357f51349d4",
+    "p_buy_mhat_vs_inv.pdf": "b897fec35a2192e3cddc1c275e3f2910a51c13bd1fe997bc0b885b83c2884860",
+    "p_buy_mhat_vs_inv.png": "65886e5edec3b913a8cb37281cb4750d7fdb30a59b9de5eaa616d04d62e63cd6",
+    "Heatmaps_B_mascara.pdf": "f4cd4e634db7bfcbf34bbae2a8c69e0c46640badb76f5d6bb1c2ca974d40340c",
+    "Heatmaps_B_mascara.png": "cdd479a8bbb3fb05cb5ab220e0de0e7315347f552a8d8b88791faaf479052512",
+    "bayes_m_vs_spread.pdf": "b4b8b058b2a127c2e335d90958000289a3ad458730fe1b681db07d8dccd6c99d",
+    "bayes_m_vs_spread.png": "5302abd60e8a16f0b6dfd352b28522f0e0b4d81ec80587d4c029cb9c4609da82"
+  },
+  "paper_assets": {
+    "p_buy_mhat_vs_inv.png": "paper/figures/p_buy_mhat_vs_inv.png",
+    "inventory_vs_spread.png": "paper/figures/inventory_vs_spread.png",
+    "bayes_m_vs_spread.png": "paper/figures/bayes_m_vs_spread.png"
+  }
+}

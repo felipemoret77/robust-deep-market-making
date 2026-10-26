@@ -1,0 +1,20 @@
+{
+  "source_campaign": "/Users/felipemoret/Desktop/frontier_glft_sem_pesos_5000_20261007",
+  "episodes_per_point": 10000,
+  "events_per_episode": 5000,
+  "warmup": 1000,
+  "runs": 110000,
+  "published_png_sha256": "3c2827c5b2e2e7f393fe30496935dd88f2eec2083821ff891121e7be573d206c",
+  "plotter": "repro/plot_frontier_10000.py",
+  "files": {
+    "analyze_campaign.py": "7a4f9cc69800817eeaea73870c28411faa1629c9214f74de0a596ae5b4c5e9b0",
+    "summary.csv": "2acce00d8f1c671a3aa6d174e84d83355161babaf14c0fb42212077dc2506186",
+    "per_run.csv.gz": "32268e1d8560bff7409946201d30fff80d20bedc78a6518e7dea3a988ced74af",
+    "campaign_manifest.json": "bd9bb229dd946fea5feaf6da13e3ea5d01efc9c863cbe13a2fefe3743cdc1aa4",
+    "analysis_manifest.json": "d0804c340b0f6c05ed7ffdd58cdb4b614f059f41f731b78c709aade84192de09",
+    "calibration_used.json": "c59d0f37af698897a0af0f255be0b8de869a4711da7fbbe8f0a56c8d2af181cd",
+    "candidate.py": "b87810dca0b31f1964d8e32a8dac16670aebd5f0d0a64c8fd0fd524481ca0d17",
+    "completion.json": "1a9e851b289b8bd27114deb94ea3d3a4f6a2f7eb299946e49113dc168889e966"
+  },
+  "scope": "Selected frontier only. Other GLFT figures retain their archived calibration pending regeneration; config/frontier_fresh_seeds.json and frontier.py evaluate describe the legacy 1000-seed campaign."
+}
