@@ -43,10 +43,10 @@ def derive():
     mc['trace_step']=paths[0]['trace_step'];arrays['regime_mc.npz']=mc
     for family in ('random','correlated'):
         fixed=values(family+'_fixed_B');b=values(family+'_B');c=values(family+'_C')
-        arrays['historical_results/'+family+'.npz']=dict(fixed_pnl=fixed,stress_pnl=b[:50],paired_pnl_difference=b[:50]-fixed)
+        arrays['policy_results/'+family+'.npz']=dict(fixed_pnl=fixed,stress_pnl=b[:50],paired_pnl_difference=b[:50]-fixed)
         arrays['bandit_'+family+'.npz']=dict(B_pnl=b,C_pnl=c)
     a=trace('illustration_A_stationary_124',124)
-    arrays['historical_results/episode_seed124.npz']=dict(event=a['trace_step'],pnl=a['trace_pnl'],inventory=a['trace_inventory'])
+    arrays['policy_results/episode_seed124.npz']=dict(event=a['trace_step'],pnl=a['trace_pnl'],inventory=a['trace_inventory'])
     ep={}
     for case,label in [('illustration_A_001_stationary_42','A_baseline'),('illustration_A_001_regime_42','A_regime'),('illustration_B_regime_42','B_regime')]:
         a=trace(case,42)
@@ -55,11 +55,11 @@ def derive():
     arrays['episode/single_episode.npz']=ep
     a=trace('illustration_signals_B_123',123)
     arrays['episode/signal_example.npz']=dict(a,step=a['trace_step'],inventory=a['trace_inventory'],pnl=a['trace_pnl'])
-    tables['historical_results/degradation_summary.csv']=[]
+    tables['policy_results/degradation_summary.csv']=[]
     for phi,model in [(.001,'A_001'),(.005,'A_005')]:
         for tau in [0,15,30,60,120,240]:
             y=values(f'degradation_{model}_tau{tau}')
-            tables['historical_results/degradation_summary.csv'].append(dict(phi=phi,tau=tau,n=len(y),mean=float(y.mean()),std=float(y.std(ddof=1))))
+            tables['policy_results/degradation_summary.csv'].append(dict(phi=phi,tau=tau,n=len(y),mean=float(y.mean()),std=float(y.std(ddof=1))))
     tables['tau_sweep_summary.csv']=[];tables['tau_sweep_B_runs.csv']=[]
     for tau in [0,15,30,60,120,240]:
         a=values(f'sweep_A_001_tau{tau}');b=values(f'sweep_B_tau{tau}')
@@ -72,8 +72,6 @@ def validate(output=None):
     p=json.loads((ARCHIVE/'protocol.json').read_text())
     provenance=json.loads((ARCHIVE/'provenance.json').read_text())
     for rel,h in provenance['files'].items():assert sha(ROOT/rel)==h,rel
-    for original,item in provenance['executed_source_mapping'].items():
-        assert sha(ROOT/item['path'])==item['sha256'],original
     canonical=json.loads((ROOT/'config/paper_experiments.json').read_text())
     specs=list(canonical['models'].values())+list(canonical['frontier_checkpoints'].values())
     for model,info in p['models'].items():

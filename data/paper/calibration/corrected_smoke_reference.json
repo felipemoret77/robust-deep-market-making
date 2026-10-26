@@ -1,0 +1,63 @@
+{
+  "provenance": {
+    "config": {
+      "lam": 0.06,
+      "mu": 0.1,
+      "delta": 0.02,
+      "number_tick_levels": 50,
+      "n_priority_ranks": 100,
+      "n_steps": 5000,
+      "n_steps_to_equilibrium": 1000,
+      "random_seed": 1234,
+      "time_interval": 0.5,
+      "posting_interval": 0.5,
+      "max_levels": 1,
+      "half_tick": 0.5,
+      "side_mode": "buy",
+      "burn_in_windows": 5,
+      "exclude_self_from_state": true,
+      "mo_size": 1
+    },
+    "distance": 0.5,
+    "variant": "corrected"
+  },
+  "actual_distance_bins": [
+    {
+      "distance": 0.5,
+      "n_probes": 702,
+      "n_exec": 8,
+      "exposure": 349.1277287427756,
+      "lambda_hat": 0.022914249832885956
+    },
+    {
+      "distance": 1.0,
+      "n_probes": 531,
+      "n_exec": 7,
+      "exposure": 263.8500973914329,
+      "lambda_hat": 0.02653021571417198
+    }
+  ],
+  "requested_distance_bins": [
+    {
+      "distance": 0.5,
+      "n_probes": 1233,
+      "n_exec": 15,
+      "exposure": 612.9778261342085,
+      "lambda_hat": 0.02447070572617389
+    }
+  ],
+  "diagnostics": {
+    "posted": 1238,
+    "failed_postings": 0,
+    "all_fills": 20,
+    "fills_after_observation_deadline": 5,
+    "removals_before_deadline": 0,
+    "sample_end_partial_observations": 0,
+    "end_reasons": {
+      "cancel": 1217,
+      "fill": 20,
+      "end_of_sample": 1
+    },
+    "simulation_end": 836.7541706487857
+  }
+}

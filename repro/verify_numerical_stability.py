@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Regression tests for frozen C51 action ranking (no training).
 
-The optional full episode reproduces the diagnosed B/500128 case using the
-current shared controller, without forcing any action or applying FIFO changes.
+Full final-policy replay is provided by evaluate_corrected.py.
 """
 from __future__ import annotations
 
@@ -85,18 +84,6 @@ class NumericalTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'net.eval'):
             DeepRLController._action_scores_from_net(ctrl, SimpleNamespace(training=True), None)
 
-    def test_learning_and_unshifted_value_methods_are_unchanged(self):
-        old = ast.parse(runtime.LEGACY_CONTROLLER.read_text())
-        new = ast.parse((runtime.ROOT / 'src/agents/dqn_distributional_with_throttle.py').read_text())
-        def methods(tree):
-            cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'DeepRLController')
-            return {n.name: ast.dump(n, include_attributes=False) for n in cls.body if isinstance(n, ast.FunctionDef)}
-        a, b = methods(old), methods(new)
-        changed = {name for name in a if a[name] != b[name]}
-        self.assertEqual(changed, {'_epsilon_greedy_action', '_epsilon_greedy_action_batch_from_net'})
-        # In these two methods the only change is routing the ranking call.
-        for name in changed:
-            self.assertEqual(a[name].replace("attr='_q_values_from_net'", "attr='_action_scores_from_net'"), b[name])
 
     def test_environment_drift_is_rejected_and_recorded(self):
         bad = dict(actual={}, matches_reference=False,
@@ -136,35 +123,11 @@ class NumericalTests(unittest.TestCase):
                         ctrl.writer.close()
 
 
-def full_episode(output):
-    with (output / 'episode.log').open('w') as log, contextlib.redirect_stdout(log):
-        ctrl, meta = runtime.load_controller('B', output / 'tensorboard')
-        before = digest(ctrl)
-        checkpoint_before = runtime.file_hash(runtime.checkpoint('B'))
-        try:
-            helpers, signals = runtime.evaluation_helpers(meta)
-            schedule = runtime.make_schedule(helpers, 'random', 500128, 500000)
-            with torch.inference_mode():
-                _, metrics = helpers.run_one_sim(schedule, seed=500128, controller=ctrl,
-                    total_events=500000, equil_steps=10000, signal_config=signals, metrics_only=True)
-            actual = dict(terminal_pnl=float(metrics['MM_TotalPnL']),
-                          terminal_inventory=float(metrics['MM_Inventory']),
-                          mean_abs_inventory=float(metrics['mean_abs_inventory']),
-                          inventory_limit_fraction=float(metrics['limit_frac']))
-            expected = json.loads((FIXTURES / 'candidate_current.json').read_text())
-            errors = {key: abs(value - expected[key]) for key, value in actual.items()}
-            unchanged = before == digest(ctrl) and checkpoint_before == runtime.file_hash(runtime.checkpoint('B'))
-            return dict(actual=actual, errors=errors, seed=500128, events=500000, warmup=10000,
-                        passed=max(errors.values()) < 1e-9 and unchanged,
-                        weights_unchanged=unchanged, forced_actions=0, fifo_intervention=False)
-        finally:
-            ctrl.writer.close()
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--full-episode', action='store_true')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -174,9 +137,6 @@ def main():
     report = dict(passed=result.wasSuccessful(), tests=result.testsRun,
                   failures=len(result.failures), errors=len(result.errors),
                   environment=environment_report(), mode='stable_float64_v1')
-    if result.wasSuccessful() and args.full_episode:
-        report['full_episode'] = full_episode(args.output)
-        report['passed'] = report['passed'] and report['full_episode']['passed']
     (args.output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     print('Numerical regression report:', args.output / 'report.json', flush=True)
     raise SystemExit(0 if report['passed'] else 1)

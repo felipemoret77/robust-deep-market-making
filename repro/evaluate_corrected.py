@@ -29,10 +29,10 @@ def load_controller(model, variant, output):
     spec = PROTOCOL['models'][model]
     assert paper.file_hash(ROOT / spec['checkpoint']) == spec['sha256']
     if model == 'A_005':
-        ctrl = frontier.load_controller(spec, output, c51_mode='legacy_float32')
+        ctrl = frontier.load_controller(spec, output, c51_mode='stable_float64_v1')
         meta = torch.load(ROOT / spec['checkpoint'], map_location='cpu', weights_only=True)['meta']
     else:
-        ctrl, meta = paper.load_controller('A' if model == 'A_001' else model, output, c51_mode='legacy_float32')
+        ctrl, meta = paper.load_controller('A' if model == 'A_001' else model, output, c51_mode='stable_float64_v1')
     assert not ctrl.enable_learning and ctrl.epsilon == 0
     assert not ctrl.q_net.training and not ctrl.target_net.training
     counters = dict(decisions=0, preserved_recovery_quotes=0)

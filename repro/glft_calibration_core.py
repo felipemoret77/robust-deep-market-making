@@ -256,37 +256,6 @@ def tracked_market_maker(recorder):
         simulator.MarketMaker = base
 
 
-def legacy_statistics(clock, sides, config):
-    """Exact original arithmetic, with first-fill search on recorded event indices.
-
-    Validated against the public unchanged estimator. Unit one-sided probes
-    have no other inventory/cash jumps, so side flags identify the same fills.
-    """
-    clock = np.asarray(clock, dtype=float)
-    sides = np.asarray(sides, dtype=np.int8)
-    intervals, delta_t, _ = original.build_intervals(aggregation_mode='time',
-        clock_t=clock, n_events_interval=1, time_interval=config.time_interval, n_tob_moves=5)
-    fills = np.flatnonzero(sides == (1 if config.side_mode == 'buy' else -1))
-    n_exec, exposure, n_windows, zero_wait = 0, 0.0, 0, 0
-    for i0, i1, c0, c1 in intervals[config.burn_in_windows:]:
-        effective = c1-float(clock[i0])
-        if not effective > 0:
-            effective = delta_t
-        at = int(np.searchsorted(fills, i0))
-        found = at < len(fills) and int(fills[at]) < i1
-        duration, indicator = effective, 0
-        if found:
-            tau = float(clock[fills[at]])-float(clock[i0])
-            if np.isfinite(tau) and tau > 0:
-                duration = min(tau, effective)
-                indicator = int(tau < effective)
-            else:
-                zero_wait += 1
-        n_exec += indicator
-        exposure += duration
-        n_windows += 1
-    return dict(n_exec=n_exec, exposure=exposure, n_windows=n_windows,
-        lambda_hat=n_exec/exposure if exposure > 0 else 0., zero_wait_fills_discarded=zero_wait)
 
 
 def bin_rows(bins):
@@ -308,10 +277,6 @@ def run_distance(config, distance, variant, output):
             return saved
     if variant == 'corrected':
         policy = ProbePolicy(distance, config)
-    elif variant == 'original':
-        policy = original.censored_wait_probe_policy_factory(delta_value=distance,
-            half_tick=config.half_tick, aggregation_mode='time', n_events_interval=1,
-            time_interval=config.time_interval, n_tob_moves=5, side_mode=config.side_mode)
     else:
         raise ValueError(variant)
     recorder = Recorder(config, distance, policy, output/(tag+'_orders.csv'), output/(tag+'_progress.json'))
@@ -331,7 +296,6 @@ def run_distance(config, distance, variant, output):
     finally:
         recorder.file.close()
     result = dict(provenance=provenance, elapsed_s=time.monotonic()-started,
-        original_estimator_on_this_tape=legacy_statistics(recorder.clock,recorder.fill_sides,config),
         actual_distance_bins=bin_rows(recorder.actual), requested_distance_bins=bin_rows(recorder.nominal),
         diagnostics=dict(posted=recorder.n_posted, failed_postings=recorder.n_failed,
             all_fills=recorder.n_fills, fills_after_observation_deadline=recorder.n_late,
@@ -358,62 +322,8 @@ def fit_curve(rows, config):
         weighting='total observed exposure, as in GLFT_studies.py')
 
 
-def combine(results, config):
-    old, nominal, actual = [], defaultdict(empty_bin), defaultdict(empty_bin)
-    for r in results:
-        p = r['provenance']
-        if p['variant']=='original':
-            old.append(dict(distance=p['distance'],**r['original_estimator_on_this_tape']))
-        else:
-            for key,target in [('requested_distance_bins',nominal),('actual_distance_bins',actual)]:
-                for row in r[key]:
-                    b = target[row['distance']]
-                    for k in b:
-                        b[k] += row[k]
-    curves = dict(original=sorted(old,key=lambda r:r['distance']),
-                  corrected_requested=bin_rows(nominal),corrected_actual=bin_rows(actual))
-    fits = {name:fit_curve(rows,config) for name,rows in curves.items() if rows}
-    return dict(config=asdict(config),curves=curves,fits=fits,
-        notes=[
-            'Same configuration and seeds; paths can differ because actual-time reposting changes the policy.',
-            'Original discards the first five reconstructed windows; corrected discards the first five successfully posted probes in each distance run.',
-            'corrected_requested and corrected_actual use exactly the same corrected simulations; only grouping differs.',
-            'Only distances inside the original fit range enter the fit; extra realized bins remain in curves.',
-            'Observation ends at posting+time_interval; physical cancellation occurs at the next eligible simulator call.',
-            'Corrected quotes use the mid immediately after cancelling the previous probe and before inserting the next one.',
-            'No change to sigma, GLFT benchmark parameters, original files, checkpoints, paper or figures.'])
 
 
-def save_outputs(summary, output):
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    output = Path(output)
-    write_json(output/'comparison.json',summary)
-    fields=['method','distance','n_exec','exposure','lambda_hat']
-    with (output/'intensities.csv').open('w',newline='') as f:
-        writer=csv.DictWriter(f,fieldnames=fields)
-        writer.writeheader()
-        for name,rows in summary['curves'].items():
-            for row in rows:
-                writer.writerow(dict(method=name,**{k:row[k] for k in fields[1:]}))
-    labels=dict(original='Original',corrected_requested='Protocolo corrigido; distância solicitada',
-                corrected_actual='Protocolo corrigido; distância efetiva')
-    fig,ax=plt.subplots(figsize=(9,6),layout='constrained')
-    for name,rows in summary['curves'].items():
-        if not rows:continue
-        positive=[r for r in rows if r['lambda_hat']>0 and r['distance']<=summary['config']['max_levels']*summary['config']['half_tick']]
-        line,=ax.semilogy([r['distance'] for r in positive],[r['lambda_hat'] for r in positive],
-            'o',label=labels[name])
-        fit=summary['fits'][name]
-        xs=np.linspace(*fit['fit_range'],200)
-        ax.semilogy(xs,fit['A']*np.exp(-fit['kappa']*xs),'--',color=line.get_color())
-    ax.set_xlabel('Distância ao mid (ticks)')
-    ax.set_ylabel('Intensidade estimada (s⁻¹)')
-    ax.set_title(f"Calibração GLFT: original versus corrigida\n{summary['config']['n_steps']:,} eventos por distância; seed {summary['config']['random_seed']}")
-    ax.grid(alpha=.2);ax.legend(fontsize=10)
-    for ext in ['png','pdf']:fig.savefig(output/('comparacao_calibracao_GLFT.'+ext),dpi=200)
-    plt.close(fig)
 
 
 def self_test(output):
@@ -425,17 +335,6 @@ def self_test(output):
         got_time,got_i=observation(posted,ended,reason,horizon)
         assert abs(got_time-want_time)<1e-12 and got_i==want_i
     cfg=replace(Config(),n_steps=5000,max_levels=1)
-    old=run_distance(cfg,.5,'original',output)
-    with (output/'public_original.log').open('w') as log,redirect_stdout(log),redirect_stderr(log):
-        public=original.fit_execution_intensity_censored_waiting_times(
-            aggregation_mode='time',time_interval=cfg.time_interval,max_levels=1,half_tick=.5,
-            side_mode='buy',burn_in_windows=cfg.burn_in_windows,
-            lam=cfg.lam,mu=cfg.mu,delta=cfg.delta,number_tick_levels=50,n_priority_ranks=100,
-            n_steps=cfg.n_steps,n_steps_to_equilibrium=1000,random_seed=1234,
-            exclude_self_from_state=True,mo_size=1,split_sweeps=False,plot=False,use_tqdm=False)
-    old=old['original_estimator_on_this_tape']
-    for key,src in [('n_exec','n_exec'),('exposure','denom_sum_tau'),('lambda_hat','lambda_hat')]:
-        assert abs(old[key]-float(public[src][0]))<1e-10,(key,old,public)
     new=run_distance(cfg,.5,'corrected',output)
     assert new['diagnostics']['removals_before_deadline']==0
     with Path(new['csv_file']).open() as f:
@@ -451,7 +350,6 @@ def self_test(output):
         assert float(row['actual_distance'])==float(row['reference_mid'])-float(row['price'])
         assert float(row['requested_distance'])<=float(row['actual_distance'])<float(row['requested_distance'])+1
     result=dict(status='passed',synthetic_cases=len(cases),
-        original_full_vs_lightweight='exact agreement in counts, exposure and lambda',
-        corrected_lifecycle_invariants='passed',original_control=old)
+        corrected_lifecycle_invariants='passed')
     write_json(output/'tests.json',result)
     print(json.dumps(result),flush=True)

@@ -14,7 +14,7 @@ help:
 	@echo "make glft-calibration-check - aggregate archived calibration statistics and run a small simulation check"
 	@echo "make paper         - compile paper/main.tex (requires tectonic)"
 	@echo "make train-a/b/c   - train in outputs/training/A, B or C; preserve shipped checkpoints"
-	@echo "Frozen evaluations: python repro/evaluate_paper.py --help"
+	@echo "Frozen evaluations: python repro/evaluate_corrected.py --help"
 env:
 	@echo 'export PYTHONPATH="$(ROOT)/src/sim:$(ROOT)/src/agents:$(ROOT)/src/glft:$(ROOT)/src/eval"'
 check-numerics:
@@ -44,7 +44,7 @@ figures:
 	$(PY) repro/plot_paper_heatmaps.py --output "$(FIGURE_OUT)" --verify-reference
 	$(PY) repro/glft_figures.py --output "$(FIGURE_OUT)"
 	$(PY) repro/frontier.py plot --output "$(FIGURE_OUT)"
-	$(PY) repro/plot_historical_results.py --output "$(FIGURE_OUT)"
+	$(PY) repro/plot_policy_results.py --output "$(FIGURE_OUT)"
 	$(PY) repro/plot_paper_episode.py --output "$(FIGURE_OUT)"
 	$(PY) repro/plot_paper_diagrams.py --output "$(FIGURE_OUT)"
 clean:

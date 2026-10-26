@@ -4,7 +4,6 @@ from __future__ import annotations
 import ast
 from functools import partial
 import hashlib
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -31,47 +30,18 @@ def checkpoint(algorithm):
     return path
 
 
-LEGACY_CONTROLLER = ROOT / 'data/paper/numerical_regression/legacy_controller.py'
-LEGACY_CONTROLLER_SHA256 = '6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde'
+def controller_class(c51_mode='stable_float64_v1'):
+    if c51_mode != 'stable_float64_v1':
+        raise ValueError('Only the final paper evaluation is supported.')
+    from dqn_distributional_with_throttle import DeepRLController
+    return DeepRLController
 
 
-def controller_class(c51_mode='stable_float64_v1', original_root=None):
-    if c51_mode not in ('stable_float64_v1', 'legacy_float32'):
-        raise ValueError(f'Unknown C51 evaluation mode: {c51_mode}')
-    if original_root is not None and c51_mode != 'legacy_float32':
-        raise ValueError('Original-source audits require explicit legacy_float32 mode.')
-    if c51_mode == 'stable_float64_v1':
-        from dqn_distributional_with_throttle import DeepRLController
-        return DeepRLController
-    # Historical controls load the exact archived source; current evaluation
-    # defaults never silently revert to the old arithmetic.
-    path = (Path(original_root) / 'dqn_distributional_with_throttle.py'
-            if original_root else LEGACY_CONTROLLER)
-    if original_root is None and file_hash(path) != LEGACY_CONTROLLER_SHA256:
-        raise ValueError('Archived controller hash differs.')
-    name = '_paper_legacy_controller_' + file_hash(path)
-    if name not in sys.modules:
-        spec = importlib.util.spec_from_file_location(name, path)
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[name] = module
-        spec.loader.exec_module(module)
-    return sys.modules[name].DeepRLController
-
-
-def load_controller(algorithm, output, *, original_root=None, c51_mode='stable_float64_v1'):
-    """Load the original factory without importing unrelated PPO/SAC tooling.
-
-    original_root is used only by the equivalence audit in a fresh process.
-    Normal reproduction imports the shipped source and checkpoint.
-    """
+def load_controller(algorithm, output, *, c51_mode='stable_float64_v1'):
+    """Load the final paper checkpoint on CPU with frozen evaluation settings."""
     import torch
-    if original_root is not None:
-        original_root = Path(original_root).resolve()
-        sys.path.insert(0, str(original_root))
-    DeepRLController = controller_class(c51_mode, original_root)
-
-    factory_path = ((original_root / 'MM_GLFT_naive_comparison.py')
-                    if original_root else ROOT / 'src/agents/checkpoint_io.py')
+    DeepRLController = controller_class(c51_mode)
+    factory_path = ROOT / 'src/agents/checkpoint_io.py'
     tree = ast.parse(factory_path.read_text())
     nodes = [n for n in tree.body if isinstance(n, ast.FunctionDef)
              and n.name == 'make_controller_from_checkpoint']

@@ -2,7 +2,6 @@
   "schema_version": 2,
   "selection": "corrected full evaluation",
   "provenance": "data/paper/corrected_evaluation/provenance.json",
-  "previous_selection": "data/paper/corrected_evaluation/previous_selection/episode/provenance.json",
   "archives": {
     "single_episode.npz": {
       "sha256": "ab122ac5407d1b5e789c4eb3ad230e2432ed957ea2840b5378c9980bf8af3ae7",
@@ -19,16 +18,6 @@
     },
     "regime_trained_final_phase_b.png": {
       "sha256": "ac705151df916004be0a1d7a4186c84635a6ec40db360e0254f0afa9fad97838"
-    }
-  },
-  "historical_episode_figures": {
-    "regime_switching_one_episode_example.png": {
-      "sha256": "ab15bd9fa21856a9da773620bafa9c5ea624a82ec004039cec8fa4d23989e9e7",
-      "pixel_match_expected": true
-    },
-    "regime_trained_final_phase_b.png": {
-      "sha256": "97128025fec66a313ff358294e68719a79bb9f9c32f95e7de929ead8b1e84536",
-      "pixel_match_expected": true
     }
   },
   "signal_example": {

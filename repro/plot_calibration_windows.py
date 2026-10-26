@@ -66,15 +66,15 @@ def fit(rates):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     root = Path(__file__).resolve().parents[1]
-    parser.add_argument('--data', type=Path, default=root/'data/paper/glft/calibration')
-    parser.add_argument('--manifest', type=Path, default=root/'data/paper/glft_regenerated/inputs/calibration_plot_manifest.json')
+    parser.add_argument('--data', type=Path, default=root/'data/paper/calibration')
+    parser.add_argument('--manifest', type=Path, default=root/'data/paper/calibration_windows_unweighted/calibration_plot_manifest.json')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(args.manifest.read_text())
     original_fit = dict(manifest['full_fit'])
     old_windows = {r['window']: r for r in manifest['window_fits']}
-    new_windows, graph_rows, seed_rows, comparisons = [], [], [], []
+    new_windows, graph_rows, seed_rows = [], [], []
     source_hashes = {}
 
     for window in WINDOWS:
@@ -123,9 +123,6 @@ def main():
         for i, distance in enumerate(DISTANCES):
             graph_rows.append(dict(window=window, distance=float(distance), normalized_log_intensity=float(means[i]),
                                    sem=float(sem[i]), n_seeds=20, fitted_line=float(-kappa*distance)))
-        comparisons.append(dict(window=window,
-                                max_absolute_point_change=float(np.max(np.abs(means-old_windows[window]['normalized_log_intensity']))),
-                                max_absolute_sem_change=float(np.max(np.abs(sem-old_windows[window]['sem'])))))
 
     # Preserve the approved plot design, axes, colors, markers, and legend.
     plt.rcParams.update({'axes.labelsize':15, 'axes.titlesize':14, 'xtick.labelsize':13,
@@ -150,7 +147,7 @@ def main():
                   intensity='Observed fills divided by observed exposure; observations pooled within each distance.',
                   points='Equal-weight mean over 20 seeds of log(intensity_seed / A_fit_seed).',
                   bars='One standard error across seeds: sample standard deviation (ddof=1) / sqrt(20).',
-                  lines='Negative pooled unweighted slope times distance; unchanged from previous plot.',
+                  lines='Negative pooled unweighted slope times distance.',
                   simulations_rerun=False, selected_full_range_parameters_changed=False,
                   selection='current paper and slides')
     manifest['window_fits'] = new_windows
@@ -163,13 +160,13 @@ def main():
     report = dict(created_utc=datetime.now(timezone.utc).isoformat(), method=method,
                   validation=dict(source_counts_and_exposure='passed', twenty_seeds_per_window='passed',
                                   pooled_unweighted_parameters_unchanged='passed', independent_OLS_check='passed',
-                                  SEM_check='passed'), comparison_with_previous=comparisons,
+                                  SEM_check='passed'),
                   source_sha256=source_hashes, source_manifest_sha256=sha(args.manifest),
                   script_sha256=sha(Path(__file__)), numpy_version=np.__version__, matplotlib_version=matplotlib.__version__,
                   selected_full_range_fit=original_fit,
                   output_sha256={p.name:sha(p) for p in args.output.iterdir() if p.is_file()})
     write_json(args.output/'validation.json', report)
-    print(json.dumps(dict(output=str(args.output), validation=report['validation'], comparison=comparisons), indent=2))
+    print(json.dumps(dict(output=str(args.output), validation=report['validation']), indent=2))
 
 
 if __name__ == '__main__':

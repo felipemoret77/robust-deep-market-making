@@ -42,7 +42,7 @@
   {
     "path": "paper/figures/total_pnl_0001.png",
     "sha256": "7974d95c2a565a928b40a85c982cb64badc7487726f82c92f9bd8843e5dc01b5",
-    "portable_replot": "repro/plot_historical_results.py",
+    "portable_replot": "repro/plot_policy_results.py",
     "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
     "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
     "pixel_match_expected": true
@@ -50,7 +50,7 @@
   {
     "path": "paper/figures/MM_inv_0001.png",
     "sha256": "f1a7eaab6d139da4667958fa7d0967ebbef9ad98c6192aca10a0af0b66354381",
-    "portable_replot": "repro/plot_historical_results.py",
+    "portable_replot": "repro/plot_policy_results.py",
     "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
     "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
     "pixel_match_expected": true
@@ -82,7 +82,7 @@
   {
     "path": "paper/figures/degradation_vs_tau_regime.png",
     "sha256": "fcb8850df398e73568f8a62b4b82d9cdd0df2273f62579e993447fc4a7f61f77",
-    "portable_replot": "repro/plot_historical_results.py",
+    "portable_replot": "repro/plot_policy_results.py",
     "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
     "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
     "pixel_match_expected": true
@@ -170,7 +170,7 @@
   {
     "path": "paper/figures/random_tau_stress.png",
     "sha256": "07258f2f5d21296963355e02d9e5e5fc0d449e95e6133801d444d06f0314b3a7",
-    "portable_replot": "repro/plot_historical_results.py",
+    "portable_replot": "repro/plot_policy_results.py",
     "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
     "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
     "pixel_match_expected": true
@@ -178,7 +178,7 @@
   {
     "path": "paper/figures/correlated_regime_stress.png",
     "sha256": "492f17c7a6aa316391fae67a6601578ebdeb8fe69e98b44c8c03453fb6a6772b",
-    "portable_replot": "repro/plot_historical_results.py",
+    "portable_replot": "repro/plot_policy_results.py",
     "status": "selected full corrected evaluation; complete individual outcomes and portable generators",
     "generation_provenance": "data/paper/corrected_evaluation/provenance.json",
     "pixel_match_expected": true

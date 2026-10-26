@@ -23,7 +23,7 @@ def configure():
  g.OUT=OUT;g.DATA=ARCHIVE/'data';g.plots._save_paper_figure=g.save
 
 def calibration():
- info=json.loads((ARCHIVE/'inputs/calibration_plot_manifest.json').read_text());full=json.loads((ARCHIVE/'inputs/calibration_summary.json').read_text());fit=full['fit_05a5']
+ full=json.loads((ARCHIVE/'inputs/calibration_summary.json').read_text());fit=full['fit_05a5']
  points=[x for x in full['empirical_rows'] if .5<=x['distance']<=5]
  x=np.array([z['distance'] for z in points]);y=np.array([z['intensity'] for z in points])
  b,k=np.linalg.lstsq(np.c_[np.ones(len(x)),-x],np.log(y),rcond=None)[0]
@@ -55,14 +55,13 @@ def calibration():
  atomic(OUT/'reports/calibration_validation.json',dict(status='passed',fit=fit,simulation_reused=True,per_seed_normalization='unweighted OLS',bars='sample standard deviation / sqrt(20)'))
 
 def parameters():
- old=json.loads((ARCHIVE/'inputs/original_experiments.json').read_text())['analytical_parameters']
+ old=json.loads((ARCHIVE/'reports/analytical_parameters.json').read_text())
  par=dict(old);par.update(json.loads((ARCHIVE/'inputs/calibration_used.json').read_text())['parameters'])
  with np.load(ARCHIVE/'data/eta.npz') as d:rates=d['fill_rate'];assert len(rates)==10
  model=t.make_model(.5,dict(par,r_fill_factor=1.))
  reference=2*par['A']*np.exp(-par['kappa']*model['half_spread'])
  par.update(r_fill_factor=float(rates.mean()/reference),eta_empirical_rate=float(rates.mean()),eta_reference_rate=float(reference),delta_bar=model['half_spread'])
  atomic(OUT/'reports/analytical_parameters.json',par)
- atomic(OUT/'reports/eta_comparison.json',dict(old=old,new=par,empirical_fill_rates=rates.tolist(),note='T and v0 are properties measured on the bare LOB and are retained. Eta is reestimated with the new GLFT policy.'))
  return par
 
 def analytical(par):
@@ -109,14 +108,14 @@ def empirical_comparison(par,dense):
   for ext in ['png','pdf']:shutil.copy2(dest/f'{name}.{ext}',OUT/f'{name}.{ext}')
  atomic(OUT/'reports/transient_metrics.json',t.metrics(rows,raw))
 
-def comparison_summary():
- previous={r['experiment']:r for r in json.loads((ARCHIVE/'inputs/old_summary.json').read_text())};rows=[]
+def result_summary():
+ rows=[]
  for e in json.loads((ARCHIVE/'protocol.json').read_text())['experiments']:
-  name=e['spec']['name'];path=ARCHIVE/'data'/f'{name}.npz'
-  if not path.exists():continue
-  with np.load(path) as d:y=d['terminal_pnl'];n=len(y);queue=int(d['preserved_recovery_quotes'].sum())
-  old=previous[name];rows.append(dict(experiment=name,episodes=n,events=e['spec'].get('events',5000),old_mean=old['mean'],new_mean=float(y.mean()),mean_change=float(y.mean()-old['mean']),old_sd=old['sd'],new_sd=float(y.std(ddof=1)),new_se=float(y.std(ddof=1)/np.sqrt(n)),preserved_recovery_quotes=queue))
- if rows:t.table(OUT/'reports/old_vs_new.csv',rows)
+  name=e['spec']['name']
+  with np.load(ARCHIVE/'data'/f'{name}.npz') as d:
+   y=d['terminal_pnl'];n=len(y);queue=int(d['preserved_recovery_quotes'].sum())
+  rows.append(dict(experiment=name,episodes=n,events=e['spec'].get('events',5000),mean=float(y.mean()),sd=float(y.std(ddof=1)),se=float(y.std(ddof=1)/np.sqrt(n)),preserved_recovery_quotes=queue))
+ t.table(OUT/'reports/summary.csv',rows)
  return rows
 
 EXPECTED=['censored_waiting_different_throttles','pnl_cumulated_pnl_glft_vs_naive','glft_naive_pnl_lifetime_hist','dqn_vs_as_vs_glft','glft_degradation_vs_tau_regime','as_miss_pi_q_lines','as_miss_pi_heatmap','as_miss_qbar_vs_p','as_miss_boundary_mass_vs_p','as_miss_expected_pnl_curves','as_miss_pnl_decomposition']
@@ -130,7 +129,7 @@ def render(final=False):
   if present(names):empirical_comparison(par,dense)
  if present(['fig2_gamma_1e-06','fig2_gamma_0.001','fig2_gamma_0.1','fig2_at_best']):configure();g.fig2();gc.collect()
  if present(['fig4_new_baseline']+[f'fig4_new_tau_{tau}' for tau in [15,30,60,120,240]]):configure();g.fig4()
- rows=comparison_summary();images={n:sha(OUT/f'{n}.png') for n in EXPECTED if (OUT/f'{n}.png').exists()}
+ rows=result_summary();images={n:sha(OUT/f'{n}.png') for n in EXPECTED if (OUT/f'{n}.png').exists()}
  atomic(OUT/'reports/figure_manifest.json',dict(expected=EXPECTED,completed=images,complete=len(images)==len(EXPECTED)))
  print(json.dumps(dict(figures_ready=len(images),figures_total=len(EXPECTED),final=final)),flush=True)
 
@@ -143,14 +142,14 @@ def validate():
  complete=json.loads((ARCHIVE/'completion.json').read_text())
  assert complete['status']=='complete' and complete['episodes']==protocol['total_episodes']==4810
  assert complete['evaluation_events']==protocol['total_evaluation_events']==81050000
- summary={r['experiment']:r for r in csv.DictReader((ARCHIVE/'reports/old_vs_new.csv').open())}
+ summary={r['experiment']:r for r in csv.DictReader((ARCHIVE/'reports/summary.csv').open())}
  for item in protocol['experiments']:
   name=item['spec']['name']
   with np.load(ARCHIVE/'data'/f'{name}.npz',allow_pickle=False) as data:
    np.testing.assert_array_equal(data['seeds'],item['seeds'])
    assert all(np.isfinite(data[k]).all() for k in data.files)
    y=data['terminal_pnl'];assert len(y)==len(item['seeds'])
-   np.testing.assert_allclose([y.mean(),y.std(ddof=1)],[float(summary[name]['new_mean']),float(summary[name]['new_sd'])],rtol=1e-12,atol=1e-12)
+   np.testing.assert_allclose([y.mean(),y.std(ddof=1)],[float(summary[name]['mean']),float(summary[name]['sd'])],rtol=1e-12,atol=1e-12)
  params=json.loads((ARCHIVE/'reports/analytical_parameters.json').read_text())
  for key,value in protocol['parameters'].items():assert params[key]==value
  frontier=json.loads((ROOT/'data/paper/frontier_10000/calibration_used.json').read_text())

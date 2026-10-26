@@ -22,34 +22,6 @@
     "full_range_all_positive": true,
     "regression": "unweighted OLS in log rate"
   },
-  "fit_05a25_reference": {
-    "A_fit": 0.15993073565533122,
-    "A": 0.14962177118086215,
-    "kappa": 2.420402128107447,
-    "sigma": 0.3,
-    "x": 0.13181279538930882,
-    "finite_window_factor": 1.068900163345932,
-    "included_distances": [
-      0.5,
-      1.0,
-      1.5,
-      2.0,
-      2.5
-    ],
-    "zero_fill_distances": [],
-    "full_range_all_positive": true,
-    "regression": "unweighted OLS in log rate"
-  },
-  "differences_vs_short_range": {
-    "A": {
-      "absolute": -0.03640499194536832,
-      "percent": -24.3313467405503
-    },
-    "kappa": {
-      "absolute": -0.17995365416406406,
-      "percent": -7.4348659701754976
-    }
-  },
   "protocol": {
     "seeds": 20,
     "events_per_seed_distance": 1000000,

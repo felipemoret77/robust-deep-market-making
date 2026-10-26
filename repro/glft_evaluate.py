@@ -26,7 +26,7 @@ import numpy as np
 import glft_evaluation_runtime as runtime
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / 'data/paper/glft'
+DATA = ROOT / 'data/paper/glft_regenerated/data'
 
 
 def run_chunk(job):
@@ -77,6 +77,7 @@ def main():
     output = args.output or Path(f'outputs/glft_evaluation_{args.mode}')
     output = output if output.is_absolute() else ROOT / output
     output.mkdir(parents=True, exist_ok=True)
+    (output / "data").mkdir(exist_ok=True)
     source_paths = ['repro/glft_evaluation_runtime.py', 'src/sim/MM_LOB_SIM.py',
                     'src/glft/GLFT_policy_factory.py', 'src/glft/MM_policy_5.py',
                     'src/sim/glft_regime_schedule.py']

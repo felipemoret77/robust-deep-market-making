@@ -3,7 +3,7 @@
 
 The two 100,000-event episode figures use the complete corrected evaluations.
 The two 5,000-event signal illustrations use a new frozen canonical-B rollout
-with seed 123; they do not reconstruct the lost historical training traces.
+with seed 123, as specified in the selected evaluation protocol.
 Use --verify-rerun to rerun that signal example and compare every saved array.
 """
 from __future__ import annotations
@@ -236,17 +236,17 @@ def main():
                 fig.savefig(path, dpi=100, bbox_inches='tight')
                 rendered[path.name] = file_hash(path)
             plt.close(fig)
-    historical = {name: rendered[name] == spec['sha256']
+    selected = {name: rendered[name] == spec['sha256']
                   for name, spec in provenance['selected_episode_figures'].items()}
     manifest = dict(
         archive_provenance_sha256=file_hash(ARCHIVE / 'provenance.json'),
         script_sha256=file_hash(__file__), outputs_sha256=rendered,
-        selected_episode_png_byte_identical=historical,
+        selected_episode_png_byte_identical=selected,
         auxiliary_figures_kind=provenance['signal_example']['kind'],
         verification=verification, numpy=np.__version__, matplotlib=matplotlib.__version__,
     )
     (output / 'episode_reproduction.json').write_text(json.dumps(manifest, indent=2) + '\n')
-    print(json.dumps(dict(output=str(output), selected_episode_png_byte_identical=historical,
+    print(json.dumps(dict(output=str(output), selected_episode_png_byte_identical=selected,
                           new_signal_example_verified=verification is not None), indent=2))
 
 

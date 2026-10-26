@@ -35,7 +35,7 @@
   "pixel_identity_expected": false,
   "raster_dependency": false,
   "requires_external_latex": false,
-  "pixel_identity_scope": "Generated replacement versus original historical PNG: false. Re-running this generator versus the integrated replacement PNG: expected true in the tested rendering environment.",
+  "pixel_identity_scope": "Re-running the generator reproduces the selected PNG in the tested rendering environment.",
   "render_environment": {
     "matplotlib": "3.10.8",
     "dpi": 300,

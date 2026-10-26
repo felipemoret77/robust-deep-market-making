@@ -38,7 +38,7 @@ def main():
             shutil.copytree(ROOT / 'repro/glft', exported / 'repro/glft',
                             ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
         for name in ('Makefile', 'requirements.txt', 'requirements-tested.txt',
-                     'README.md', 'data/README.md', 'repro/README.md', 'repro/numerical_stability.txt'):
+                     'README.md', 'data/README.md', 'repro/README.md'):
             shutil.copy2(ROOT / name, exported / name)
         (exported / 'checkpoints').mkdir()
         checkpoints = {entry['checkpoint'] for entry in spec['models'].values()}
@@ -90,8 +90,8 @@ sys.addaudithook(audit)
                           '--output', str(base / 'calibration_smoke')],
                          [sys.executable, str(exported / 'repro/glft_evaluate.py'),
                           '--output', str(base / 'glft_evaluation_smoke')],
-                         [sys.executable, str(exported / 'repro/plot_historical_results.py'),
-                          '--verify-rerun', '--output', str(base / 'historical_rerun')],
+                         [sys.executable, str(exported / 'repro/plot_policy_results.py'),
+                          '--verify-rerun', '--output', str(base / 'policy_rerun')],
                          [sys.executable, str(exported / 'repro/plot_paper_episode.py'),
                           '--verify-rerun', '--output', str(base / 'episode_rerun')]]
             commands.append([sys.executable, str(exported / 'repro/evaluate_corrected.py'),

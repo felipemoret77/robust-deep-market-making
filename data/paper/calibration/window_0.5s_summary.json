@@ -1,0 +1,1176 @@
+{
+  "config": {
+    "lam": 0.06,
+    "mu": 0.1,
+    "delta": 0.02,
+    "number_tick_levels": 50,
+    "n_priority_ranks": 100,
+    "n_steps": 1000000,
+    "n_steps_to_equilibrium": 1000,
+    "random_seed": 1234,
+    "time_interval": 0.5,
+    "posting_interval": 0.5,
+    "max_levels": 5,
+    "half_tick": 0.5,
+    "side_mode": "buy",
+    "burn_in_windows": 5,
+    "exclude_self_from_state": true,
+    "mo_size": 1
+  },
+  "seeds": [
+    2610030,
+    2610031,
+    2610032,
+    2610033,
+    2610034,
+    2610035,
+    2610036,
+    2610037,
+    2610038,
+    2610039,
+    2610040,
+    2610041,
+    2610042,
+    2610043,
+    2610044,
+    2610045,
+    2610046,
+    2610047,
+    2610048,
+    2610049
+  ],
+  "runs": 100,
+  "curves": {
+    "corrected_requested": [
+      {
+        "distance": 0.5,
+        "n_exec": 74610,
+        "exposure": 2500908.6530949087,
+        "n_probes": 5039157,
+        "lambda_hat": 0.029833156803895696
+      },
+      {
+        "distance": 1.0,
+        "n_exec": 25764,
+        "exposure": 2523969.783019236,
+        "n_probes": 5060711,
+        "lambda_hat": 0.01020772917858805
+      },
+      {
+        "distance": 1.5,
+        "n_exec": 7846,
+        "exposure": 2531148.1306884238,
+        "n_probes": 5066042,
+        "lambda_hat": 0.003099779070561958
+      },
+      {
+        "distance": 2.0,
+        "n_exec": 2161,
+        "exposure": 2532892.1282520387,
+        "n_probes": 5066760,
+        "lambda_hat": 0.0008531749046459853
+      },
+      {
+        "distance": 2.5,
+        "n_exec": 613,
+        "exposure": 2534612.3717064844,
+        "n_probes": 5069485,
+        "lambda_hat": 0.00024185157732315655
+      }
+    ],
+    "corrected_actual": [
+      {
+        "distance": 0.5,
+        "n_exec": 58564,
+        "exposure": 1539550.9983465099,
+        "n_probes": 3108467,
+        "lambda_hat": 0.03803966225405862
+      },
+      {
+        "distance": 1.0,
+        "n_exec": 36357,
+        "exposure": 1903506.7225386326,
+        "n_probes": 3825156,
+        "lambda_hat": 0.01910001134722135
+      },
+      {
+        "distance": 1.5,
+        "n_exec": 11927,
+        "exposure": 3182284.8130234797,
+        "n_probes": 6370276,
+        "lambda_hat": 0.0037479360587678485
+      },
+      {
+        "distance": 2.0,
+        "n_exec": 3047,
+        "exposure": 1852924.9026146978,
+        "n_probes": 3707267,
+        "lambda_hat": 0.0016444271409490584
+      },
+      {
+        "distance": 2.5,
+        "n_exec": 983,
+        "exposure": 3219034.205603193,
+        "n_probes": 6438480,
+        "lambda_hat": 0.000305371094935539
+      },
+      {
+        "distance": 3.0,
+        "n_exec": 116,
+        "exposure": 926229.4246345784,
+        "n_probes": 1852509,
+        "lambda_hat": 0.00012523894935184663
+      }
+    ]
+  },
+  "fits": {
+    "corrected_requested": {
+      "A": 0.10871332962879658,
+      "kappa": 2.422793997402082,
+      "fit_diagnostics": {
+        "ok": true,
+        "n_used": 5,
+        "r2_log": 0.9987425961198182,
+        "b0_logA": -2.2190408646933113,
+        "b1_slope": -2.422793997402082
+      },
+      "distances_used": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5
+      ],
+      "fit_range": [
+        0.5,
+        2.5
+      ],
+      "weighting": "total observed exposure, as in GLFT_studies.py",
+      "cluster_bootstrap_95ci": {
+        "A": [
+          0.10371589637505131,
+          0.11437527786206672
+        ],
+        "kappa": [
+          2.3783035325804525,
+          2.4750545603256144
+        ]
+      }
+    },
+    "corrected_actual": {
+      "A": 0.17033610590375425,
+      "kappa": 2.477788840405135,
+      "fit_diagnostics": {
+        "ok": true,
+        "n_used": 5,
+        "r2_log": 0.9813741868160079,
+        "b0_logA": -1.7699817002575629,
+        "b1_slope": -2.477788840405135
+      },
+      "distances_used": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5
+      ],
+      "fit_range": [
+        0.5,
+        2.5
+      ],
+      "weighting": "total observed exposure, as in GLFT_studies.py",
+      "cluster_bootstrap_95ci": {
+        "A": [
+          0.16361869255517988,
+          0.17751830864232832
+        ],
+        "kappa": [
+          2.4431321309904854,
+          2.51514453868355
+        ]
+      }
+    }
+  },
+  "per_seed_fits": {
+    "2610030": {
+      "corrected_requested": {
+        "A": 0.09871168004771101,
+        "kappa": 2.311249184536937,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9992179083661578,
+          "b0_logA": -2.3155520006616106,
+          "b1_slope": -2.311249184536937
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.15135175173833115,
+        "kappa": 2.370063049375353,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9825967029189837,
+          "b0_logA": -1.8881486694926464,
+          "b1_slope": -2.370063049375353
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610031": {
+      "corrected_requested": {
+        "A": 0.10829127741244975,
+        "kappa": 2.3911114060556296,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9975215846651112,
+          "b0_logA": -2.2229306691934005,
+          "b1_slope": -2.3911114060556296
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17136038776236767,
+        "kappa": 2.4498593710523764,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9837014107258422,
+          "b0_logA": -1.763986409432973,
+          "b1_slope": -2.4498593710523764
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610032": {
+      "corrected_requested": {
+        "A": 0.1293838906851868,
+        "kappa": 2.6061173742485426,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9978374764627972,
+          "b0_logA": -2.044971397051658,
+          "b1_slope": -2.6061173742485426
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.1815485050275116,
+        "kappa": 2.541580047277527,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9858727058301816,
+          "b0_logA": -1.7062324156502615,
+          "b1_slope": -2.541580047277527
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610033": {
+      "corrected_requested": {
+        "A": 0.1174247367991807,
+        "kappa": 2.5134690824236166,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9958005785616326,
+          "b0_logA": -2.141957688509268,
+          "b1_slope": -2.5134690824236166
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17928967612830318,
+        "kappa": 2.542258760485986,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9806659795220931,
+          "b0_logA": -1.718752478788931,
+          "b1_slope": -2.542258760485986
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610034": {
+      "corrected_requested": {
+        "A": 0.09446217070652492,
+        "kappa": 2.285311110166945,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9999307350797367,
+          "b0_logA": -2.3595558346117342,
+          "b1_slope": -2.285311110166945
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.14392017379473626,
+        "kappa": 2.3308182664423898,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9809400452450334,
+          "b0_logA": -1.9384964817618207,
+          "b1_slope": -2.3308182664423898
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610035": {
+      "corrected_requested": {
+        "A": 0.12765308598726705,
+        "kappa": 2.6133307785930886,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9945543988330154,
+          "b0_logA": -2.0584389602067854,
+          "b1_slope": -2.6133307785930886
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.2016402576401665,
+        "kappa": 2.6447885695371904,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9774864950126735,
+          "b0_logA": -1.6012700720450235,
+          "b1_slope": -2.6447885695371904
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610036": {
+      "corrected_requested": {
+        "A": 0.08892142761182145,
+        "kappa": 2.2562532687401675,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9969239158795367,
+          "b0_logA": -2.420002135001285,
+          "b1_slope": -2.2562532687401675
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.1387310078215846,
+        "kappa": 2.3224884219076642,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9866803309610331,
+          "b0_logA": -1.9752184162897488,
+          "b1_slope": -2.3224884219076642
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610037": {
+      "corrected_requested": {
+        "A": 0.1028792046374818,
+        "kappa": 2.3631788435624683,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9982338690451196,
+          "b0_logA": -2.274199749495867,
+          "b1_slope": -2.3631788435624683
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17141286762194152,
+        "kappa": 2.4827566392246125,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9811462258249075,
+          "b0_logA": -1.7636802019960767,
+          "b1_slope": -2.4827566392246125
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610038": {
+      "corrected_requested": {
+        "A": 0.12200841721917433,
+        "kappa": 2.555623585118826,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9968046926809516,
+          "b0_logA": -2.10366524302904,
+          "b1_slope": -2.555623585118826
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17432760810285453,
+        "kappa": 2.5052298113283036,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9862349249317198,
+          "b0_logA": -1.7468189448347953,
+          "b1_slope": -2.5052298113283036
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610039": {
+      "corrected_requested": {
+        "A": 0.10157002082676596,
+        "kappa": 2.3581069883902916,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9991745352810414,
+          "b0_logA": -2.2870068579823486,
+          "b1_slope": -2.3581069883902916
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.15903288301212054,
+        "kappa": 2.4187983050868422,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9795871575184246,
+          "b0_logA": -1.83864428674745,
+          "b1_slope": -2.4187983050868422
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610040": {
+      "corrected_requested": {
+        "A": 0.09304140106879985,
+        "kappa": 2.2861358316191116,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9949720132794888,
+          "b0_logA": -2.374710712106092,
+          "b1_slope": -2.2861358316191116
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.16538847297543316,
+        "kappa": 2.4653005673771795,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9829181001943068,
+          "b0_logA": -1.7994581906262528,
+          "b1_slope": -2.4653005673771795
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610041": {
+      "corrected_requested": {
+        "A": 0.10236002576445767,
+        "kappa": 2.3773774802741885,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9975749595977297,
+          "b0_logA": -2.2792590159862267,
+          "b1_slope": -2.3773774802741885
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17464464091841805,
+        "kappa": 2.508448526244215,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9798033844052988,
+          "b0_logA": -1.7450019928927918,
+          "b1_slope": -2.508448526244215
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610042": {
+      "corrected_requested": {
+        "A": 0.11359631674195422,
+        "kappa": 2.449951452248894,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.99379156175216,
+          "b0_logA": -2.175104196266902,
+          "b1_slope": -2.449951452248894
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.1691772642955582,
+        "kappa": 2.458191574640757,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9742405597220989,
+          "b0_logA": -1.7768082126143707,
+          "b1_slope": -2.458191574640757
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610043": {
+      "corrected_requested": {
+        "A": 0.11352062642414236,
+        "kappa": 2.438962447658996,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9942362458857794,
+          "b0_logA": -2.1757707279625027,
+          "b1_slope": -2.438962447658996
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17477437273088078,
+        "kappa": 2.479451002242602,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9759530950747667,
+          "b0_logA": -1.7442594355999363,
+          "b1_slope": -2.479451002242602
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610044": {
+      "corrected_requested": {
+        "A": 0.12282398198994583,
+        "kappa": 2.508853605342209,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9932540325123796,
+          "b0_logA": -2.097002989258571,
+          "b1_slope": -2.508853605342209
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17824660524526742,
+        "kappa": 2.4926299525069995,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9719898130391779,
+          "b0_logA": -1.724587264776424,
+          "b1_slope": -2.4926299525069995
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610045": {
+      "corrected_requested": {
+        "A": 0.12795443384992133,
+        "kappa": 2.615603577272291,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9930623614322128,
+          "b0_logA": -2.056081063987906,
+          "b1_slope": -2.615603577272291
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.1807788427418059,
+        "kappa": 2.565807411742539,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9800679884144734,
+          "b0_logA": -1.7104808581048372,
+          "b1_slope": -2.565807411742539
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610046": {
+      "corrected_requested": {
+        "A": 0.11995610211735239,
+        "kappa": 2.5153318882228697,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9952890507094337,
+          "b0_logA": -2.1206294188157027,
+          "b1_slope": -2.5153318882228697
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.16866089028032155,
+        "kappa": 2.4730568079328905,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9849293584556142,
+          "b0_logA": -1.7798651462991073,
+          "b1_slope": -2.4730568079328905
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610047": {
+      "corrected_requested": {
+        "A": 0.12368987952586183,
+        "kappa": 2.546610927924376,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.994788695067117,
+          "b0_logA": -2.089977817596325,
+          "b1_slope": -2.546610927924376
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.20445930547244437,
+        "kappa": 2.635241262884582,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9747678941851943,
+          "b0_logA": -1.5873863185462322,
+          "b1_slope": -2.635241262884582
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610048": {
+      "corrected_requested": {
+        "A": 0.10730879899586653,
+        "kappa": 2.390184466064913,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9982607146497009,
+          "b0_logA": -2.23204462901826,
+          "b1_slope": -2.390184466064913
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.17838884662134702,
+        "kappa": 2.4958638627803063,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9823384816971147,
+          "b0_logA": -1.7237895797292562,
+          "b1_slope": -2.4958638627803063
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    },
+    "2610049": {
+      "corrected_requested": {
+        "A": 0.10173440088751999,
+        "kappa": 2.360327093164452,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9990386566717285,
+          "b0_logA": -2.2853897746431024,
+          "b1_slope": -2.360327093164452
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      },
+      "corrected_actual": {
+        "A": 0.1724099772758558,
+        "kappa": 2.4876109711858483,
+        "fit_diagnostics": {
+          "ok": true,
+          "n_used": 5,
+          "r2_log": 0.9782384939936946,
+          "b0_logA": -1.757880049597322,
+          "b1_slope": -2.4876109711858483
+        },
+        "distances_used": [
+          0.5,
+          1.0,
+          1.5,
+          2.0,
+          2.5
+        ],
+        "fit_range": [
+          0.5,
+          2.5
+        ],
+        "weighting": "total observed exposure, as in GLFT_studies.py"
+      }
+    }
+  },
+  "selected_method": "corrected_actual",
+  "selected_parameters": {
+    "A": 0.17033610590375425,
+    "kappa": 2.477788840405135,
+    "sigma": 0.3
+  },
+  "bootstrap": {
+    "repetitions": 5000,
+    "unit": "paired seed, including all requested distances",
+    "seed": 20261003
+  },
+  "notes": [
+    "Coefficients fitted to pooled executions / pooled exposure, weighted by pooled exposure.",
+    "Requested and effective fits use identical corrected order observations.",
+    "Actual distances refer to rounded prices and the mid after previous-probe cancellation, immediately before insertion.",
+    "Only distances 0.5 through 2.5 ticks enter the fit; extra bins remain available.",
+    "Changing observation-window length also changes posting interval, as in the original figure.",
+    "Zero-event bins are reported; original log-linear fitter omits their logarithms.",
+    "No claim that the exponential intensity exactly describes the FIFO simulator."
+  ]
+}

@@ -34,19 +34,12 @@ def main():
         saved_meta = torch.load(path, map_location='cpu', weights_only=True)['meta']
         assert json.loads(json.dumps(saved_meta)) == info['metadata'], label
     print('Frontier checkpoints: hashes and metadata verified')
-    from frontier import load_config, load_archive
-    frontier_config, frontier_provenance = load_config()
-    frontier_rows = load_archive(frontier_config, frontier_provenance)
-    glft = json.loads((ROOT / 'config/glft_experiments.json').read_text())
-    for parameter in ('A', 'kappa', 'sigma'):
-        assert frontier_config['parameters'][parameter] == glft['analytical_parameters'][parameter]
     heatmaps = json.loads((ROOT / 'data/paper/heatmaps/provenance.json').read_text())
     assert heatmaps['checkpoint_sha256'] == spec['models']['B']['sha256']
     assert heatmaps['USE_MIXTURE'] is False
-    print(f'Legacy archive alignment: {len(frontier_rows)} frontier outcomes; legacy GLFT parameters; masked B heatmaps')
     from plot_frontier_10000 import validate as validate_selected_frontier
     validate_selected_frontier()
-    print('Selected frontier: 110000 outcomes; checkpoint hashes; fresh seeds; bootstrap summaries verified')
+    print('Selected frontier: 110000 outcomes; checkpoint hashes; fresh seeds; final summary identities verified')
 
     from plot_glft_regenerated import validate as validate_selected_glft
     validate_selected_glft()

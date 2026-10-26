@@ -5,7 +5,7 @@ python repro/glft_calibration.py
 python repro/glft_calibration.py --mode aggregate
 python repro/glft_calibration.py --mode full --stage all --workers 2
 
-Full primary: 20 seeds x 5 distances x 2 protocols x 1,000,000 events.
+Full primary: 20 seeds x 5 distances x 1,000,000 events.
 Full windows: 20 seeds x 5 distances x 4 windows x 1,000,000 events.
 All outputs remain under --output; the archived selected parameters are fixed.
 """
@@ -30,7 +30,7 @@ import glft_calibration_core as core
 from glft_calibration_stats import fit_runs, summarize
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / 'data/paper/glft'
+DATA = ROOT / 'data/paper'
 
 
 class CompressedRecorder(core.Recorder):
@@ -54,20 +54,20 @@ def run_job(job):
 def smoke(output):
     core.self_test(output)
     comparisons = {}
-    for variant in ('original', 'corrected'):
+    for variant in ('corrected',):
         observed = json.loads((output / 'self_test' /
             f'{variant}_seed1234_delta0.5_n5000.json').read_text())
         archived = json.loads((DATA / 'calibration' /
             f'{variant}_smoke_reference.json').read_text())
-        fields = ('original_estimator_on_this_tape', 'actual_distance_bins',
+        fields = ('actual_distance_bins',
                   'requested_distance_bins', 'diagnostics')
         for key in fields:
             if observed[key] != archived[key]:
                 raise AssertionError(f'{variant}: archived smoke differs in {key}')
         comparisons[variant] = 'exact counts, exposures, rates, and diagnostics'
-    result = dict(status='passed', events=15000,
-                  note='Three 5000-event simulations, each with 1000 warmup events; no parameter selection.',
-                  archived_controls=comparisons)
+    result = dict(status='passed', events=5000,
+                  note='One 5000-event simulation, with 1000 warmup events; no parameter selection.',
+                  reference_checks=comparisons)
     core.write_json(output / 'smoke_validation.json', result)
     print(json.dumps(result, indent=2))
 

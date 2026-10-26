@@ -58,7 +58,7 @@ def preserve_recovery_queue(command, state, mm, inv_limit):
 
 
 def instrument_controller(ctrl, variant, counters):
-    assert variant in ('original', 'stable_only', 'queue_only', 'both')
+    assert variant == 'both', 'Only final-paper controller evaluation is supported.'
     if variant in ('stable_only', 'both'):
         ctrl._q_values_from_net = lambda net, states: stable_action_scores(ctrl, net, states)
     original_act = ctrl.act

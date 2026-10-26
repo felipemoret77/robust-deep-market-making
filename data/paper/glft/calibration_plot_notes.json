@@ -1,5 +1,0 @@
-{
-  "zero_fill_display_warnings": [],
-  "points": "mean normalized log intensity across 20 seeds; error bars SEM",
-  "lines": "pooled exposure-weighted log-linear fit, also used for the selected 0.5 s coefficients"
-}
