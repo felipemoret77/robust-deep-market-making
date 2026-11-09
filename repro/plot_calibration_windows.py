@@ -133,7 +133,7 @@ def main():
     for color, row in zip(plt.cm.viridis(np.linspace(.05,.95,5)), new_windows):
         window = row['window']
         ax.errorbar(DISTANCES, row['normalized_log_intensity'], yerr=row['sem'], fmt='o',
-                    markersize=4, capsize=4, color=color, label=rf'$\Delta T={window:g}$ s')
+                    markersize=4, capsize=4, color=color, label=rf'$\Delta T={window:g}\,\mathrm{{u}}$')
         ax.plot(DISTANCES, -row['kappa']*DISTANCES, '--', color=color, linewidth=2)
     ax.set_xlabel(r'$\delta$ [tick]')
     ax.set_ylabel(r'$\log(\hat\Lambda(\delta)/\hat A_{\mathrm{fit}})$')

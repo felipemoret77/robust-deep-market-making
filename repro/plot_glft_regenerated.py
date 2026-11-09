@@ -34,7 +34,7 @@ def calibration():
  xx=np.linspace(.5,5,700);yy=fit['A_fit']*np.exp(-fit['kappa']*xx)
  top.plot(x,y,'o-',color='#1f77b4',linewidth=1.5,markersize=5,label='Pooled empirical intensity')
  top.plot(xx,yy,'--',color='#ff7f0e',linewidth=1.5,label=rf'Exponential fit: $A_{{\mathrm{{fit}}}}={fit["A_fit"]:.4f},\ \kappa={fit["kappa"]:.4f}$')
- top.set_title(r'Censored waiting times, $\Delta T=0.5$ s');top.set_ylabel(r'$\widehat\Lambda(\delta)$ (s$^{-1}$)');top.set_ylim(bottom=0);top.legend(loc='upper right')
+ top.set_title(r'Censored waiting times, $\Delta T=0.5\,\mathrm{u}$');top.set_ylabel(r'$\widehat\Lambda(\delta)$ ($\mathrm{u}^{-1}$)');top.set_ylim(bottom=0);top.legend(loc='upper right')
  bottom.plot(x,np.log(y),'o-',color='#1f77b4',linewidth=1.5,markersize=5);bottom.plot(xx,np.log(yy),'--',color='#ff7f0e',linewidth=1.5)
  bottom.set_ylabel(r'$\log\widehat\Lambda(\delta)$');bottom.set_xlabel(r'Effective quote distance $\delta$ (ticks)');bottom.set_xticks([.5,1,2,3,4,5])
  for ax in (top,bottom):ax.grid(alpha=.3)

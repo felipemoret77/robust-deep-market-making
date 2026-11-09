@@ -1,9 +1,9 @@
 [
   {
     "path": "paper/figures/censored_waiting_different_throttles.png",
-    "sha256": "f180cea753272a465a3d9fbe0efdbfff225997710b0f23eba4d3ad211b8a7d8a",
+    "sha256": "42af92d782f8d896d38257d806c0c229991e44833a337243a2066bb077975b67",
     "portable_replot": "repro/glft_figures.py",
-    "status": "unweighted pooled and per-seed OLS; equal-seed normalization and SEM from archived probes",
+    "status": "unweighted pooled and per-seed OLS; equal-seed normalization and SEM from archived probes; simulator time unit u",
     "generation_provenance": "data/paper/calibration_windows_unweighted/provenance.json",
     "pixel_match_expected": true
   },

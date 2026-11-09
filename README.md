@@ -7,6 +7,11 @@ This repository contains the selected paper results and their reproduction
 pipeline. Superseded results, exploratory runs and duplicate source snapshots
 are excluded from the working tree.
 
+Model time is expressed in simulator units (`u`), without a conversion to
+empirical seconds. Historical archive keys such as `windows_seconds` retain
+their recorded names and values; runtime fields such as `elapsed_seconds`
+still report real elapsed seconds.
+
 ## Layout
 
 | Directory | Contents |
