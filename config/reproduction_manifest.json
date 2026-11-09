@@ -449,7 +449,7 @@
     "paper/figures/scenario_bandit_diagram.png": "b9fd18f8b91b8655b01bc9a083245f8d50e54fe2c3d4b25ef6484d43d36ea4a9",
     "paper/figures/scenario_bandit_random_tau.png": "861c9b9734ee6b7c795948505b4eaafaadb4feb8f20ae21b9cafed88fbf9d663",
     "paper/figures/total_pnl_0001.png": "7974d95c2a565a928b40a85c982cb64badc7487726f82c92f9bd8843e5dc01b5",
-    "paper/main.tex": "adec31840b9b43818beec1fc20bb88a30f0ea7f01cd1319ab327c9ae9739fbe3",
+    "paper/main.tex": "92fb7666110a500ba65b85c81e331bb8a89c8fa857ceefac051ffd7c5c234ba7",
     "paper/references.bib": "8a13a8b187b57741bd0871e6ede928a6efd183525b3a23300f8e5c7a27ff564d",
     "repro/README.md": "c888ad5bc7ea21e037727a452a49fddc73fa04924ff638713407459a83107188",
     "repro/check_portability.py": "a25f58ebc1503de0c2d13668e68ccabd19a5e2ffe979281171f711865959d9cf",
