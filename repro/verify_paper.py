@@ -49,6 +49,10 @@ def main():
     current=validate_corrected()
     print(f"Selected corrected evaluation: {current['episodes']} outcomes and {current['traces']} trajectories verified")
 
+    from uniform_control import verify as verify_uniform_control
+    verify_uniform_control()
+    print('Matched adaptive/uniform control: 400 outcomes, final policies and paired summaries verified')
+
     data_dir = ROOT / 'data/paper'
     for name, info in json.loads((data_dir / 'data_manifest.json').read_text()).items():
         assert file_hash(data_dir / name) == info['sha256'], name

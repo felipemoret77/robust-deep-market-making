@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "experiment_started_utc": "2026-11-06",
+  "checkpoint_selection": "Final after exactly 2000 episodes, prescribed before evaluation. No test-based checkpoint selection.",
+  "training_scope": "One paired continuation from the same fixed B, not independent end-to-end training replications.",
+  "effect_scope": "Adaptive scenario probabilities and easiest-slot replacement jointly versus uniform probabilities and random-slot replacement.",
+  "evaluation_scope": "paired evaluation episodes conditional on this single trained checkpoint pair",
+  "evaluation_metric": "Gross terminal marked-to-market PnL; fees, rebates and terminal liquidation costs excluded.",
+  "original_evaluation_protocol_sha256": "36dbb304d0f4ad5dbd890e4b3a23f10ff37033233dc4b9d4e20f1649135ffa58",
+  "original_evaluator_sha256": "49e7251bd2e1e15d2f0bec700f02a953906aa083aa2fa59cfb2db9072d18e966",
+  "original_evaluation_source_sha256": {
+    "config/evaluation_environment.json": "ac4855ea47c6b8f4243d0f95acbac03b5d80ee87517ee316096e7a41eb6e107f",
+    "data/paper/numerical_regression/legacy_controller.py": "6607491ccbf645256f291106b19bb7f2c8e6d802d93876c12f63daabd562abde",
+    "repro/evaluation_environment.py": "898fa6704d826c17768b0f18e174f3c9974267ae7bb961e9e2e425191c8a0209",
+    "repro/paper_evaluation_corrections.py": "b87810dca0b31f1964d8e32a8dac16670aebd5f0d0a64c8fd0fd524481ca0d17",
+    "repro/paper_helpers.py": "fc0f8039d8e412261104412ea793c1a32d42c8c406888f4848b2580108b817a8",
+    "repro/paper_runtime.py": "4e87ee29e653c43d0c1d4fa2854cfab9f638e21a8c28bf9ab2088f75066da321",
+    "src/agents/DRO_adversary.py": "d5e0b6bfb3db1f606f0d5a0c6314c72502dd8be94e413ec3d39e17323540ddf9",
+    "src/agents/DeepSarsaQRunner.py": "baabd963084ebd65c3314ad583de0c46ddff61dd093908677c15fee5a83cdee4",
+    "src/agents/DeepSarsaQRunner_RANDOM_TAU.py": "e69b9cc7515650c3e5cbcbe9595bad2be48673d2bf1b8e6daa6f4e2deedf7f25",
+    "src/agents/DeepSarsaQRunner_REGIME.py": "3abc96c5f6049bf62d2743d94b84c62bc486b2204736d35d9ce0fa8c221fa3ca",
+    "src/agents/actor_critic.py": "79badedd4cb9c0a9ce625310397cf492913dd9bc3f462642a100645f3b57bd70",
+    "src/agents/adr_lite.py": "3379017394c3c525d1f29e673b5d4c1d56e32de680d569e0dea953077583aab3",
+    "src/agents/adr_lite_config.py": "d17899fd7cb46011c5ab3d1e9e60bdcf9514924b462f1e5cda8daafc28cc547a",
+    "src/agents/adversary_agent.py": "62b926b2f6759d2b8b2835309f1f422ff02067a3529e6bf731f84ee5f5a90422",
+    "src/agents/adversary_tau_agent.py": "6c8f3e407da19f97748783450927df99a07a35cbc33ecb2cfb9618d02b7c1a89",
+    "src/agents/c51_evaluation.py": "03b4aae8b3c10a0b822d1c4421207522c5095968a17dfe3fab2c385fd746efcf",
+    "src/agents/dqn_distributional_with_throttle.py": "a623cf930d537aa22cbc9fc4fdb577b94867922b48981a2738849b68501f2226",
+    "src/agents/ewc.py": "a691e3f068cf4637cd7a35b5759089b26ab6824867d741f6f96b0a3c290ab9a4",
+    "src/agents/ppo.py": "f5d77d6c63feb05fde28757455b445e65bc59c7545226320f2c6c1dd837a9aeb",
+    "src/agents/regime_switching_stress_test.py": "90a406d3fb615da03953d9d12fc40a9881f8cc1b98141d35bbedfdfa286f7059",
+    "src/agents/reinforce_general.py": "4c2f3978a3d1e2d1f67bed7bb1451816f61cd5ae651251274fe065308af978e5",
+    "src/agents/sac.py": "444f8c42766244828861764a472e763aa7809e0281c1ea7a3e8e589085e72fa8",
+    "src/eval/comparison_cesonred_waiting_times_by_throttle.py": "f71f960fbb1e329f11a7b310bb77825ae5accd049975b95eeb546b717183eaf1",
+    "src/eval/generate_as_miss_bundle.py": "b12e572c01aea3901bc2d3a878ebdc0d1d1f4f4400fa5911eac4112276d28847",
+    "src/eval/glft_degradation_vs_tau_r.py": "86fa962faa11c77dd26ef90dc9eca2e78c256389718ecd54175b3340486138d5",
+    "src/eval/regime_switching_stress_test_2.py": "a005abf1c08e81bd3166c515fa800f10994b2314c086c172d438e64acbc243dc",
+    "src/eval/risk_return_frontier.py": "2d10c0341d1d61af69be217efd6ccb22411d21d16e2331fd9aa3b8f3e5dd655e",
+    "src/glft/GLFT_policy_factory.py": "dd12cbd64da3a3db00551c5199f35e8aee90e8205013e0638b43514b4dbc7688",
+    "src/glft/GLFT_studies.py": "709c0d0b1ff3a2b4458b95f4f99c0b557d7bc4dcf7cb8960aaaa663274759b86",
+    "src/glft/MM_GLFT_naive_comparison.py": "a3bcf6804f14f55bf632a9369c552f2db8fc942242068cf2a1090b800d1ce378",
+    "src/glft/MM_policy_5.py": "34c1ac997e3bff9348400cd192263158d734a2d678d1ff7aaa3686d9eeac0f84",
+    "src/glft/calibrate_trading_intensity.py": "fa28023b79198265161ae6ecedd013ba48698aac5f2e8016bd085f846fb2a8e5",
+    "src/glft/censored_waiting_times_calib.py": "5164ec0a255ccc596ca503cc51df1fc3b50986fb47fab5f2475b28706776974c",
+    "src/sim/CONFIG_MM.py": "1de53dcb477d2f90f869aed8d78ff3c8c3450e6c1986b70409a4e2d741d55941",
+    "src/sim/LOB_SIM_QRM.py": "babfb3b711164a579e74b61f89b1653f422a59605be3d106e9215d30ecd34b93",
+    "src/sim/LOB_SIM_SANTA_FE.py": "0238c69ef9bee8d323d6ea20c7cbf924d2cd6af7cbcb5d657c296c4c1ce6aa18",
+    "src/sim/MM_LOB_SIM.py": "1398196abe41341ac92c8179ac9e7d53a0c416cca583daec0bde3e5e6368545a",
+    "src/sim/RLController.py": "e76020fb57dd4afb965d5377e77d6200081decb9a94a30ef84fbded095a6c1d0",
+    "src/sim/animate_LOB_sim.py": "83674d40ae23fc2ed9c7463dd8bddb6399dd4135367542087249cf8a3c60e942",
+    "src/sim/bayes_online_MM_input.py": "1e07d6843b425910b6c31491092826e164c891300807f6230986bf34cbd4e3b3",
+    "src/sim/mm_base.py": "f06606f967dd209f3dacfa8d00c467d8aa8d20dcf43b879fa920f5c8601f7da3",
+    "src/sim/paper_palette.py": "01afdcad0415eb9af67d05b7ebba990d885ae82317957f2bb069986c1a53276a"
+  },
+  "unchanged_numerical_core": [
+    {
+      "path": "src/agents/DRO_adversary.py",
+      "sha256": "d5e0b6bfb3db1f606f0d5a0c6314c72502dd8be94e413ec3d39e17323540ddf9",
+      "byte_identical_to_executed_training_source": true
+    },
+    {
+      "path": "src/agents/dqn_distributional_with_throttle.py",
+      "sha256": "a623cf930d537aa22cbc9fc4fdb577b94867922b48981a2738849b68501f2226",
+      "byte_identical_to_executed_training_source": true
+    },
+    {
+      "path": "src/sim/LOB_SIM_SANTA_FE.py",
+      "sha256": "0238c69ef9bee8d323d6ea20c7cbf924d2cd6af7cbcb5d657c296c4c1ce6aa18",
+      "byte_identical_to_executed_training_source": true
+    },
+    {
+      "path": "src/sim/bayes_online_MM_input.py",
+      "sha256": "1e07d6843b425910b6c31491092826e164c891300807f6230986bf34cbd4e3b3",
+      "byte_identical_to_executed_training_source": true
+    }
+  ],
+  "pairing_evidence": "matched_initialization.json records initial weights, target, Adam moments, anchor, hyperparameters and initial pool hashes; refreshes.json records incoming candidates and replacement slots at all four updates.",
+  "limitations": [
+    "One continuation seed conditional on canonical B.",
+    "CIs resample evaluation episodes and do not measure training variability.",
+    "Adaptive selection and adaptive replacement are not separately identified.",
+    "Inventory-limit occupancy is not lower in every test."
+  ],
+  "data_sha256": {
+    "matched_initialization.json": "128470db0bb0017f30d3f73732702619eefd8dd5e7860a42bf7266a5a09fae0c",
+    "outcomes.jsonl": "ffa5507e28564e56b2922b8fce3e8ce7aca23fa8ebdbffbbcdc70d66ebd07c5c",
+    "refreshes.json": "85e816537dc42e33689ca367124e7e6bb052603ed36650fc8124bd3efa7b958d",
+    "runtime_smoke_reference.json": "0f51685d45842d33806dcd8134ac67046e9fd2dc282ecc107e668d340bcb2863",
+    "summary.json": "1d1636ac24ea153579f60134f195ca09ae94666eccd581836464182836be9fde",
+    "training_smoke_reference.json": "ede637c49438ef157b330453fe01b9ec6b5255c71181f5c165ce6c1c24eda092"
+  },
+  "runtime_validation": "runtime_smoke_reference.json records exact agreement in all six metrics and both schedule hashes at the first random-family seed, 5000 events and 100 warmup events, for both final models.",
+  "training_validation": "training_smoke_reference.json records exact agreement with the originally executed training pilot over the first three episodes in each arm, including online/target weights and optimizer state."
+}

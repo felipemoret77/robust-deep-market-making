@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "scope": "Short-horizon equality check of the executed original evaluator and the portable published evaluator; not a replacement for the complete archived Monte Carlo outcomes.",
+  "original_and_portable_metrics_exactly_equal": true,
+  "reference": {
+    "adaptive": {
+      "arm": "adaptive",
+      "family": "random",
+      "seed": 90000123,
+      "events": 5000,
+      "warmup": 100,
+      "checkpoint_sha256": "19633b79a2b57e03eb84467b5da22da5a815650a5be542afd6a16c0794da9a9d",
+      "terminal_pnl": 0.12500000000000003,
+      "terminal_inventory": 1.0,
+      "mean_abs_inventory": 0.8582,
+      "inventory_limit_fraction": 0.0,
+      "decisions": 728,
+      "preserved_recovery_quotes": 0,
+      "schedule_sha256_before": "ba3f0549b3c3724f271611d73408f4296557e12b259ef77567a0321c16ae010d",
+      "schedule_sha256_after": "ba3f0549b3c3724f271611d73408f4296557e12b259ef77567a0321c16ae010d"
+    },
+    "uniform": {
+      "arm": "uniform",
+      "family": "random",
+      "seed": 90000123,
+      "events": 5000,
+      "warmup": 100,
+      "checkpoint_sha256": "9522f4f156223607d58431870397fa5393d609e49ac732b00ced7e617c76bd09",
+      "terminal_pnl": 0.1700000000000001,
+      "terminal_inventory": 0.0,
+      "mean_abs_inventory": 0.583,
+      "inventory_limit_fraction": 0.0,
+      "decisions": 733,
+      "preserved_recovery_quotes": 0,
+      "schedule_sha256_before": "ba3f0549b3c3724f271611d73408f4296557e12b259ef77567a0321c16ae010d",
+      "schedule_sha256_after": "ba3f0549b3c3724f271611d73408f4296557e12b259ef77567a0321c16ae010d"
+    }
+  }
+}

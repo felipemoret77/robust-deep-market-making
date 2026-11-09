@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "scope": "First three training episodes with the matched pilot seed streams in the tested CPU environment; all episode metrics and online/target tensors verified bit-identical to the historical pilot smoke.",
+  "source_B_sha256": "3a4649c860f91ffe2ca3747d071880508e953aa45f5a0d14d6b18cdfcff30200",
+  "episodes": 3,
+  "events_per_episode": 5000,
+  "schedule_episodes": 2000,
+  "arms": {
+    "adaptive": {
+      "q_net_hash": "8ce6b22cf30c93b40e86a9305ed0692133feac03517d5794c2878279196a6cbd",
+      "target_net_hash": "c9081016fd56a3081bfea19319ddbb2f5eaa0cfc8bbbf9745252ad805734cf19",
+      "optimizer_hash": "1c1a8d2a98d9cfc88520cd6f4bd1d6349caa0a92875209bdf1f02bcd02f038a5",
+      "gradient_steps": 1515,
+      "episodes": [
+        {
+          "episode": 1,
+          "environment_seed": 80001123,
+          "learning_seed": 2451714062,
+          "scenario_index": 255,
+          "scenario_hash": "9f80a4233a426e5cf4554af44890543e470e0ce3a24cf0f84d6b9c950fb9b22b",
+          "scenario_probability": 0.00390625,
+          "persistent_side": false,
+          "terminal_pnl": 0.28,
+          "penalized_pnl": -6.082,
+          "mean_abs_inventory": 0.8212,
+          "mean_inventory_sq": 1.2724,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 68,
+          "replay_size": 709,
+          "learning_rates_used": [
+            0.00015,
+            0.0003
+          ]
+        },
+        {
+          "episode": 2,
+          "environment_seed": 80001124,
+          "learning_seed": 2451714063,
+          "scenario_index": 108,
+          "scenario_hash": "ccf2f9de36e9492236cd1f99962088fe24ee5f0a9dd9e91291573f178e43dbb8",
+          "scenario_probability": 0.003906249938478233,
+          "persistent_side": true,
+          "terminal_pnl": -0.19499999999999984,
+          "penalized_pnl": -13.991000000000001,
+          "mean_abs_inventory": 1.2796,
+          "mean_inventory_sq": 2.7592,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 790,
+          "replay_size": 1431,
+          "learning_rates_used": [
+            0.0001499325,
+            0.000299865
+          ]
+        },
+        {
+          "episode": 3,
+          "environment_seed": 80001125,
+          "learning_seed": 2451714064,
+          "scenario_index": 11,
+          "scenario_hash": "0053e5346e6d2c7b1ff516ef47f77013c94eb89b6afb72efef669ca4caad7d8a",
+          "scenario_probability": 0.0039062496750771163,
+          "persistent_side": false,
+          "terminal_pnl": -0.20999999999999974,
+          "penalized_pnl": -17.883000000000003,
+          "mean_abs_inventory": 1.617,
+          "mean_inventory_sq": 3.5346,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 1515,
+          "replay_size": 2156,
+          "learning_rates_used": [
+            0.00014983911773422357,
+            0.00029967823546844715
+          ]
+        }
+      ]
+    },
+    "uniform": {
+      "q_net_hash": "8ce6b22cf30c93b40e86a9305ed0692133feac03517d5794c2878279196a6cbd",
+      "target_net_hash": "c9081016fd56a3081bfea19319ddbb2f5eaa0cfc8bbbf9745252ad805734cf19",
+      "optimizer_hash": "1c1a8d2a98d9cfc88520cd6f4bd1d6349caa0a92875209bdf1f02bcd02f038a5",
+      "gradient_steps": 1515,
+      "episodes": [
+        {
+          "episode": 1,
+          "environment_seed": 80001123,
+          "learning_seed": 2451714062,
+          "scenario_index": 255,
+          "scenario_hash": "9f80a4233a426e5cf4554af44890543e470e0ce3a24cf0f84d6b9c950fb9b22b",
+          "scenario_probability": 0.00390625,
+          "persistent_side": false,
+          "terminal_pnl": 0.28,
+          "penalized_pnl": -6.082,
+          "mean_abs_inventory": 0.8212,
+          "mean_inventory_sq": 1.2724,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 68,
+          "replay_size": 709,
+          "learning_rates_used": [
+            0.00015,
+            0.0003
+          ]
+        },
+        {
+          "episode": 2,
+          "environment_seed": 80001124,
+          "learning_seed": 2451714063,
+          "scenario_index": 108,
+          "scenario_hash": "ccf2f9de36e9492236cd1f99962088fe24ee5f0a9dd9e91291573f178e43dbb8",
+          "scenario_probability": 0.00390625,
+          "persistent_side": true,
+          "terminal_pnl": -0.19499999999999984,
+          "penalized_pnl": -13.991000000000001,
+          "mean_abs_inventory": 1.2796,
+          "mean_inventory_sq": 2.7592,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 790,
+          "replay_size": 1431,
+          "learning_rates_used": [
+            0.0001499325,
+            0.000299865
+          ]
+        },
+        {
+          "episode": 3,
+          "environment_seed": 80001125,
+          "learning_seed": 2451714064,
+          "scenario_index": 11,
+          "scenario_hash": "0053e5346e6d2c7b1ff516ef47f77013c94eb89b6afb72efef669ca4caad7d8a",
+          "scenario_probability": 0.00390625,
+          "persistent_side": false,
+          "terminal_pnl": -0.20999999999999974,
+          "penalized_pnl": -17.883000000000003,
+          "mean_abs_inventory": 1.617,
+          "mean_inventory_sq": 3.5346,
+          "fraction_at_limit": 0.0,
+          "gradient_steps_cumulative": 1515,
+          "replay_size": 2156,
+          "learning_rates_used": [
+            0.00014983911773422357,
+            0.00029967823546844715
+          ]
+        }
+      ]
+    }
+  }
+}

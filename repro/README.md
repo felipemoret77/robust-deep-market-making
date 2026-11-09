@@ -6,6 +6,7 @@ inputs and writes new results under `outputs/` or an explicit `--output`.
 | Task | Command |
 | --- | --- |
 | Validate final data and checkpoint identities | `make verify-paper` |
+| Validate the matched adaptive/uniform control | `make verify-uniform-control` |
 | Test frozen C51 ranking and inventory masks | `make check-numerics` |
 | Regenerate all 32 figures | `make figures` |
 | Compare regenerated figure pixels | `python repro/verify_paper.py --figures-dir outputs/paper_figures` |
@@ -46,3 +47,38 @@ the selected benchmark parameters.
 The numerical fixtures test final-policy action ranking and masks. Full
 simulation comparisons use recorded final outcomes. No previous model version,
 source snapshot or superseded result set is needed by these commands.
+
+## Matched scenario-allocation control
+
+`uniform_control.py verify` recomputes the matched comparison from all 400
+individual outcomes, verifies the two final checkpoint files and checks the
+shared initialization, initial pool and incoming replacement scenarios. The
+single fine-tuning seed and the two held-out seed blocks are recorded in
+`config/uniform_control.json`.
+
+```sh
+python repro/uniform_control.py verify
+python repro/uniform_control.py replay --family random --arm adaptive --seeds 1 --smoke --events 5000 --warmup 100 --output outputs/control_adaptive_smoke
+python repro/uniform_control.py replay --family correlated --arm uniform --seeds 1 --smoke --events 5000 --warmup 100 --output outputs/control_uniform_smoke
+```
+
+These bounded smokes check the execution path, not equality to the archived
+500,000-event outcomes. To repeat a complete recorded episode and compare its
+metrics, omit the smoke overrides and add `--verify-archive`.
+
+The paired training harness instruments the published C runner and imports the
+same learner, sampler and simulator. It writes only to the specified new output
+directory. It does not require a duplicate source snapshot or the author's
+research folders.
+
+```sh
+python repro/uniform_control_train.py --arm adaptive --output-root outputs/uniform_control_training
+python repro/uniform_control_train.py --arm uniform --output-root outputs/uniform_control_training
+```
+
+Each arm runs exactly 2,000 episodes of 5,000 events after 1,000 warmup events.
+Add `--smoke` to exercise the first three episodes while retaining the original
+2,000-episode learning and sampling schedules. Both arms must finish before
+comparing their final checkpoints; intermediate best-moving-average models
+are diagnostic and are not selected for the reported comparison. Checkpoints
+without replay contents do not support exact mid-training continuation.

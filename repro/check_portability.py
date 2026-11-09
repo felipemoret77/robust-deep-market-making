@@ -19,6 +19,8 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT / 'outputs/portability')
     parser.add_argument('--skip-figures', action='store_true',
                         help='Check identities only; skip generating and comparing figures.')
+    parser.add_argument('--skip-long-replays', action='store_true',
+                        help='Keep figure, training and short-control checks; omit long historical replays.')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     report = {'status': 'running', 'commands': [], 'original_workspace_access': 'blocked'}
@@ -30,6 +32,8 @@ def main():
         for directory in ('src', 'config', 'data/paper', 'paper/figures'):
             shutil.copytree(ROOT / directory, exported / directory,
                             ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+        for name in ('main.tex', 'references.bib'):
+            shutil.copy2(ROOT / 'paper' / name, exported / 'paper' / name)
         (exported / 'repro').mkdir()
         for script in (ROOT / 'repro').glob('*.py'):
             shutil.copy2(script, exported / 'repro' / script.name)
@@ -43,6 +47,8 @@ def main():
         (exported / 'checkpoints').mkdir()
         checkpoints = {entry['checkpoint'] for entry in spec['models'].values()}
         checkpoints |= {entry['checkpoint'] for entry in spec['frontier_checkpoints'].values()}
+        control = json.loads((ROOT / 'config/uniform_control.json').read_text())
+        checkpoints |= {entry['checkpoint'] for entry in control['models'].values()}
         for checkpoint in checkpoints:
             shutil.copy2(ROOT / checkpoint, exported / checkpoint)
 
@@ -68,6 +74,11 @@ sys.addaudithook(audit)
         env = dict(os.environ, PYTHONPATH=str(hooks), MPLBACKEND='Agg',
                    MPLCONFIGDIR=str(base / 'matplotlib'),
                    PAPER_BLOCK_PATHS=os.pathsep.join(blocked), PYTHONDONTWRITEBYTECODE='1')
+        # Reuse only an optional font-discovery cache; numerical inputs stay in export.
+        if os.environ.get('MPLCONFIGDIR'):
+            (base / 'matplotlib').mkdir(exist_ok=True)
+            for cached in Path(os.environ['MPLCONFIGDIR']).glob('fontlist-v*.json'):
+                shutil.copy2(cached, base / 'matplotlib' / cached.name)
         guard_check = ('from pathlib import Path\n'
                        'try:\n'
                        f'    Path({str(ROOT / "README.md")!r}).read_bytes()\n'
@@ -84,7 +95,20 @@ sys.addaudithook(audit)
             commands += [['make', '-C', str(exported), 'figures', f'PY={sys.executable}'],
                          [sys.executable, str(exported / 'repro/verify_paper.py'),
                           '--figures-dir', str(exported / 'outputs/paper_figures')],
-                         [sys.executable, str(exported / 'repro/frontier.py'), 'evaluate',
+                         ['make', '-C', str(exported), 'paper']]
+        commands += [[sys.executable, str(exported / 'repro/uniform_control.py'),
+                      'replay', '--family', 'random', '--arm', 'adaptive', '--seeds', '1',
+                      '--smoke', '--events', '5000', '--warmup', '100',
+                      '--output', str(base / 'uniform_control_adaptive_smoke')],
+                     [sys.executable, str(exported / 'repro/uniform_control.py'),
+                      'replay', '--family', 'correlated', '--arm', 'uniform', '--seeds', '1',
+                      '--smoke', '--events', '5000', '--warmup', '100',
+                      '--output', str(base / 'uniform_control_uniform_smoke')],
+                     [sys.executable, str(exported / 'repro/uniform_control_train.py'),
+                      '--arm', 'uniform', '--smoke',
+                      '--output-root', str(base / 'uniform_training_smoke')]]
+        if not args.skip_figures and not args.skip_long_replays:
+            commands += [[sys.executable, str(exported / 'repro/frontier.py'), 'evaluate',
                           '--seeds', '1', '--compare-archive', '--output', str(base / 'frontier_smoke')],
                          [sys.executable, str(exported / 'repro/glft_calibration.py'),
                           '--output', str(base / 'calibration_smoke')],
@@ -112,6 +136,8 @@ sys.addaudithook(audit)
                 raise RuntimeError(f'Export check failed; see {log}')
         report['status'] = 'passed'
         report['figures_regenerated'] = not args.skip_figures
+        report['long_replays_run'] = not args.skip_figures and not args.skip_long_replays
+        report['uniform_control_training_and_smoke_replays'] = True
         report['checkpoints_copied'] = len(checkpoints)
         (args.output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     print('Portable export verified:', args.output / 'report.json')

@@ -1,0 +1,78 @@
+{
+  "status": "complete",
+  "smoke": false,
+  "arm_summaries": [
+    {
+      "family": "random",
+      "arm": "adaptive",
+      "episodes": 100,
+      "mean_terminal_pnl": 12.625949999999934,
+      "sd_terminal_pnl": 2.2563289992885136,
+      "loss_fraction": 0.0,
+      "mean_abs_inventory": 0.8042755800000001,
+      "mean_inventory_limit_fraction": 0.0006538399999999999
+    },
+    {
+      "family": "random",
+      "arm": "uniform",
+      "episodes": 100,
+      "mean_terminal_pnl": 11.542899999999934,
+      "sd_terminal_pnl": 2.6131788354918664,
+      "loss_fraction": 0.0,
+      "mean_abs_inventory": 0.8453197800000001,
+      "mean_inventory_limit_fraction": 0.0008717200000000001
+    },
+    {
+      "family": "correlated",
+      "arm": "adaptive",
+      "episodes": 100,
+      "mean_terminal_pnl": 11.346749999999929,
+      "sd_terminal_pnl": 2.311716902624276,
+      "loss_fraction": 0.0,
+      "mean_abs_inventory": 0.8211594999999998,
+      "mean_inventory_limit_fraction": 0.0008508400000000001
+    },
+    {
+      "family": "correlated",
+      "arm": "uniform",
+      "episodes": 100,
+      "mean_terminal_pnl": 10.601649999999932,
+      "sd_terminal_pnl": 2.5084017462733206,
+      "loss_fraction": 0.0,
+      "mean_abs_inventory": 0.8622280400000001,
+      "mean_inventory_limit_fraction": 0.0006793200000000001
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "family": "random",
+      "contrast": "adaptive minus uniform",
+      "episodes": 100,
+      "mean_pnl_difference": 1.083050000000004,
+      "paired_schedule_initial_hashes_equal": true,
+      "inference_scope": "conditional on this single checkpoint pair",
+      "paired_standard_error": 0.17802082353228008,
+      "paired_bootstrap_ci95": [
+        0.7299000000000029,
+        1.4292562500000052
+      ],
+      "sd_ratio_left_over_right": 0.8634422446115577,
+      "paired_t_pvalue": 2.2207406062095537e-08
+    },
+    {
+      "family": "correlated",
+      "contrast": "adaptive minus uniform",
+      "episodes": 100,
+      "mean_pnl_difference": 0.7450999999999981,
+      "paired_schedule_initial_hashes_equal": true,
+      "inference_scope": "conditional on this single checkpoint pair",
+      "paired_standard_error": 0.16357437347141385,
+      "paired_bootstrap_ci95": [
+        0.4246924999999998,
+        1.0626612499999961
+      ],
+      "sd_ratio_left_over_right": 0.9215895763343112,
+      "paired_t_pvalue": 1.4947792933240282e-05
+    }
+  ]
+}

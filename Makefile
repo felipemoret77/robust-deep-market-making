@@ -1,14 +1,15 @@
 # Run from the repository root. PY may select an existing scientific environment.
-export PYTHONPATH := $(CURDIR)/src/sim:$(CURDIR)/src/agents:$(CURDIR)/src/glft:$(CURDIR)/src/eval:$(PYTHONPATH)
+export PYTHONPATH := $(CURDIR)/src/sim:$(CURDIR)/src/agents:$(CURDIR)/src/glft:$(PYTHONPATH)
 PY ?= python
 ROOT := $(CURDIR)
 NUMERICS_OUT ?= $(ROOT)/outputs/numerics_$(shell date +%Y%m%d_%H%M%S)
 FIGURE_OUT ?= $(ROOT)/outputs/paper_figures
 
-.PHONY: help env check-numerics verify-paper check-portability glft-calibration-check train-a train-b train-c paper figures clean
+.PHONY: help env check-numerics verify-paper verify-uniform-control check-portability glft-calibration-check train-a train-b train-c paper figures clean
 help:
 	@echo "make check-numerics - test frozen C51 action stability and inventory masks"
 	@echo "make verify-paper  - verify canonical checkpoints, metadata and archived data"
+	@echo "make verify-uniform-control - verify the matched adaptive/uniform experiment"
 	@echo "make figures       - regenerate supported figures into outputs/paper_figures"
 	@echo "make check-portability - verify an isolated export with Desktop access blocked"
 	@echo "make glft-calibration-check - aggregate archived calibration statistics and run a small simulation check"
@@ -16,11 +17,13 @@ help:
 	@echo "make train-a/b/c   - train in outputs/training/A, B or C; preserve shipped checkpoints"
 	@echo "Frozen evaluations: python repro/evaluate_corrected.py --help"
 env:
-	@echo 'export PYTHONPATH="$(ROOT)/src/sim:$(ROOT)/src/agents:$(ROOT)/src/glft:$(ROOT)/src/eval"'
+	@echo 'export PYTHONPATH="$(ROOT)/src/sim:$(ROOT)/src/agents:$(ROOT)/src/glft"'
 check-numerics:
 	$(PY) repro/verify_numerical_stability.py --output "$(NUMERICS_OUT)"
 verify-paper:
 	$(PY) repro/verify_paper.py
+verify-uniform-control:
+	$(PY) repro/uniform_control.py verify
 check-portability:
 	$(PY) repro/check_portability.py
 glft-calibration-check:

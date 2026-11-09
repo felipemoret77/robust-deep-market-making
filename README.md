@@ -4,7 +4,7 @@ Code, trained policies and numerical data for the final paper in
 [`paper/main.tex`](paper/main.tex).
 
 This repository contains the selected paper results and their reproduction
-pipeline. Superseded results, comparison runs and duplicate source snapshots
+pipeline. Superseded results, exploratory runs and duplicate source snapshots
 are excluded from the working tree.
 
 ## Layout
@@ -18,7 +18,7 @@ are excluded from the working tree.
 | `repro/` | Final-policy evaluation, figure generation and verification |
 | `config/` | Checkpoint identities, experiment settings and reference environment |
 | `data/paper/` | Final outcomes, trajectories, calibration observations and plot inputs |
-| `checkpoints/` | Seven selected checkpoint files |
+| `checkpoints/` | Seven selected paper checkpoints and two matched-control policies |
 
 ## Setup and figures
 
@@ -63,6 +63,9 @@ parameters are `A=0.11321677923549382`, `kappa=2.240448473943383`, `sigma=0.3`.
 `make check-portability` exports the required files into a temporary directory,
 blocks access to the original workspace, regenerates the figures and runs
 representative final-policy replays.
+Use `python repro/check_portability.py --skip-long-replays` for the figure,
+compilation and bounded control checks without repeating the long historical
+evaluation cases.
 
 ## Training
 
@@ -76,6 +79,27 @@ Runs write to `outputs/training/`. The checked-in checkpoints are the selected
 paper models; training again does not overwrite them or guarantee bit-identical
 weights. Algorithm B starts from scratch; C warm-starts from the selected B.
 The DRO sampler is part of C's training and is required.
+
+## Matched uniform-sampling control
+
+The additional control starts from the same B checkpoint and fine-tunes two
+policies for 2,000 episodes each. The adaptive arm uses C's scenario weighting
+and easiest-scenario replacement; the uniform arm samples uniformly and
+replaces random pool members. All other settings are matched.
+
+`config/uniform_control.json` records the training settings, final model hashes
+and held-out evaluation seeds. The 400 individual outcomes and matched-run
+provenance are in `data/paper/uniform_control/`.
+
+```sh
+make verify-uniform-control
+```
+
+This recomputes the reported PnL gains of 9.4% and 7.0% and checks both final
+policies. They are additional controls, not replacements for the C checkpoint
+used in the existing figures. The comparison uses one fine-tuning seed;
+evaluation intervals do not measure variation across independent trainings.
+Portable training and bounded replay commands are in `repro/README.md`.
 
 See [`repro/README.md`](repro/README.md) for commands,
 [`data/README.md`](data/README.md) for the final inputs, and

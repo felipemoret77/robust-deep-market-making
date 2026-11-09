@@ -41,6 +41,12 @@ coefficient `ANCHOR_LAMBDA=0.001`, and other saved training settings.
 
 ## Storage
 
+The additional matched-control policies are
+`uniform_control_adaptive_final.pt` and `uniform_control_uniform_final.pt`.
+Their settings, hashes and common B initialization are recorded separately in
+`config/uniform_control.json`. Both are the final policies after exactly 2,000
+episodes. They do not replace the canonical C used in the original figures.
+
 These small curated checkpoints are ordinary Git files, not Git LFS pointers.
 New training outputs belong in `outputs/training/`. Do not overwrite a canonical
 checkpoint to publish a later run under an old filename.

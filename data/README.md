@@ -16,9 +16,15 @@ identities. Hashes identify the selected files; they are not extra result sets.
 | `heatmaps/` | Selected B value-function inputs and verification records |
 | `diagrams/` | Inputs for the selected architecture diagrams |
 | `numerical_regression/` | Fixed C51 logits and state probes used by current numerical tests |
+| `uniform_control/` | 400 matched adaptive/uniform outcomes, summaries, initialization and pool-refresh provenance |
 | Root `.npz` and sweep `.csv` files | Final derived arrays used by regime/sampling plots |
 
 `make verify-paper` verifies checkpoint and data identities, individual outcomes,
 summary statistics and figure coverage. `make figures` reconstructs all selected
 panels without rerunning the Monte Carlo campaigns. Full and bounded replay
 commands are documented in `repro/README.md`.
+
+The uniform control compares two final policies after 2,000 fine-tuning episodes
+from the same B. Each policy is evaluated on 100 new seeds per regime family,
+with 500,000 events and 10,000 warmup events. Reported PnL is gross marked-to-market
+PnL. The paired intervals are conditional on this one trained policy pair.
